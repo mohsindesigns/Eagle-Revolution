@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Home, Layout, TreePine, Building2, Building, Droplets, ArrowRight, Shield, Clock, Award, Users, TrendingUp, BadgeCheck, Star } from 'lucide-react';
 import { useContent } from "../../hooks/useContent";
+import RichTextRenderer from "../ui/RichTextRenderer";
 
 const iconMap: Record<string, any> = { Home, Layout, TreePine, Building2, Building, Droplets, Shield, Award, Clock, BadgeCheck, TrendingUp, Star };
 
@@ -79,14 +80,9 @@ export default function ServicesTemplate({ pageData, params }: { pageData?: any,
                     {headlineJsx}
                 </motion.h1>
                 {data?.description && (
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="text-lg text-muted-foreground max-w-3xl mx-auto"
-                    >
-                        {Array.isArray(data.description) ? data.description[0] : data.description}
-                    </motion.p>
+                    <div className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                        <RichTextRenderer content={Array.isArray(data.description) ? data.description[0] : data.description} />
+                    </div>
                 )}
             </div>
             <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

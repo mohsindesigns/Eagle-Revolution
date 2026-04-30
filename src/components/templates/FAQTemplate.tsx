@@ -4,6 +4,7 @@ import { useRef, useEffect, useState, useMemo } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Icon } from "../../config/icons";
 import { useContent } from "../../hooks/useContent";
+import RichTextRenderer from "../ui/RichTextRenderer";
 
 const AccordionItem = ({ item, index, isOpen, onToggle, searchHighlight }: any) => {
     const itemRef = useRef(null);
@@ -32,11 +33,11 @@ const AccordionItem = ({ item, index, isOpen, onToggle, searchHighlight }: any) 
                 <AnimatePresence>
                     {isOpen && (
                         <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-                            <div className="px-7 pb-7">
-                                <p className="text-muted-foreground leading-relaxed">
-                                    {searchHighlight ? highlightText(item.answer, searchHighlight) : item.answer}
-                                </p>
-                            </div>
+                             <div className="px-7 pb-7">
+                                 <div className="text-muted-foreground leading-relaxed">
+                                     <RichTextRenderer content={item.answer} />
+                                 </div>
+                             </div>
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -60,7 +61,9 @@ export default function FAQTemplate({ pageData, params }: { pageData?: any, para
             <div className="max-w-7xl mx-auto px-4">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl sm:text-6xl font-medium mb-4">{section?.headline}</h2>
-                    <p className="text-muted-foreground text-lg">{section?.description}</p>
+                     <div className="text-muted-foreground text-lg">
+                        <RichTextRenderer content={section?.description} />
+                     </div>
                 </div>
                 <div className="space-y-4">
                     {filteredItems.map((item: any, index: number) => (

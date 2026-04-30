@@ -11,6 +11,11 @@ import {
   Zap, Calendar, Settings as SettingsIcon, MousePointer2, X
 } from "lucide-react";
 import { UI } from "./styles";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 import IconSelector from "@/components/admin/IconSelector";
 import ImageField from "@/components/admin/ImageField";
 
@@ -241,7 +246,10 @@ export default function SettingsEditor({ pageId, data, setData }: { pageId: stri
                        <div className={UI.card + " space-y-4"}>
                           <div className="space-y-1.5">
                              <label className={UI.label}>Footer Narrative</label>
-                             <textarea value={data.footer?.company?.description || ""} onChange={(e) => updateNested(["footer", "company", "description"], e.target.value)} rows={3} className={UI.textarea} />
+                             <RichTextEditor 
+                               content={data.footer?.company?.description || ""} 
+                               onChange={(val) => updateNested(["footer", "company", "description"], val)} 
+                             />
                           </div>
                            <ImageField label="Footer Specific Logo" value={data.footer?.company?.logo || ""} onChange={(url: string) => updateNested(["footer", "company", "logo"], url)} />
                        </div>
@@ -343,7 +351,10 @@ export default function SettingsEditor({ pageId, data, setData }: { pageId: stri
                  <div className="space-y-6">
                     <label className={UI.label}>Service Areas Coverage</label>
                     <div className={UI.card}>
-                       <textarea value={data.footer?.contact?.areas || ""} onChange={(e) => updateNested(["footer", "contact", "areas"], e.target.value)} rows={8} className={UI.textarea} placeholder="St. Louis, MO and surrounding areas..." />
+                       <RichTextEditor 
+                         content={data.footer?.contact?.areas || ""} 
+                         onChange={(val) => updateNested(["footer", "contact", "areas"], val)} 
+                       />
                     </div>
                  </div>
               </div>

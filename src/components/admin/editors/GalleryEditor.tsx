@@ -8,7 +8,12 @@ import {
   MapPin, Calendar, Layers, Sparkles
 } from "lucide-react";
 import React from "react";
+import dynamic from "next/dynamic";
 import ContentSelector from "@/components/admin/ContentSelector";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 import { UI } from "./styles";
 
 
@@ -105,7 +110,10 @@ export default function GalleryEditor({ pageId, data, setData }: { pageId: strin
                     </div>
                     <div className="space-y-1.5">
                        <label className={UI.label}>Intro Description</label>
-                       <textarea value={data.galleryPage?.header?.description || ""} onChange={(e) => updateHeader("description", e.target.value)} rows={4} className={UI.textarea} />
+                       <RichTextEditor 
+                         content={data.galleryPage?.header?.description || ""} 
+                         onChange={(val) => updateHeader("description", val)} 
+                       />
                     </div>
                  </div>
               </div>

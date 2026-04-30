@@ -5,6 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Save, Loader2, LayoutTemplate, Type, Image as ImageIcon, ChevronRight, Star, Phone, Plus, Trash2, Mail, Award, Target, Heart } from "lucide-react";
 import Link from "next/link";
 import ImageField from "@/components/admin/ImageField";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 
 export default function AboutEditor() {
   const [data, setData] = useState<any>(null);
@@ -169,11 +174,9 @@ export default function AboutEditor() {
 
                 <div className="space-y-2">
                   <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Hero Description</label>
-                  <textarea
-                    rows={3}
-                    value={aboutPage.hero?.description || ""}
-                    onChange={(e) => updateAbout("hero", "description", e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
+                  <RichTextEditor 
+                    content={aboutPage.hero?.description || ""} 
+                    onChange={(v) => updateAbout("hero", "description", v)} 
                   />
                 </div>
 
@@ -368,14 +371,9 @@ export default function AboutEditor() {
 
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Main Quote</label>
-                    <textarea
-                      rows={2}
-                      value={aboutPage.story?.founder?.quote || ""}
-                      onChange={(e) => {
-                        const newFounder = { ...aboutPage.story.founder, quote: e.target.value };
-                        updateAbout("story", "founder", newFounder);
-                      }}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 font-medium italic"
+                    <RichTextEditor 
+                      content={aboutPage.story?.founder?.quote || ""} 
+                      onChange={(v) => updateAbout("story", "founder", { ...aboutPage.story.founder, quote: v })} 
                     />
                   </div>
 
@@ -413,15 +411,10 @@ export default function AboutEditor() {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Full Biography (Enter key for new paragraphs)</label>
-                    <textarea
-                      rows={6}
-                      value={(aboutPage.story?.founder?.bio || []).join("\n\n")}
-                      onChange={(e) => {
-                        const newFounder = { ...aboutPage.story.founder, bio: e.target.value.split("\n\n").filter(Boolean) };
-                        updateAbout("story", "founder", newFounder);
-                      }}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm leading-relaxed"
+                    <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Full Biography</label>
+                    <RichTextEditor 
+                      content={(aboutPage.story?.founder?.bio || []).join("")} 
+                      onChange={(v) => updateAbout("story", "founder", { ...aboutPage.story.founder, bio: [v] })} 
                     />
                   </div>
                 </div>
@@ -548,14 +541,9 @@ export default function AboutEditor() {
                     </div>
                     <div className="space-y-2">
                       <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Mission Paragraph</label>
-                      <textarea
-                        rows={3}
-                        value={aboutPage.mission?.description || ""}
-                        onChange={(e) => {
-                          const newMission = { ...aboutPage.mission, description: e.target.value };
-                          updateAbout("mission", null, newMission);
-                        }}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900"
+                      <RichTextEditor 
+                        content={aboutPage.mission?.description || ""} 
+                        onChange={(v) => updateAbout("mission", "description", v)} 
                       />
                     </div>
                   </div>
@@ -597,11 +585,14 @@ export default function AboutEditor() {
                          </div>
                          <div className="space-y-1">
                             <label className="text-[10px] font-bold text-slate-400 uppercase">Description</label>
-                            <textarea rows={2} value={principle.desc} onChange={(e) => {
-                                const newPrinciples = [...aboutPage.mission.principles];
-                                newPrinciples[idx].desc = e.target.value;
-                                updateAbout("mission", "principles", newPrinciples);
-                              }} className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs" />
+                            <RichTextEditor 
+                               content={principle.desc} 
+                               onChange={(v) => {
+                                 const newPrinciples = [...aboutPage.mission.principles];
+                                 newPrinciples[idx].desc = v;
+                                 updateAbout("mission", "principles", newPrinciples);
+                               }} 
+                            />
                          </div>
                       </div>
                     ))}
@@ -642,14 +633,9 @@ export default function AboutEditor() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Intro Description</label>
-                    <textarea
-                      rows={3}
-                      value={aboutPage.capabilities?.description || ""}
-                      onChange={(e) => {
-                        const newCap = { ...aboutPage.capabilities, description: e.target.value };
-                        updateAbout("capabilities", null, newCap);
-                      }}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 font-medium"
+                    <RichTextEditor 
+                      content={aboutPage.capabilities?.description || ""} 
+                      onChange={(v) => updateAbout("capabilities", "description", v)} 
                     />
                   </div>
                 </div>
@@ -715,7 +701,10 @@ export default function AboutEditor() {
                     </div>
                     <div className="space-y-2">
                       <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Description</label>
-                      <textarea rows={2} value={aboutPage.ctaBanner?.description || ""} onChange={(e) => updateAbout("ctaBanner", "description", e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900" />
+                      <RichTextEditor 
+                        content={aboutPage.ctaBanner?.description || ""} 
+                        onChange={(v) => updateAbout("ctaBanner", "description", v)} 
+                      />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                        <div className="space-y-2">

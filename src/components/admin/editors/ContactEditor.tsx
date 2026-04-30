@@ -10,6 +10,11 @@ import {
   User, MessageSquare, Smartphone, Hash, Sparkles
 } from "lucide-react";
 import IconSelector from "@/components/admin/IconSelector";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 import { UI } from "./styles";
 
 export default function ContactEditor({ pageId, data, setData }: { pageId: string, data: any, setData: (d: any) => void }) {
@@ -113,7 +118,10 @@ export default function ContactEditor({ pageId, data, setData }: { pageId: strin
                     </div>
                     <div className="space-y-1.5">
                        <label className={UI.label}>Intro Narrative</label>
-                       <textarea value={data.contactPage?.header?.description || ""} onChange={(e) => updateContact("header", "description", e.target.value)} rows={4} className={UI.textarea} />
+                       <RichTextEditor 
+                         content={data.contactPage?.header?.description || ""} 
+                         onChange={(val) => updateContact("header", "description", val)} 
+                       />
                     </div>
                  </div>
               </div>

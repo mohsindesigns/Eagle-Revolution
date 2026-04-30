@@ -13,6 +13,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Icon } from "../config/icons";
 import { useContent } from "../hooks/useContent";
+import RichTextRenderer from "./ui/RichTextRenderer";
 import serviceDetail from "@/assets/fairservice.png";
 // import sharedServicesData from "../data/servicesData.json";
 
@@ -96,7 +97,10 @@ const CompactServiceCard = ({ service }: { service: any }) => {
               {service.number}
             </span>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{service.description}</p>
+          <RichTextRenderer 
+            content={service.description} 
+            className="text-sm text-muted-foreground leading-relaxed line-clamp-2"
+          />
           <motion.div
             className="flex items-center gap-2 mt-3"
             animate={isHovered ? { x: 5 } : { x: 0 }}
@@ -244,9 +248,10 @@ const ServiceCard = ({ service, index }: { service: any; index: number }) => {
         </h3>
 
         <div className="flex-1">
-          <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3 mb-3">
-            {service.description}
-          </p>
+          <RichTextRenderer 
+            content={service.description} 
+            className="text-muted-foreground text-sm leading-relaxed line-clamp-3 mb-3"
+          />
 
           <motion.div
             initial={{ opacity: 0 }}
@@ -392,9 +397,10 @@ const Services = () => {
               </div>
 
               <div className="overflow-hidden mt-2">
-                {description.map((text: string, idx: number) => (
-                  <p key={idx} className="text-muted-foreground text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: text }} />
-                ))}
+                <RichTextRenderer 
+                  content={description} 
+                  className="text-muted-foreground text-lg leading-relaxed"
+                />
               </div>
               <div className="flex items-center justify-between gap-8 mt-8 pt-6 border-t border-border">
                 {stats.map((stat: any, idx: number) => (

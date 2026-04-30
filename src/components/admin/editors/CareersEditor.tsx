@@ -8,6 +8,11 @@ import {
   List, Heart, HelpCircle, Check, Target, Award, Shield, 
   ArrowRight, Briefcase, Send, Sparkles, CheckCircle, PenTool
 } from "lucide-react";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 import { UI } from "./styles";
 
 export default function CareersEditor({ pageId, data, setData }: { pageId: string, data: any, setData: (d: any) => void }) {
@@ -108,7 +113,10 @@ export default function CareersEditor({ pageId, data, setData }: { pageId: strin
                     </div>
                     <div className="space-y-1.5">
                        <label className={UI.label}>Recruitment Narrative</label>
-                       <textarea value={data.careers?.section?.description || ""} onChange={(e) => updateCareers("section", "description", e.target.value)} rows={4} className={UI.textarea} />
+                       <RichTextEditor 
+                         content={data.careers?.section?.description || ""} 
+                         onChange={(val) => updateCareers("section", "description", val)} 
+                       />
                     </div>
                  </div>
               </div>
@@ -159,7 +167,10 @@ export default function CareersEditor({ pageId, data, setData }: { pageId: strin
                           </div>
                           <div className="space-y-1.5">
                              <label className={UI.label}>Success Narrative</label>
-                             <textarea value={data.careers?.success?.description || ""} onChange={(e) => updateCareers("success", "description", e.target.value)} rows={3} className={UI.textarea} placeholder="Detailed success message..." />
+                             <RichTextEditor 
+                               content={data.careers?.success?.description || ""} 
+                               onChange={(val) => updateCareers("success", "description", val)} 
+                             />
                           </div>
                        </div>
                     </div>

@@ -47,6 +47,7 @@ import {
   GlobeIcon
 } from 'lucide-react';
 import React from 'react';
+import RichTextRenderer from "../ui/RichTextRenderer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -159,9 +160,10 @@ const StatsSection = () => {
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-2 sm:mb-4 px-2">
             {statsData.headline}
           </h2>
-          <p className="text-xs sm:text-sm md:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto px-3 sm:px-4">
-            {statsData.description}
-          </p>
+          <RichTextRenderer 
+            content={statsData.description} 
+            className="text-xs sm:text-sm md:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto px-3 sm:px-4"
+          />
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
@@ -242,9 +244,10 @@ const Hero = () => {
               {hero.headline?.line3}
             </h1>
 
-            <p className="text-muted-foreground text-lg sm:text-lg md:text-lg lg:text-xl xl:text-2xl max-w-xl mx-auto lg:mx-0 mb-6 sm:mb-8 font-medium leading-relaxed px-2 sm:px-0">
-              {hero.description}
-            </p>
+            <RichTextRenderer 
+              content={hero.description} 
+              className="text-muted-foreground text-lg sm:text-lg md:text-lg lg:text-xl xl:text-2xl max-w-xl mx-auto lg:mx-0 mb-6 sm:mb-8 font-medium leading-relaxed px-2 sm:px-0"
+            />
 
             <div className="flex flex-row gap-3 sm:gap-4 justify-center lg:justify-start items-center">
               <Link href={hero.ctaLink || "/contact"} className="w-full sm:w-auto">
@@ -475,9 +478,10 @@ const FounderStory = () => {
             {story.headline?.replace(story.highlight || '', '')} <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80">{story.highlight}</span>
           </h2>
 
-          <p className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl font-light max-w-2xl mx-auto px-3 sm:px-4">
-            {story.description}
-          </p>
+          <RichTextRenderer 
+            content={story.description} 
+            className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl font-light max-w-2xl mx-auto px-3 sm:px-4 text-center"
+          />
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 xl:gap-20 items-start">
@@ -498,23 +502,22 @@ const FounderStory = () => {
                 <div className="absolute -left-2 sm:-left-4 -top-2 text-primary/20">
                   <Icon name="Quote" className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
                 </div>
-                <p className="text-foreground text-base sm:text-lg md:text-xl font-medium leading-relaxed pl-4 sm:pl-6 md:pl-8">
-                  &ldquo;{story.founder?.quote}&rdquo;
-                </p>
+                <RichTextRenderer 
+                  content={story.founder?.quote} 
+                  className="text-foreground text-base sm:text-lg md:text-xl font-medium leading-relaxed pl-4 sm:pl-6 md:pl-8"
+                />
               </div>
 
-              <div className="mt-6 sm:mt-8 space-y-3 sm:space-y-4 md:space-y-5">
-                {(story.founder?.bio || []).map((paragraph: string, i: number) => (
-                  <p key={i} className="text-muted-foreground text-sm sm:text-base md:text-lg leading-relaxed">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+              <RichTextRenderer 
+                content={story.founder?.bio} 
+                className="mt-6 sm:mt-8 space-y-4"
+              />
 
               <blockquote className="border-l-4 border-primary pl-3 sm:pl-4 md:pl-6 py-2 my-6 sm:my-8">
-                <p className="text-sm sm:text-base md:text-lg font-medium text-foreground italic">
-                  "{story.founder?.secondaryQuote}"
-                </p>
+                <RichTextRenderer 
+                  content={story.founder?.secondaryQuote} 
+                  className="text-sm sm:text-base md:text-lg font-medium text-foreground italic"
+                />
                 <footer className="mt-2 sm:mt-3 font-bold text-[10px] sm:text-xs text-primary uppercase tracking-widest">
                   {story.founder?.footer}
                 </footer>
@@ -580,7 +583,10 @@ const MissionSection = () => {
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">{mission.headline}</h2>
               <motion.div initial={{ width: 0 }} animate={inView ? { width: 60 } : {}} className="h-[2px] bg-primary mt-3 sm:mt-4 mx-auto lg:mx-0" />
             </div>
-            <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-6 sm:mb-8 px-2 sm:px-0">{mission.description}</p>
+            <RichTextRenderer 
+              content={mission.description} 
+              className="text-sm sm:text-base md:text-lg text-muted-foreground mb-6 sm:mb-8 px-2 sm:px-0"
+            />
             <div className="flex gap-4 sm:gap-6 justify-center lg:justify-start">
               {(mission.stats || []).map((stat: any, i: number) => (
                 <div key={i} className="text-center">
@@ -601,7 +607,10 @@ const MissionSection = () => {
                     <span className="text-[10px] sm:text-xs text-muted-foreground">{item.val}</span>
                   </div>
                   <h3 className="text-base sm:text-lg md:text-xl font-bold mb-1 sm:mb-2">{item.title}</h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground">{item.desc}</p>
+                  <RichTextRenderer 
+                    content={item.desc} 
+                    className="text-xs sm:text-sm text-muted-foreground"
+                  />
                 </motion.div>
               );
             })}
@@ -701,7 +710,10 @@ const ServicesSection = () => {
             {capabilities.headline || "Our Capabilities"}
           </h2>
           <div className="w-24 h-1 bg-primary mx-auto rounded-full mb-6" />
-          <p className="max-w-3xl mx-auto text-muted-foreground text-lg md:text-xl leading-relaxed">{capabilities.description}</p>
+          <RichTextRenderer 
+            content={capabilities.description} 
+            className="max-w-3xl mx-auto text-muted-foreground text-lg md:text-xl leading-relaxed"
+          />
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 relative z-30">
           {servicesList.map((service: any, index: number) => (
@@ -736,7 +748,10 @@ const AwardCTABanner = () => {
           <h3 className="text-3xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
             {ctaBanner.headline?.replace(ctaBanner.highlight || '', '')} <span className="text-primary">{ctaBanner.highlight}</span>
           </h3>
-          <p className="text-muted-foreground text-lg leading-relaxed max-w-lg mx-auto lg:mx-0">{ctaBanner.description}</p>
+          <RichTextRenderer 
+            content={ctaBanner.description} 
+            className="text-muted-foreground text-lg leading-relaxed max-w-lg mx-auto lg:mx-0"
+          />
           <div className="flex flex-wrap justify-center lg:justify-start items-center gap-4 mt-6">
             {(ctaBanner.features || []).map((feature: string, i: number) => (
               <div key={i} className="flex items-center gap-2">
@@ -768,7 +783,10 @@ const ValuesGrid = () => {
             {valuesData.headline?.replace(valuesData.highlight || '', '')} <br />
             <span className="bg-gradient-to-r from-primary to-primary/95 bg-clip-text text-transparent">{valuesData.highlight}</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{valuesData.description}</p>
+          <RichTextRenderer 
+            content={valuesData.description} 
+            className="text-muted-foreground text-lg max-w-2xl mx-auto"
+          />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {(valuesData.items || []).map((value: any, idx: number) => {
@@ -779,7 +797,10 @@ const ValuesGrid = () => {
                   <VIcon className="w-8 h-8 text-muted-foreground group-hover:text-primary transition-colors" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">{value.title}</h3>
-                <p className="text-muted-foreground mb-6">{value.description}</p>
+                <RichTextRenderer 
+                  content={value.description} 
+                  className="text-muted-foreground mb-6"
+                />
                 <div className="pt-6 border-t border-border/50 flex items-center justify-between">
                   <span className="text-xs text-muted-foreground uppercase tracking-widest">{value.statLabel}</span>
                   <span className="text-2xl font-bold text-primary">{value.stat}</span>

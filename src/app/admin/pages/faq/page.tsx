@@ -4,6 +4,11 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Save, Loader2, Type, ChevronRight, HelpCircle, Plus } from "lucide-react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-40 bg-slate-50 animate-pulse border border-slate-200 rounded-2xl flex items-center justify-center text-slate-400 text-xs">Loading Rich Text Editor...</div>
+});
 
 export default function FAQPageEditor() {
   const [data, setData] = useState<any>(null);
@@ -119,12 +124,9 @@ export default function FAQPageEditor() {
 
           <div className="space-y-2">
             <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Page Description</label>
-            <textarea
-              rows={4}
-              value={data.faqPage?.description || ""}
-              onChange={(e) => updatePage("description", e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all shadow-inner leading-relaxed"
-              placeholder="Provide a brief overview of what this page covers..."
+            <RichTextEditor 
+              content={data.faqPage?.description || ""} 
+              onChange={(v) => updatePage("description", v)} 
             />
           </div>
         </div>
@@ -150,12 +152,9 @@ export default function FAQPageEditor() {
             </div>
             <div className="space-y-2">
               <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">CTA Description</label>
-              <textarea
-                rows={2}
-                value={data.faqPage?.ctaDescription || ""}
-                onChange={(e) => updatePage("ctaDescription", e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 font-medium focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-inner leading-relaxed"
-                placeholder="e.g. Our team is ready to provide the detailed answers you need..."
+              <RichTextEditor 
+                content={data.faqPage?.ctaDescription || ""} 
+                onChange={(v) => updatePage("ctaDescription", v)} 
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

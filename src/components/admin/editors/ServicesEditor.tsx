@@ -9,7 +9,12 @@ import {
   ArrowRight, Zap, Globe, ShieldCheck, Building2, Droplets, Building,
   Home, Layout, TreePine, TrendingUp, BadgeCheck, Sparkles, Box, PenTool as Tool
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import ContentSelector from "@/components/admin/ContentSelector";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 import { UI } from "./styles";
 
 export default function ServicesEditor({ pageId, data, setData }: { pageId: string, data: any, setData: (d: any) => void }) {
@@ -112,10 +117,11 @@ export default function ServicesEditor({ pageId, data, setData }: { pageId: stri
                       <input type="text" value={data.services?.headline?.suffix || ""} onChange={(e) => updateServices("headline", "suffix", e.target.value)} className={UI.input} placeholder="Suffix Text" />
                     </div>
                   </div>
-                  <div className="space-y-1.5">
-                    <label className={UI.label}>Page Narrative</label>
-                    <textarea value={data.services?.description || ""} onChange={(e) => updateServices(null, "description", e.target.value)} rows={4} className={UI.textarea} />
-                  </div>
+                  <RichTextEditor 
+                    label="Page Narrative" 
+                    content={data.services?.description || ""} 
+                    onChange={(html) => updateServices(null, "description", html)} 
+                  />
                 </div>
               </div>
             )}

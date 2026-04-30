@@ -14,6 +14,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useContent } from "../hooks/useContent";
 import { useRouter } from "next/navigation";
+import RichTextRenderer from "./ui/RichTextRenderer";
 
 // Rename window import to avoid conflict with global window object
 import commercialroof from "../assets/COMMERCIAL ROOFS-20260414T184732Z-3-001/COMMERCIAL ROOFS/croof1.jpg";
@@ -188,9 +189,10 @@ const MarqueeItem = ({ project }: { project: Project }) => {
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="overflow-hidden"
               >
-                <p className="text-white/90 text-[8px] sm:text-[10px] leading-relaxed mb-1 sm:mb-2 line-clamp-2">
-                  {project.desc}
-                </p>
+                <RichTextRenderer 
+                  content={project.desc} 
+                  className="text-white/90 text-[8px] sm:text-[10px] leading-relaxed mb-1 sm:mb-2 line-clamp-2"
+                />
                 <div className="flex items-center justify-between">
                   <div className="hidden xs:block">
                     <span className="text-white/50 text-[6px] sm:text-[8px] uppercase">

@@ -5,6 +5,7 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Icon } from "../../config/icons";
 import { useContent } from "../../hooks/useContent";
 import Image from "next/image";
+import RichTextRenderer from "../ui/RichTextRenderer";
 
 const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&h=450&fit=crop&q=80";
 const GOOGLE_MAPS_REVIEW_URL = "https://maps.app.goo.gl/PbvRBs4tJsDAJVMy6";
@@ -41,7 +42,9 @@ const TestimonialCard = ({ testimonial, index, onPlay }: any) => {
                     <svg key={i} className="w-4 h-4 text-yellow-500 fill-yellow-500" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z" /></svg>
                 ))}
             </div>
-            <p className="text-gray-700 dark:text-foreground/80 text-sm sm:text-base leading-relaxed mb-6 line-clamp-5">"{testimonial.text}"</p>
+            <div className="text-gray-700 dark:text-foreground/80 text-sm sm:text-base leading-relaxed mb-6 line-clamp-5 italic">
+                <RichTextRenderer content={testimonial.text} />
+            </div>
             <div className="flex items-center justify-between pt-5 border-t border-gray-100">
                 <div>
                     <h4 className="font-semibold text-gray-900 dark:text-foreground text-sm">{testimonial.name}</h4>
@@ -61,7 +64,9 @@ export default function ReviewsTemplate({ pageData, params }: { pageData?: any, 
         <main className="relative min-h-screen bg-gray-50 dark:bg-background pt-24 pb-16">
             <div className="max-w-6xl mx-auto px-4 text-center">
                 <h1 className="text-4xl sm:text-7xl font-bold tracking-tight mb-4" dangerouslySetInnerHTML={{ __html: section?.headline || 'Customer Stories' }} />
-                <p className="text-lg text-gray-600 max-w-xl mx-auto mb-12">{section?.description}</p>
+                <div className="text-lg text-gray-600 max-w-xl mx-auto mb-12">
+                    <RichTextRenderer content={section?.description} />
+                </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
                     {testimonials.map((item: any, i: number) => (

@@ -6,6 +6,11 @@ import { Save, Loader2, Settings, LayoutTemplate, Type, Image as ImageIcon, Chev
 import Link from "next/link";
 import * as LucideIcons from "lucide-react";
 import ImageField from "@/components/admin/ImageField";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-20 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 
 const COMMON_ICONS = [
   "Home", "Info", "Briefcase", "Phone", "Mail", "MapPin", "Shield", "Star", "Check", "Award",
@@ -306,7 +311,10 @@ export default function SettingsEditor() {
                   <input type="text" value={data.footer?.company?.name || ""} onChange={(e) => updateData("footer", "company", { ...data.footer.company, name: e.target.value })} className="w-full max-w-md border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]" />
                </SettingsRow>
                <SettingsRow label="Footer Description">
-                  <textarea rows={3} value={data.footer?.company?.description || ""} onChange={(e) => updateData("footer", "company", { ...data.footer.company, description: e.target.value })} className="w-full max-w-md border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]" />
+                  <RichTextEditor 
+                    content={data.footer?.company?.description || ""} 
+                    onChange={(v) => updateData("footer", "company", { ...data.footer.company, description: v })} 
+                  />
                </SettingsRow>
                <SettingsRow label="Marquee Text" description="Add messages for the scrolling bottom bar.">
                   <div className="space-y-2">

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, MapPin, Calendar, Star } from "lucide-react";
 import { useContent } from "../../hooks/useContent";
+import RichTextRenderer from "../ui/RichTextRenderer";
 
 // ---------- Image map: keys match galleryPage.projects[].image ----------
 import deck2a from "../../assets/outdoor-sitting-desk.png";
@@ -78,7 +79,10 @@ const Lightbox = ({ project, onClose }: { project: any; onClose: () => void }) =
             {project.category}
           </span>
         </div>
-        <p className="text-muted-foreground text-sm leading-relaxed mb-4">{project.desc}</p>
+        <RichTextRenderer 
+          content={project.desc} 
+          className="text-muted-foreground text-sm leading-relaxed mb-4" 
+        />
         <div className="flex items-center gap-4 text-sm text-muted-foreground">
           {project.location && (
             <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> {project.location}</span>
@@ -173,14 +177,16 @@ export default function GalleryTemplate({ pageData, params }: { pageData?: any; 
         >
           {galleryPage?.header?.title || "Project Gallery"}
         </motion.h1>
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-muted-foreground text-lg max-w-2xl mx-auto"
         >
-          {galleryPage?.header?.description || "Browse our completed projects across St. Louis."}
-        </motion.p>
+          <RichTextRenderer 
+            content={galleryPage?.header?.description || "Browse our completed projects across St. Louis."} 
+            className="text-muted-foreground text-lg max-w-2xl mx-auto"
+          />
+        </motion.div>
       </div>
 
       {/* Category Filter */}

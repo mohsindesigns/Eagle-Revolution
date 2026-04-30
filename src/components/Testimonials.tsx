@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Icon } from "../config/icons";
 import { useContent } from "../hooks/useContent";
+import RichTextRenderer from "./ui/RichTextRenderer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -47,9 +48,9 @@ const TestimonialCard = ({ testimonial, isActive }: { testimonial: any; isActive
         </div>
 
         <div className="flex-1 mb-6 overflow-y-auto pr-2 custom-scrollbar">
-          <p className="text-foreground/90 text-lg lg:text-xl leading-relaxed font-light">
-            "{testimonial.text}"
-          </p>
+          <div className="text-foreground/90 text-lg lg:text-xl leading-relaxed font-light italic">
+            <RichTextRenderer content={testimonial.text} />
+          </div>
         </div>
 
         <div className="flex items-center justify-between gap-4 mt-auto pt-4 border-t border-primary/10">
@@ -258,9 +259,9 @@ const Testimonials = () => {
             {section.headline}
           </h2>
 
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            {section.description}
-          </p>
+          <div className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+            <RichTextRenderer content={section.description} />
+          </div>
 
           <div className="flex items-center justify-center gap-3 mt-6">
             <div className="flex items-center gap-2 px-3 py-1.5 bg-card/50 rounded-full border border-primary/10">

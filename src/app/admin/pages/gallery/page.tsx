@@ -4,6 +4,11 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Save, Loader2, Type, ChevronRight, Image as ImageIcon, Plus } from "lucide-react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-40 bg-slate-50 animate-pulse border border-slate-200 rounded-2xl flex items-center justify-center text-slate-400 text-xs">Loading Rich Text Editor...</div>
+});
 
 export default function GalleryPageEditor() {
   const [data, setData] = useState<any>(null);
@@ -125,12 +130,9 @@ export default function GalleryPageEditor() {
 
           <div className="space-y-2">
             <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Page Description</label>
-            <textarea
-              rows={4}
-              value={data.galleryPage?.header?.description || ""}
-              onChange={(e) => updateHeader("description", e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 font-medium focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-inner leading-relaxed"
-              placeholder="e.g. Browse our completed projects across St. Louis."
+            <RichTextEditor 
+              content={data.galleryPage?.header?.description || ""} 
+              onChange={(v) => updateHeader("description", v)} 
             />
           </div>
         </div>

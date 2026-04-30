@@ -22,6 +22,7 @@ import {
 import { notFound } from 'next/navigation';
 import breakcrumb from '@/assets/Breadcrumb-Image.jpeg';
 import { useContent } from "../../hooks/useContent";
+import RichTextRenderer from "../ui/RichTextRenderer";
 
 import roofingImg from '@/assets/roof1.jpg.jpeg';
 import windowsImg from '@/assets/window5.jpeg';
@@ -163,7 +164,10 @@ const ProcessCard = ({ step, index }: { step: any, index: number }) => {
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary/50">Phase {String(index + 1).padStart(2, '0')}</span>
         </div>
         <h3 className="text-xl sm:text-2xl font-bold mb-4 group-hover:text-primary transition-colors">{step.title}</h3>
-        <p className="text-muted-foreground text-sm sm:text-base leading-relaxed flex-1">{step.description}</p>
+        <RichTextRenderer 
+          content={step.description} 
+          className="text-muted-foreground text-sm sm:text-base leading-relaxed flex-1"
+        />
       </div>
     </motion.div>
   );
@@ -184,7 +188,10 @@ const BenefitCard = ({ benefit, index }: { benefit: any, index: number }) => {
         <Icon className="w-6 h-6" />
       </div>
       <h3 className="text-xl font-bold mb-3">{benefit.title}</h3>
-      <p className="text-muted-foreground text-sm leading-relaxed">{benefit.description}</p>
+      <RichTextRenderer 
+        content={benefit.description} 
+        className="text-muted-foreground text-sm leading-relaxed"
+      />
     </motion.div>
   );
 };
@@ -289,7 +296,10 @@ export default function ServiceDetailTemplate({ pageData, params: syncParams }: 
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <h2 className="text-3xl sm:text-6xl font-bold mb-8 leading-tight">{service.overviewTitle || "Craftsmanship Without Compromise."}</h2>
-            <p className="text-lg text-muted-foreground mb-10 leading-relaxed whitespace-pre-line">{service.overview}</p>
+            <RichTextRenderer 
+              content={service.overview} 
+              className="text-lg text-muted-foreground mb-10 leading-relaxed"
+            />
             <div className="grid sm:grid-cols-2 gap-6 mb-12">
               {features.map((f: any, i: number) => {
                 const Icon = iconMap[f.icon] || CheckCircle;

@@ -5,6 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Save, Loader2, LayoutTemplate, Type, Image as ImageIcon, ChevronRight, Star, Phone, Plus, Trash2, Mail } from "lucide-react";
 import Link from "next/link";
 import ImageField from "@/components/admin/ImageField";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 
 export default function HomeEditor() {
   const [data, setData] = useState<any>(null);
@@ -156,11 +161,9 @@ export default function HomeEditor() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-wider text-slate-500 font-bold">Description</label>
-                    <textarea
-                      rows={2}
-                      value={data.hero?.description || ""}
-                      onChange={(e) => updateSection("hero", "description", e.target.value)}
-                      className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none shadow-sm transition-all"
+                    <RichTextEditor 
+                      content={data.hero?.description || ""} 
+                      onChange={(v) => updateSection("hero", "description", v)} 
                     />
                   </div>
                 </div>
@@ -369,11 +372,9 @@ export default function HomeEditor() {
                 <div className="space-y-4 pt-4 border-t border-gray-200">
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-wider text-slate-500 font-bold">Description</label>
-                    <textarea
-                      rows={4}
-                      value={data.about?.description || ""}
-                      onChange={(e) => updateSection("about", "description", e.target.value)}
-                      className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none shadow-sm transition-all"
+                    <RichTextEditor 
+                      content={data.about?.description || ""} 
+                      onChange={(v) => updateSection("about", "description", v)} 
                     />
                   </div>
                   <div className="space-y-2">
@@ -583,13 +584,10 @@ export default function HomeEditor() {
                     <div className="space-y-2">
                       <label className="text-xs uppercase tracking-widest text-gray-500 font-bold flex justify-between">
                         <span>Description Paragraphs</span>
-                        <span className="text-gray-400 lowercase font-normal italic">Hit enter for a new paragraph</span>
                       </label>
-                      <textarea
-                        rows={5}
-                        value={(data.services?.description || []).join('\n')}
-                        onChange={(e) => updateSection("services", "description", e.target.value.split('\n').filter(Boolean))}
-                        className="w-full bg-white border border-gray-200 rounded-xl px-4 py-4 text-gray-900 text-sm leading-relaxed focus:border-primary/50 focus:outline-none resize-y min-h-[120px]"
+                      <RichTextEditor 
+                        content={(data.services?.description || []).join("")} 
+                        onChange={(v) => updateSection("services", "description", [v])} 
                       />
                     </div>
                   </div>
@@ -680,11 +678,9 @@ export default function HomeEditor() {
                     </div>
                     <div className="space-y-2 md:col-span-2">
                       <label className="text-xs uppercase tracking-widest text-gray-500 font-bold">Description Text</label>
-                      <textarea
-                        rows={2}
-                        value={data.services?.cta?.description || ""}
-                        onChange={(e) => setData((prev: any) => ({ ...prev, services: { ...prev.services, cta: { ...prev.services.cta, description: e.target.value } } }))}
-                        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none shadow-sm transition-all"
+                      <RichTextEditor 
+                        content={data.services?.cta?.description || ""} 
+                        onChange={(v) => setData((prev: any) => ({ ...prev, services: { ...prev.services, cta: { ...prev.services.cta, description: v } } }))} 
                       />
                     </div>
                     <div className="space-y-2 md:col-span-2">
@@ -736,11 +732,9 @@ export default function HomeEditor() {
                     </div>
                     <div className="space-y-2 md:col-span-2">
                       <label className="text-xs uppercase tracking-widest text-gray-500 font-bold">Section Paragraph</label>
-                      <textarea
-                        rows={2}
-                        value={data.leadership?.section?.description || ""}
-                        onChange={(e) => setData((prev: any) => ({ ...prev, leadership: { ...prev.leadership, section: { ...prev.leadership.section, description: e.target.value } } }))}
-                        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none shadow-sm transition-all"
+                      <RichTextEditor 
+                        content={data.leadership?.section?.description || ""} 
+                        onChange={(v) => setData((prev: any) => ({ ...prev, leadership: { ...prev.leadership, section: { ...prev.leadership.section, description: v } } }))} 
                       />
                     </div>
                   </div>
@@ -845,24 +839,19 @@ export default function HomeEditor() {
                         <span>Founder Quotes</span>
                         <span className="text-gray-400 lowercase font-normal italic">Hit enter for a new quote</span>
                       </label>
-                      <textarea
-                        rows={3}
-                        value={(data.leadership?.ceo?.quotes || []).join('\n')}
-                        onChange={(e) => setData((prev: any) => ({ ...prev, leadership: { ...prev.leadership, ceo: { ...prev.leadership.ceo, quotes: e.target.value.split('\n').filter(Boolean) } } }))}
-                        className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 text-lg font-medium leading-relaxed focus:border-primary/50 focus:outline-none"
-                      />
+                       <RichTextEditor 
+                         content={(data.leadership?.ceo?.quotes || []).join("")} 
+                         onChange={(v) => setData((prev: any) => ({ ...prev, leadership: { ...prev.leadership, ceo: { ...prev.leadership.ceo, quotes: [v] } } }))} 
+                       />
                     </div>
 
                     <div className="space-y-2">
                       <label className="text-xs uppercase tracking-widest text-gray-500 font-bold flex justify-between">
                         <span>Complete Description</span>
-                        <span className="text-gray-400 lowercase font-normal italic">Hit enter for a new paragraph</span>
                       </label>
-                      <textarea
-                        rows={5}
-                        value={(data.leadership?.ceo?.description || []).join('\n')}
-                        onChange={(e) => setData((prev: any) => ({ ...prev, leadership: { ...prev.leadership, ceo: { ...prev.leadership.ceo, description: e.target.value.split('\n').filter(Boolean) } } }))}
-                        className="w-full bg-white border border-gray-200 rounded-xl px-4 py-4 text-gray-900 text-sm leading-relaxed focus:border-primary/50 focus:outline-none"
+                      <RichTextEditor 
+                        content={(data.leadership?.ceo?.description || []).join("")} 
+                        onChange={(v) => setData((prev: any) => ({ ...prev, leadership: { ...prev.leadership, ceo: { ...prev.leadership.ceo, description: [v] } } }))} 
                       />
                     </div>
                   </div>
@@ -1069,11 +1058,9 @@ export default function HomeEditor() {
                     </div>
                     <div className="space-y-2 md:col-span-2">
                       <label className="text-xs uppercase tracking-widest text-gray-500 font-bold">Section Paragraph</label>
-                      <textarea
-                        rows={2}
-                        value={data.testimonials?.section?.description || ""}
-                        onChange={(e) => setData((prev: any) => ({ ...prev, testimonials: { ...prev.testimonials, section: { ...prev.testimonials.section, description: e.target.value } } }))}
-                        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none shadow-sm transition-all"
+                      <RichTextEditor 
+                        content={data.testimonials?.section?.description || ""} 
+                        onChange={(v) => setData((prev: any) => ({ ...prev, testimonials: { ...prev.testimonials, section: { ...prev.testimonials.section, description: v } } }))} 
                       />
                     </div>
                   </div>
@@ -1145,11 +1132,9 @@ export default function HomeEditor() {
                     </div>
                     <div className="space-y-2 md:col-span-2">
                       <label className="text-xs uppercase tracking-widest text-gray-500 font-bold">Description</label>
-                      <textarea
-                        rows={2}
-                        value={data.whyChooseUs?.section?.description || ""}
-                        onChange={(e) => setData((prev: any) => ({ ...prev, whyChooseUs: { ...prev.whyChooseUs, section: { ...prev.whyChooseUs.section, description: e.target.value } } }))}
-                        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none shadow-sm transition-all"
+                      <RichTextEditor 
+                        content={data.whyChooseUs?.section?.description || ""} 
+                        onChange={(v) => setData((prev: any) => ({ ...prev, whyChooseUs: { ...prev.whyChooseUs, section: { ...prev.whyChooseUs.section, description: v } } }))} 
                       />
                     </div>
                   </div>
@@ -1221,15 +1206,13 @@ export default function HomeEditor() {
                           </div>
                           <div>
                             <label className="text-[10px] uppercase text-gray-500 font-bold">Description</label>
-                            <textarea
-                              rows={2}
-                              value={feature.description}
-                              onChange={(e) => {
+                            <RichTextEditor 
+                              content={feature.description || ""} 
+                              onChange={(v) => {
                                 const newFeatures = [...data.whyChooseUs.features];
-                                newFeatures[idx].description = e.target.value;
+                                newFeatures[idx].description = v;
                                 setData((prev: any) => ({ ...prev, whyChooseUs: { ...prev.whyChooseUs, features: newFeatures } }));
-                              }}
-                              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:border-primary/50 focus:outline-none"
+                              }} 
                             />
                           </div>
                         </div>
@@ -1339,11 +1322,9 @@ export default function HomeEditor() {
                     </div>
                     <div className="space-y-2">
                       <label className="text-xs uppercase tracking-widest text-gray-500 font-bold">Description</label>
-                      <textarea
-                        rows={2}
-                        value={data.whyChooseUs?.cta?.description || ""}
-                        onChange={(e) => setData((prev: any) => ({ ...prev, whyChooseUs: { ...prev.whyChooseUs, cta: { ...prev.whyChooseUs.cta, description: e.target.value } } }))}
-                        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none shadow-sm transition-all"
+                      <RichTextEditor 
+                        content={data.whyChooseUs?.cta?.description || ""} 
+                        onChange={(v) => setData((prev: any) => ({ ...prev, whyChooseUs: { ...prev.whyChooseUs, cta: { ...prev.whyChooseUs.cta, description: v } } }))} 
                       />
                     </div>
 
@@ -1420,11 +1401,9 @@ export default function HomeEditor() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-wider text-slate-500 font-bold">Section Description</label>
-                    <textarea
-                      rows={3}
-                      value={data.quote?.section?.description || ""}
-                      onChange={(e) => setData((prev: any) => ({ ...prev, quote: { ...(prev.quote || {}), section: { ...(prev.quote?.section || {}), description: e.target.value } } }))}
-                      className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none shadow-sm transition-all"
+                    <RichTextEditor 
+                      content={data.quote?.section?.description || ""} 
+                      onChange={(v) => setData((prev: any) => ({ ...prev, quote: { ...(prev.quote || {}), section: { ...(prev.quote?.section || {}), description: v } } }))} 
                     />
                   </div>
                   <div className="space-y-2 pt-4 border-t border-gray-100">
@@ -1479,17 +1458,14 @@ export default function HomeEditor() {
 
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Section Paragraph</label>
-                    <textarea
-                      rows={4}
-                      value={data.faq?.section?.description || ""}
-                      onChange={(e) => {
+                    <RichTextEditor 
+                      content={data.faq?.section?.description || ""} 
+                      onChange={(v) => {
                         setData((prev: any) => ({
                           ...prev,
-                          faq: { ...prev.faq, section: { ...prev.faq.section, description: e.target.value } }
+                          faq: { ...prev.faq, section: { ...prev.faq.section, description: v } }
                         }));
-                      }}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 font-medium focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-inner leading-relaxed"
-                      placeholder="Find answers to common questions about our services..."
+                      }} 
                     />
                   </div>
                 </div>

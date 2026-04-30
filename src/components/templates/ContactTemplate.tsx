@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useContent } from "../../hooks/useContent";
 import { Icon } from "../../config/icons";
+import RichTextRenderer from "../ui/RichTextRenderer";
 
 const HolographicInput = ({ icon: IconName, label, type = "text", ...props }: any) => {
     const [isFocused, setIsFocused] = useState(false);
@@ -113,9 +114,9 @@ export default function ContactTemplate() {
                         <h1 className="text-4xl sm:text-6xl font-light text-foreground mb-6 leading-tight">
                             {headline}
                         </h1>
-                        <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                            {description}
-                        </p>
+                        <div className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                            <RichTextRenderer content={description} />
+                        </div>
                     </motion.div>
                 </div>
 

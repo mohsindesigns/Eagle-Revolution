@@ -4,6 +4,11 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Save, Loader2, Phone, ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-40 bg-white animate-pulse border border-gray-200 rounded-xl flex items-center justify-center text-gray-400 text-xs">Loading Rich Text Editor...</div>
+});
 
 export default function ContactEditor() {
     const [data, setData] = useState<any>(null);
@@ -105,12 +110,9 @@ export default function ContactEditor() {
 
                         <div className="space-y-2">
                             <label className="text-xs uppercase tracking-widest text-slate-400 font-bold">Section Paragraph</label>
-                            <textarea
-                                rows={4}
-                                value={data.contactPage?.header?.description || ""}
-                                onChange={(e) => setData((prev: any) => ({ ...prev, contactPage: { ...(prev.contactPage || {}), header: { ...(prev.contactPage?.header || {}), description: e.target.value } } }))}
-                                placeholder="e.g. We'd love to hear from you..."
-                                className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 text-sm focus:border-primary/50 focus:outline-none transition-all shadow-inner"
+                            <RichTextEditor 
+                                content={data.contactPage?.header?.description || ""} 
+                                onChange={(v) => setData((prev: any) => ({ ...prev, contactPage: { ...(prev.contactPage || {}), header: { ...(prev.contactPage?.header || {}), description: v } } }))} 
                             />
                         </div>
                     </div>

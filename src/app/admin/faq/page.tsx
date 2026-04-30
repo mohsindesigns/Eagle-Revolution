@@ -4,6 +4,11 @@ import { useState, useEffect } from "react";
 import { Plus, Pencil, Trash2, Loader2, HelpCircle, Save, X, ChevronRight, Globe, Layers, ListFilter } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 
 export default function FAQAdminPage() {
   const [data, setData] = useState<any>(null);
@@ -135,7 +140,10 @@ export default function FAQAdminPage() {
                  />
                  <div className="space-y-1">
                     <label className="text-[13px] font-bold">Answer</label>
-                    <textarea rows={8} value={form.answer} onChange={(e) => setForm({ ...form, answer: e.target.value })} className="w-full border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]" />
+                    <RichTextEditor 
+                      content={form.answer} 
+                      onChange={(val) => setForm({ ...form, answer: val })} 
+                    />
                  </div>
               </div>
            </div>

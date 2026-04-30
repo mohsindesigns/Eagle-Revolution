@@ -8,7 +8,12 @@ import {
   List, Heart, HelpCircle, Check, Target, Award, Shield, 
   ArrowRight, MessageSquare, Filter, BookOpen, Sparkles
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import ContentSelector from "@/components/admin/ContentSelector";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 import { UI } from "./styles";
 
 export default function FAQEditor({ pageId, data, setData }: { pageId: string, data: any, setData: (d: any) => void }) {
@@ -102,10 +107,11 @@ export default function FAQEditor({ pageId, data, setData }: { pageId: string, d
                        <label className={UI.label}>Main Headline</label>
                        <input type="text" value={data.faq?.section?.headline || ""} onChange={(e) => updateFAQ("section", "headline", e.target.value)} className={UI.inputLarge} />
                     </div>
-                    <div className="space-y-1.5">
-                       <label className={UI.label}>Knowledge Intro Narrative</label>
-                       <textarea value={data.faq?.section?.description || ""} onChange={(e) => updateFAQ("section", "description", e.target.value)} rows={4} className={UI.textarea} />
-                    </div>
+                    <RichTextEditor 
+                        label="Knowledge Intro Narrative" 
+                        content={data.faq?.section?.description || ""} 
+                        onChange={(html) => updateFAQ("section", "description", html)} 
+                    />
                  </div>
               </div>
             )}

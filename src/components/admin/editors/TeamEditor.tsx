@@ -9,7 +9,12 @@ import {
   ArrowRight, Users, Linkedin, Sparkles, Quote, UserPlus, X
 } from "lucide-react";
 import { UI } from "./styles";
+import dynamic from "next/dynamic";
 import ImageField from "@/components/admin/ImageField";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 
 
 export default function TeamEditor({ pageId, data, setData }: { pageId: string, data: any, setData: (d: any) => void }) {
@@ -99,10 +104,11 @@ export default function TeamEditor({ pageId, data, setData }: { pageId: string, 
                        <label className={UI.label}>Main Headline</label>
                        <input type="text" value={data.team?.section?.headline || ""} onChange={(e) => updateTeam("section", "headline", e.target.value)} className={UI.inputLarge} placeholder="Expert hands with Visionary minds" />
                     </div>
-                    <div className="space-y-1.5">
-                       <label className={UI.label}>Intro Narrative</label>
-                       <textarea value={data.team?.section?.description || ""} onChange={(e) => updateTeam("section", "description", e.target.value)} rows={4} className={UI.textarea} />
-                    </div>
+                    <RichTextEditor 
+                        label="Intro Narrative" 
+                        content={data.team?.section?.description || ""} 
+                        onChange={(html) => updateTeam("section", "description", html)} 
+                    />
                  </div>
               </div>
             )}
@@ -156,24 +162,11 @@ export default function TeamEditor({ pageId, data, setData }: { pageId: string, 
                                   </div>
                                </div>
 
-                               <div className="space-y-4 border-t border-[#f0f0f1] pt-6">
-                                  <label className={UI.label}>Biography Paragraphs</label>
-                                  <div className="space-y-3">
-                                     {(member.description || []).map((desc: string, j: number) => (
-                                       <div key={j} className="flex gap-2">
-                                          <textarea value={desc} onChange={(e) => {
-                                              const newM = [...data.team.members]; newM[i].description[j] = e.target.value; updateTeam("members", null, newM);
-                                            }} rows={3} className={UI.textarea} />
-                                          <button onClick={() => {
-                                             const newM = [...data.team.members]; newM[i].description = member.description.filter((_: any, idx: number) => idx !== j); updateTeam("members", null, newM);
-                                          }} className="text-slate-400 hover:text-[#d63638] self-start"><X className="w-4 h-4" /></button>
-                                       </div>
-                                     ))}
-                                     <button onClick={() => {
-                                         const newM = [...data.team.members]; newM[i].description = [...(member.description || []), ""]; updateTeam("members", null, newM);
-                                       }} className="text-[10px] font-bold text-[#2271b1] uppercase hover:underline">+ Add Bio Segment</button>
-                                  </div>
-                               </div>
+                               <RichTextEditor 
+                                  label="Biography" 
+                                  content={typeof member.description === 'string' ? member.description : (member.description || []).join("")} 
+                                  onChange={(html) => { const newM = [...data.team.members]; newM[i].description = html; updateTeam("members", null, newM); }} 
+                               />
 
                                <div className="space-y-4 border-t border-[#f0f0f1] pt-6">
                                   <div className="space-y-1.5">

@@ -4,6 +4,11 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Save, Loader2, Type, ChevronRight, Users, Plus, Trash2, Image as ImageIcon, Briefcase, Quote, Star } from "lucide-react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-40 bg-slate-50 animate-pulse border border-slate-200 rounded-2xl flex items-center justify-center text-slate-400 text-xs">Loading Rich Text Editor...</div>
+});
 import ImageField from "@/components/admin/ImageField";
 
 export default function TeamPageEditor() {
@@ -201,12 +206,9 @@ export default function TeamPageEditor() {
 
           <div className="space-y-2">
             <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Section Description</label>
-            <textarea
-              rows={3}
-              value={data.team?.section?.description || ""}
-              onChange={(e) => updateSection("description", e.target.value)}
-              className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 font-medium focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-inner leading-relaxed"
-              placeholder="Describe your team's philosophy..."
+            <RichTextEditor 
+              content={data.team?.section?.description || ""} 
+              onChange={(v) => updateSection("description", v)} 
             />
           </div>
         </section>
@@ -312,47 +314,16 @@ export default function TeamPageEditor() {
                       </button>
                     </div>
 
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
+                      <div className="space-y-4">
                         <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold flex items-center gap-2">
                           <Quote className="w-4 h-4" />
                           Biography / Story
                         </label>
-                        <button 
-                          onClick={() => addParagraph(mIdx)}
-                          className="text-[10px] font-bold text-primary hover:underline flex items-center gap-1 uppercase"
-                        >
-                          <Plus className="w-3 h-3" /> Add Paragraph
-                        </button>
+                        <RichTextEditor 
+                          content={typeof member.description === 'string' ? member.description : (member.description || []).join("")} 
+                          onChange={(v) => updateMember(mIdx, "description", v)} 
+                        />
                       </div>
-                      
-                      <div className="space-y-4">
-                        {member.description?.map((para: string, pIdx: number) => (
-                          <div key={pIdx} className="relative group/p">
-                            <textarea
-                              rows={3}
-                              value={para}
-                              onChange={(e) => updateMemberDescription(mIdx, pIdx, e.target.value)}
-                              className={`w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-700 font-medium focus:ring-2 focus:ring-primary/20 outline-none transition-all leading-relaxed ${
-                                para.startsWith('"') ? "italic font-bold text-slate-900" : ""
-                              }`}
-                              placeholder={pIdx === 0 ? "First paragraph..." : "Additional details..."}
-                            />
-                            {member.description.length > 1 && (
-                              <button
-                                onClick={() => removeParagraph(mIdx, pIdx)}
-                                className="absolute -right-3 -top-3 w-8 h-8 bg-white border border-slate-200 rounded-full flex items-center justify-center text-red-500 opacity-0 group-hover/p:opacity-100 transition-all shadow-lg hover:bg-red-50"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </button>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                      <p className="text-[10px] text-slate-400 italic">
-                        Tip: Start a paragraph with a quote mark (") to render it in high-contrast italic style.
-                      </p>
-                    </div>
                   </div>
                 </div>
               </motion.div>

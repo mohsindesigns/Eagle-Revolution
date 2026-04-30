@@ -11,6 +11,7 @@ import { Icon } from "../config/icons";
 import { useContent } from "../hooks/useContent";
 import Image from "next/image";
 import Link from "next/link";
+import RichTextRenderer from "./ui/RichTextRenderer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -406,18 +407,17 @@ const SuccessModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                 {success.title}
               </motion.h3>
 
-              <motion.p
+              <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
                 className="text-muted-foreground text-xs sm:text-sm leading-relaxed"
               >
-                {success.message}
-                <br />
+                <RichTextRenderer content={success.message} className="mb-2" />
                 <span className="font-medium text-primary mt-2 block">
-                  {success.response}
+                  <RichTextRenderer content={success.response} />
                 </span>
-              </motion.p>
+              </motion.div>
 
               <motion.button
                 initial={{ opacity: 0, y: 10 }}

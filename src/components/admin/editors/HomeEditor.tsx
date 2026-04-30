@@ -8,9 +8,14 @@ import {
   CheckCircle2, List, HelpCircle, Mail, Briefcase, 
   ChevronRight, X
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import ContentSelector from "@/components/admin/ContentSelector";
 import IconSelector from "@/components/admin/IconSelector";
 import ImageField from "@/components/admin/ImageField";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 import { UI } from "./styles";
 
 export default function HomeEditor({ pageId, data, setData }: { pageId: string, data: any, setData: (d: any) => void }) {
@@ -106,10 +111,13 @@ export default function HomeEditor({ pageId, data, setData }: { pageId: string, 
                      <button onClick={() => updateSection("hero", "headlines", [...(data.hero?.headlines || []), { text: "", highlight: false }])} className={UI.buttonAdd}>+ Add Line</button>
                   </div>
                </div>
-               <div className="space-y-6">
-                  <h3 className={UI.sectionHeader}>3. Description</h3>
-                  <textarea value={data.hero?.description} onChange={(e) => updateSection("hero", "description", e.target.value)} rows={6} className={UI.textarea} />
-               </div>
+                <div className="space-y-6">
+                   <RichTextEditor 
+                      label="3. Description Narrative" 
+                      content={data.hero?.description || ""} 
+                      onChange={(html) => updateSection("hero", "description", html)} 
+                   />
+                </div>
                <div className="space-y-6">
                   <h3 className={UI.sectionHeader}>4. Buttons</h3>
                   <div className="space-y-4">
@@ -163,7 +171,11 @@ export default function HomeEditor({ pageId, data, setData }: { pageId: string, 
                </div>
                <div className="space-y-6">
                   <h3 className={UI.sectionHeader}>2. Brand Narrative</h3>
-                  <textarea value={data.about?.description || ""} onChange={(e) => updateSection("about", "description", e.target.value)} rows={10} className={UI.textarea} />
+                  <RichTextEditor 
+                     label="2. Brand Narrative" 
+                     content={data.about?.description || ""} 
+                     onChange={(html) => updateSection("about", "description", html)} 
+                  />
                </div>
                <div className="space-y-6">
                   <h3 className={UI.sectionHeader}>3. Action Buttons</h3>
@@ -239,16 +251,11 @@ export default function HomeEditor({ pageId, data, setData }: { pageId: string, 
                      <input type="text" value={data.services?.headline?.highlight} onChange={(e) => updateSection("services", "headline", { ...data.services.headline, highlight: e.target.value })} className={UI.input + " font-bold border-[#2271b1]"} />
                      <input type="text" value={data.services?.headline?.suffix} onChange={(e) => updateSection("services", "headline", { ...data.services.headline, suffix: e.target.value })} className={UI.input} />
                   </div>
-                  <div className="space-y-4">
-                     <label className={UI.label}>Description Paragraphs</label>
-                     {(Array.isArray(data.services?.description) ? data.services.description : (data.services?.description ? [data.services.description] : [])).map((p: string, i: number) => (
-                        <div key={i} className="flex gap-2">
-                           <textarea value={p} onChange={(e) => { const newD = Array.isArray(data.services?.description) ? [...data.services.description] : [data.services?.description || ""]; newD[i] = e.target.value; updateSection("services", "description", newD); }} rows={3} className={UI.textarea} />
-                           <button onClick={() => { const newD = Array.isArray(data.services?.description) ? data.services.description.filter((_: any, idx: number) => idx !== i) : []; updateSection("services", "description", newD); }} className="text-[#d63638]"><Trash2 className="w-4 h-4" /></button>
-                        </div>
-                     ))}
-                     <button onClick={() => updateSection("services", "description", [...(Array.isArray(data.services?.description) ? data.services.description : (data.services?.description ? [data.services.description] : [])), ""])} className="text-[#2271b1] text-[12px] font-bold uppercase">+ Add Paragraph</button>
-                  </div>
+                  <RichTextEditor 
+                     label="Description Narrative" 
+                     content={Array.isArray(data.services?.description) ? data.services.description.join("") : (data.services?.description || "")} 
+                     onChange={(html) => updateSection("services", "description", html)} 
+                  />
                </div>
                <div className="space-y-6">
                   <h3 className={UI.sectionHeader}>2. Metrics</h3>
@@ -277,7 +284,11 @@ export default function HomeEditor({ pageId, data, setData }: { pageId: string, 
                   <h3 className={UI.sectionHeader}>1. Narrative</h3>
                   <div className="space-y-1.5"><label className={UI.label}>Badge</label><input type="text" value={data.whyChooseUs?.section?.badge} onChange={(e) => updateSection("whyChooseUs", "section", { ...data.whyChooseUs.section, badge: e.target.value })} className={UI.input} /></div>
                   <div className="space-y-1.5"><label className={UI.label}>Headline</label><input type="text" value={data.whyChooseUs?.section?.headline} onChange={(e) => updateSection("whyChooseUs", "section", { ...data.whyChooseUs.section, headline: e.target.value })} className={UI.inputLarge} /></div>
-                  <div className="space-y-1.5"><label className={UI.label}>Intro</label><textarea value={data.whyChooseUs?.section?.description} onChange={(e) => updateSection("whyChooseUs", "section", { ...data.whyChooseUs.section, description: e.target.value })} rows={4} className={UI.textarea} /></div>
+                  <RichTextEditor 
+                     label="Intro Narrative" 
+                     content={data.whyChooseUs?.section?.description || ""} 
+                     onChange={(html) => updateSection("whyChooseUs", "section", { ...data.whyChooseUs.section, description: html })} 
+                  />
                </div>
                <div className="space-y-8">
                   <h3 className={UI.sectionHeader}>2. Features</h3>
@@ -290,7 +301,11 @@ export default function HomeEditor({ pageId, data, setData }: { pageId: string, 
                            </div>
                            <IconSelector label="Icon" value={f.icon} onChange={(val) => { const newF = [...data.whyChooseUs.features]; newF[i].icon = val; updateSection("whyChooseUs", "features", newF); }} />
                            <input type="text" value={f.title} onChange={(e) => { const newF = [...data.whyChooseUs.features]; newF[i].title = e.target.value; updateSection("whyChooseUs", "features", newF); }} className={UI.input + " font-bold"} placeholder="Title" />
-                           <textarea value={f.description} onChange={(e) => { const newF = [...data.whyChooseUs.features]; newF[i].description = e.target.value; updateSection("whyChooseUs", "features", newF); }} rows={3} className={UI.textarea} placeholder="Description" />
+                           <RichTextEditor 
+                              label="Feature Detail" 
+                              content={f.description} 
+                              onChange={(html) => { const newF = [...data.whyChooseUs.features]; newF[i].description = html; updateSection("whyChooseUs", "features", newF); }} 
+                           />
                         </div>
                      ))}
                      <button onClick={() => updateSection("whyChooseUs", "features", [...(data.whyChooseUs?.features || []), { title: "", description: "", icon: "Star" }])} className={UI.buttonAdd}>+ Add Feature</button>
@@ -361,7 +376,11 @@ export default function HomeEditor({ pageId, data, setData }: { pageId: string, 
                    <h3 className={UI.sectionHeader}>1. Header</h3>
                    <div className="space-y-1.5"><label className={UI.label}>Badge</label><input type="text" value={data.faq?.section?.badge} onChange={(e) => updateSection("faq", "section", { ...data.faq.section, badge: e.target.value })} className={UI.input} /></div>
                    <div className="space-y-1.5"><label className={UI.label}>Headline</label><input type="text" value={data.faq?.section?.headline} onChange={(e) => updateSection("faq", "section", { ...data.faq.section, headline: e.target.value })} className={UI.inputLarge} /></div>
-                   <div className="space-y-1.5"><label className={UI.label}>Intro</label><textarea value={data.faq?.section?.description} onChange={(e) => updateSection("faq", "section", { ...data.faq.section, description: e.target.value })} rows={3} className={UI.textarea} /></div>
+                   <RichTextEditor 
+                      label="Intro Narrative" 
+                      content={data.faq?.section?.description || ""} 
+                      onChange={(html) => updateSection("faq", "section", { ...data.faq.section, description: html })} 
+                   />
                 </div>
                 <div className="space-y-6">
                    <h3 className={UI.sectionHeader}>2. Questions</h3>
@@ -377,13 +396,23 @@ export default function HomeEditor({ pageId, data, setData }: { pageId: string, 
                    <h3 className={UI.sectionHeader}>1. Narrative</h3>
                    <div className="space-y-1.5"><label className={UI.label}>Badge</label><input type="text" value={data.quote?.section?.badge} onChange={(e) => updateSection("quote", "section", { ...data.quote.section, badge: e.target.value })} className={UI.input} /></div>
                    <div className="space-y-1.5"><label className={UI.label}>Headline</label><input type="text" value={data.quote?.section?.headline} onChange={(e) => updateSection("quote", "section", { ...data.quote.section, headline: e.target.value })} className={UI.inputLarge} /></div>
-                   <div className="space-y-1.5"><label className={UI.label}>Intro</label><textarea value={data.quote?.section?.description} onChange={(e) => updateSection("quote", "section", { ...data.quote.section, description: e.target.value })} rows={4} className={UI.textarea} /></div>
+                   <RichTextEditor 
+                      label="Intro Narrative" 
+                      content={data.quote?.section?.description || ""} 
+                      onChange={(html) => updateSection("quote", "section", { ...data.quote.section, description: html })} 
+                   />
                 </div>
                 <div className="space-y-6">
                    <h3 className={UI.sectionHeader}>2. Success State</h3>
                    <div className={UI.card + " space-y-4"}>
                       <div className="space-y-1.5"><label className={UI.label}>Title</label><input type="text" value={data.quote?.success?.title} onChange={(e) => updateSection("quote", "success", { ...data.quote.success, title: e.target.value })} className={UI.input} /></div>
-                      <div className="space-y-1.5"><label className={UI.label}>Message</label><textarea value={data.quote?.success?.message} onChange={(e) => updateSection("quote", "success", { ...data.quote.success, message: e.target.value })} rows={3} className={UI.textarea} /></div>
+                      <div className="space-y-1.5">
+                         <label className={UI.label}>Message</label>
+                         <RichTextEditor 
+                            content={data.quote?.success?.message || ""} 
+                            onChange={(html) => updateSection("quote", "success", { ...data.quote.success, message: html })} 
+                         />
+                      </div>
                       <div className="space-y-1.5"><label className={UI.label}>Button Text</label><input type="text" value={data.quote?.success?.buttonText} onChange={(e) => updateSection("quote", "success", { ...data.quote.success, buttonText: e.target.value })} className={UI.input} /></div>
                    </div>
                 </div>

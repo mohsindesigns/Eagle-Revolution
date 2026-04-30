@@ -16,6 +16,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import ImageField from "@/components/admin/ImageField";
 import SeoEditor from "@/components/admin/SeoEditor";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 
 const ICON_LIST = [
   "Home", "Layout", "Building2", "Building", "Droplets", "Shield", "ShieldCheck", 
@@ -239,7 +244,10 @@ export default function ServicesAdminPage() {
                         </div>
                         <div className="space-y-1">
                            <label className="text-[13px] font-bold">Short Description (Card View)</label>
-                           <textarea rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]" />
+                           <RichTextEditor 
+                             content={form.description} 
+                             onChange={(v) => setForm({ ...form, description: v })} 
+                           />
                         </div>
                       </div>
                     )}
@@ -259,7 +267,10 @@ export default function ServicesAdminPage() {
                          <ImageField label="Section Image" value={form.overviewImage || ""} onChange={(v) => setForm({ ...form, overviewImage: v })} />
                          <div className="space-y-1">
                             <label className="text-[13px] font-bold">Overview Detailed Text</label>
-                            <textarea rows={5} value={form.overview} onChange={(e) => setForm({ ...form, overview: e.target.value })} className="w-full border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]" />
+                            <RichTextEditor 
+                              content={form.overview} 
+                              onChange={(v) => setForm({ ...form, overview: v })} 
+                            />
                          </div>
                       </div>
                     )}
@@ -281,7 +292,10 @@ export default function ServicesAdminPage() {
                              {form.benefits?.map((b:any, i:number) => (
                                 <div key={i} className="bg-[#f6f7f7] border border-[#c3c4c7] p-3 space-y-2">
                                    <input placeholder="Title" value={b.title} onChange={(e) => { const nb = [...form.benefits]; nb[i].title = e.target.value; setForm({...form, benefits: nb}); }} className="w-full border border-[#8c8f94] px-2 py-1 text-xs" />
-                                   <textarea placeholder="Description" rows={2} value={b.description} onChange={(e) => { const nb = [...form.benefits]; nb[i].description = e.target.value; setForm({...form, benefits: nb}); }} className="w-full border border-[#8c8f94] px-2 py-1 text-xs" />
+                                   <RichTextEditor 
+                                     content={b.description} 
+                                     onChange={(v) => { const nb = [...form.benefits]; nb[i].description = v; setForm({...form, benefits: nb}); }} 
+                                   />
                                    <button onClick={() => { const nb = form.benefits.filter((_:any,idx:number)=>idx!==i); setForm({...form, benefits: nb}); }} className="text-[#d63638] text-xs">Remove Benefit</button>
                                 </div>
                              ))}
@@ -297,7 +311,10 @@ export default function ServicesAdminPage() {
                                 <div className="w-8 h-8 bg-[#2271b1] text-white rounded-full flex items-center justify-center shrink-0 text-xs font-bold">{i+1}</div>
                                 <div className="flex-1 space-y-2">
                                    <input value={step.title} onChange={(e) => { const np = [...form.process]; np[i].title = e.target.value; setForm({...form, process: np}); }} placeholder="Step Title" className="w-full border border-[#8c8f94] px-2 py-1 text-xs font-bold" />
-                                   <textarea value={step.description} onChange={(e) => { const np = [...form.process]; np[i].description = e.target.value; setForm({...form, process: np}); }} placeholder="Description" rows={2} className="w-full border border-[#8c8f94] px-2 py-1 text-xs" />
+                                   <RichTextEditor 
+                                     content={step.description} 
+                                     onChange={(v) => { const np = [...form.process]; np[i].description = v; setForm({...form, process: np}); }} 
+                                   />
                                    <button onClick={() => { const np = form.process.filter((_:any,idx:number)=>idx!==i); setForm({...form, process: np}); }} className="text-[#d63638] text-xs">Remove Step</button>
                                 </div>
                              </div>
@@ -311,7 +328,10 @@ export default function ServicesAdminPage() {
                           {form.faq?.map((item:any, i:number) => (
                              <div key={i} className="bg-white border border-[#c3c4c7] p-4 space-y-3 shadow-sm">
                                 <input value={item.question} onChange={(e) => { const nf = [...form.faq]; nf[i].question = e.target.value; setForm({...form, faq: nf}); }} placeholder="Question" className="w-full border border-[#8c8f94] px-2 py-1 text-xs font-bold" />
-                                <textarea value={item.answer} onChange={(e) => { const nf = [...form.faq]; nf[i].answer = e.target.value; setForm({...form, faq: nf}); }} placeholder="Answer" rows={3} className="w-full border border-[#8c8f94] px-2 py-1 text-xs" />
+                                <RichTextEditor 
+                                  content={item.answer} 
+                                  onChange={(v) => { const nf = [...form.faq]; nf[i].answer = v; setForm({...form, faq: nf}); }} 
+                                />
                                 <button onClick={() => { const nf = form.faq.filter((_:any,idx:number)=>idx!==i); setForm({...form, faq: nf}); }} className="text-[#d63638] text-xs">Remove FAQ</button>
                              </div>
                           ))}

@@ -12,6 +12,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Icon } from "../config/icons";
 import { useContent } from "../hooks/useContent";
+import RichTextRenderer from "./ui/RichTextRenderer";
 import brandonImg from "@/assets/ownerupdatedimage.jpeg";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -241,9 +242,10 @@ const Leadership = () => {
             dangerouslySetInnerHTML={{ __html: section.headline }}
           />
 
-          <p className="text-muted-foreground text-lg md:text-xl font-light max-w-2xl mx-auto">
-            {section.description}
-          </p>
+          <RichTextRenderer 
+            content={section.description} 
+            className="text-muted-foreground text-lg md:text-xl font-light max-w-2xl mx-auto"
+          />
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-start">
@@ -271,13 +273,10 @@ const Leadership = () => {
                 ))}
               </div>
 
-              <div className="mt-8 space-y-5">
-                {ceo.description.map((desc: string, idx: number) => (
-                  <p key={idx} className="text-muted-foreground text-base md:text-lg leading-relaxed">
-                    {desc}
-                  </p>
-                ))}
-              </div>
+              <RichTextRenderer 
+                content={ceo.description} 
+                className="mt-8 space-y-4"
+              />
 
               <div className="flex flex-wrap items-center gap-4 mt-10 pt-4 border-t border-border">
                 {(ceo.socials || []).map((social: any, idx: number) => (

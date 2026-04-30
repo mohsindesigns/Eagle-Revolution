@@ -5,6 +5,11 @@ import { Plus, Pencil, Trash2, Loader2, Folder, Image as ImageIcon, ChevronRight
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import ImageField from "@/components/admin/ImageField";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 
 export default function ProjectsAdminPage() {
   const [data, setData] = useState<any>(null);
@@ -130,7 +135,10 @@ export default function ProjectsAdminPage() {
 
                     <div className="space-y-1">
                        <label className="text-[13px] font-bold">Project Description</label>
-                       <textarea rows={6} value={form.desc} onChange={(e) => setForm({ ...form, desc: e.target.value })} className="w-full border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]" />
+                       <RichTextEditor 
+                         content={form.desc} 
+                         onChange={(val) => setForm({ ...form, desc: val })} 
+                       />
                     </div>
                  </div>
               </div>

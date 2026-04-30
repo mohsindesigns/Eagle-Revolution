@@ -13,6 +13,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Icon } from "../config/icons";
 import { useContent } from "../hooks/useContent";
 import Link from "next/link";
+import RichTextRenderer from "./ui/RichTextRenderer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -318,9 +319,10 @@ const AccordionItem = ({ item, index, isOpen, onToggle }: { item: any; index: nu
             >
               <div className="px-7 md:px-9 pb-7 md:pb-9">
                 <div className="relative pl-6 border-l-2 border-primary/20">
-                  <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-5">
-                    {item.answer}
-                  </p>
+                  <RichTextRenderer 
+                    content={item.answer} 
+                    className="text-muted-foreground text-sm md:text-base leading-relaxed mb-5"
+                  />
 
                   {Array.isArray(item.metadata) && item.metadata.length > 0 && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
@@ -593,9 +595,10 @@ const FAQ = ({ currentPage = "home", hideHeader = false }: { currentPage?: strin
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-foreground mb-4">
               {section.title || section.headline}
             </h2>
-            <p className="text-muted-foreground text-base md:text-lg">
-              {section.description}
-            </p>
+            <RichTextRenderer 
+              content={section.description} 
+              className="text-muted-foreground text-base md:text-lg"
+            />
             <div className="w-16 h-0.5 bg-gradient-to-r from-primary to-primary/60 mx-auto mt-6 rounded-full" />
           </div>
         )}

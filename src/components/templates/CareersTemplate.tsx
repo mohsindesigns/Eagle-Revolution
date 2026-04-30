@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Upload, Send, Briefcase, FileText, User, Mail, Phone, CheckCircle, ArrowRight } from 'lucide-react';
 import { useContent } from "../../hooks/useContent";
+import RichTextRenderer from '../ui/RichTextRenderer';
 
 const Images = {
   Pattern: "https://images.unsplash.com/photo-1502691876148-a84978e59af8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
@@ -82,7 +83,9 @@ export default function CareersTemplate({ pageData, params }: { pageData?: any, 
               {careersData?.section?.headline?.split('with')[0]} <br />
               <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-900">{careersData?.section?.headline?.split('with')[1]}</span>
             </motion.h1>
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-slate-600 text-lg md:text-xl font-light max-w-2xl mx-auto px-4">{careersData?.section?.description}</motion.p>
+            <div className="text-slate-600 text-lg md:text-xl font-light max-w-2xl mx-auto px-4">
+              <RichTextRenderer content={careersData?.section?.description} />
+            </div>
           </div>
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
             <div className="relative bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-2xl overflow-hidden border border-white">
@@ -90,7 +93,9 @@ export default function CareersTemplate({ pageData, params }: { pageData?: any, 
                 <div className="p-8 md:p-16 text-center flex flex-col items-center justify-center min-h-[400px]">
                   <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6"><CheckCircle className="w-10 h-10 text-green-600" /></div>
                   <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">{careersData?.success?.title}</h2>
-                  <p className="text-lg text-slate-600 max-w-md mx-auto">{careersData?.success?.description}</p>
+                  <div className="text-lg text-slate-600 max-w-md mx-auto">
+                    <RichTextRenderer content={careersData?.success?.description} />
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="p-8 md:p-16 space-y-10">

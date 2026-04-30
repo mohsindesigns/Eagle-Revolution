@@ -11,6 +11,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Icon } from "../config/icons";
 import { useContent } from "../hooks/useContent";
 import Link from "next/link";
+import RichTextRenderer from "./ui/RichTextRenderer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -344,11 +345,10 @@ const FeatureCard = ({ feature, index }: { feature: any; index: number }) => {
                         />
                     </div>
 
-                    <motion.p
+                    <RichTextRenderer 
+                        content={feature.description} 
                         className="text-sm md:text-base text-muted-foreground leading-relaxed flex-1"
-                    >
-                        {feature.description}
-                    </motion.p>
+                    />
 
                     <motion.div
                         className="absolute bottom-4 right-4 text-7xl font-black text-muted-foreground/20 select-none"
@@ -562,9 +562,10 @@ const AwardCTABanner = () => {
                             dangerouslySetInnerHTML={{ __html: cta.title }}
                         />
 
-                        <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-lg">
-                            {cta.description}
-                        </p>
+                        <RichTextRenderer 
+                            content={cta.description} 
+                            className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-lg"
+                        />
 
                         <div className="flex items-center gap-6 mt-6">
                             {cta.trustBadges.map((badge: string, i: number) => (
@@ -672,9 +673,10 @@ const WhyChooseUs = () => {
                             dangerouslySetInnerHTML={{ __html: section.headline }}
                         />
 
-                        <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-                            {section.description}
-                        </p>
+                        <RichTextRenderer 
+                            content={section.description} 
+                            className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto"
+                        />
                     </motion.div>
                 </header>
 

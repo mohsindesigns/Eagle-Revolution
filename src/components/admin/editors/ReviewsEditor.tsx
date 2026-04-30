@@ -5,7 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Loader2, Type, Quote
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import ContentSelector from "@/components/admin/ContentSelector";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 import { UI } from "./styles";
 
 export default function ReviewsEditor({ data, setData }: { pageId: string, data: any, setData: (d: any) => void }) {
@@ -97,10 +102,11 @@ export default function ReviewsEditor({ data, setData }: { pageId: string, data:
                        <label className={UI.label}>Main Headline</label>
                        <input type="text" value={data.testimonials?.section?.headline || ""} onChange={(e) => updateTestimonials("section", "headline", e.target.value)} className={UI.inputLarge} />
                     </div>
-                    <div className="space-y-1.5">
-                       <label className={UI.label}>Intro Narrative</label>
-                       <textarea value={data.testimonials?.section?.description || ""} onChange={(e) => updateTestimonials("section", "description", e.target.value)} rows={4} className={UI.textarea} />
-                    </div>
+                    <RichTextEditor 
+                        label="Intro Narrative" 
+                        content={data.testimonials?.section?.description || ""} 
+                        onChange={(html) => updateTestimonials("section", "description", html)} 
+                    />
                  </div>
 
                  <div className="space-y-6">

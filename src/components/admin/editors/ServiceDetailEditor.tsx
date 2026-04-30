@@ -8,9 +8,14 @@ import {
   Check, Target, Award, Shield, ArrowRight, 
   Settings, Info, Box, TrendingUp, X
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import ContentSelector from "@/components/admin/ContentSelector";
 import IconSelector from "@/components/admin/IconSelector";
 import ImageField from "@/components/admin/ImageField";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 import { UI } from "./styles";
 
 export default function ServiceDetailEditor({ pageId, data, setData }: { pageId: string, data: any, setData: (d: any) => void }) {
@@ -114,10 +119,11 @@ export default function ServiceDetailEditor({ pageId, data, setData }: { pageId:
                         <label className={UI.label}>Headline</label>
                         <input type="text" value={data.overviewTitle || ""} onChange={(e) => updateField("overviewTitle", e.target.value)} className={UI.input + " font-bold"} />
                       </div>
-                      <div className="space-y-1.5">
-                        <label className={UI.label}>Long Description</label>
-                        <textarea value={data.overview || ""} onChange={(e) => updateField("overview", e.target.value)} rows={8} className={UI.textarea} />
-                      </div>
+                      <RichTextEditor 
+                        label="Long Description" 
+                        content={data.overview || ""} 
+                        onChange={(html) => updateField("overview", html)} 
+                      />
                     </div>
                   </div>
                 </div>
@@ -228,12 +234,11 @@ export default function ServiceDetailEditor({ pageId, data, setData }: { pageId:
                                   const newB = [...data.benefits]; newB[i].title = e.target.value; updateField("benefits", newB);
                                }} className={UI.inputLarge} />
                             </div>
-                            <div className="space-y-1.5">
-                               <label className={UI.label}>Narrative</label>
-                               <textarea value={b.description} onChange={(e) => {
-                                  const newB = [...data.benefits]; newB[i].description = e.target.value; updateField("benefits", newB);
-                               }} className={UI.textarea} rows={4} />
-                            </div>
+                             <RichTextEditor 
+                                label="Narrative" 
+                                content={b.description} 
+                                onChange={(html) => { const newB = [...data.benefits]; newB[i].description = html; updateField("benefits", newB); }} 
+                             />
                          </div>
                       </div>
                     ))}
@@ -268,12 +273,11 @@ export default function ServiceDetailEditor({ pageId, data, setData }: { pageId:
                                  const newP = [...data.process]; newP[i].title = e.target.value; updateField("process", newP);
                                }} className={UI.input + " font-bold"} />
                             </div>
-                            <div className="space-y-1.5">
-                               <label className={UI.label}>Process Details</label>
-                               <textarea value={p.description} onChange={(e) => {
-                                  const newP = [...data.process]; newP[i].description = e.target.value; updateField("process", newP);
-                               }} className={UI.textarea} rows={3} />
-                            </div>
+                             <RichTextEditor 
+                                label="Process Details" 
+                                content={p.description} 
+                                onChange={(html) => { const newP = [...data.process]; newP[i].description = html; updateField("process", newP); }} 
+                             />
                          </div>
                       </div>
                     ))}

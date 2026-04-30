@@ -6,6 +6,7 @@ import { Icon } from "../config/icons";
 import { useContent } from "../hooks/useContent";
 import Image from "next/image";
 import Link from "next/link";
+import RichTextRenderer from "./ui/RichTextRenderer";
 
 import bgfair from "../assets/bgfair.jpg";
 
@@ -143,14 +144,17 @@ const Hero = () => {
                 ))}
               </h1>
 
-              <motion.p
-                className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed"
+              <motion.div
+                className="max-w-2xl mx-auto lg:mx-0 mb-8"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
-                {description}
-              </motion.p>
+                <RichTextRenderer 
+                  content={description} 
+                  className="text-base sm:text-lg md:text-xl text-white/80 leading-relaxed" 
+                />
+              </motion.div>
 
               <motion.div
                 className="mb-10 w-full"

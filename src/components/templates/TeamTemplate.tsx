@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import { useContent } from "../../hooks/useContent";
+import RichTextRenderer from "../ui/RichTextRenderer";
 import {
   motion,
   useScroll,
@@ -152,7 +153,9 @@ export default function TeamTemplate({ pageData, params }: { pageData?: any, par
               {teamData?.section?.headline?.split('with')[0]} <br />
               <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-950">{teamData?.section?.headline?.split('with')[1]}</span>
             </h1>
-            <p className="text-slate-500 text-[13px] min-[350px]:text-sm sm:text-lg font-light max-w-2xl mx-auto px-4 leading-relaxed">{teamData?.section?.description}</p>
+            <div className="text-slate-500 text-[13px] min-[350px]:text-sm sm:text-lg font-light max-w-2xl mx-auto px-4 leading-relaxed">
+              <RichTextRenderer content={teamData?.section?.description} />
+            </div>
           </div>
           {teamData?.members?.map((member: any, index: number) => {
             const alignRight = index % 2 !== 0;
@@ -167,9 +170,7 @@ export default function TeamTemplate({ pageData, params }: { pageData?: any, par
                     <div className="mt-8 relative">
                       <div className="absolute -left-3 sm:-left-6 -top-4 text-blue-100/60 scale-[1.2] sm:scale-[1.8] pointer-events-none"><Icons.Quote /></div>
                       <div className="space-y-4 text-slate-600 text-[13px] sm:text-lg leading-relaxed relative z-10">
-                        {member.description.map((paragraph: string, i: number) => (
-                          <p key={i} className={paragraph.startsWith('"') || paragraph.startsWith('\"') ? "italic font-medium text-slate-700" : ""}>{paragraph}</p>
-                        ))}
+                        <RichTextRenderer content={member.description} />
                       </div>
                     </div>
                   </div>
