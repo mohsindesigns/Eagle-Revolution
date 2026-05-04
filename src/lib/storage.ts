@@ -5,10 +5,23 @@ import path from 'path';
  * Universal upload function that handles both local and Cloudinary storage
  */
 export async function uploadFile(file: File, buffer: Buffer): Promise<{ url: string; publicId?: string }> {
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
-  const apiKey = process.env.CLOUDINARY_API_KEY;
-  const apiSecret = process.env.CLOUDINARY_API_SECRET;
+  let cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+  let apiKey = process.env.CLOUDINARY_API_KEY;
+  let apiSecret = process.env.CLOUDINARY_API_SECRET;
   const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET;
+  const cloudinaryUrl = process.env.CLOUDINARY_URL;
+
+  // Parse CLOUDINARY_URL if provided
+  if (cloudinaryUrl && !cloudName) {
+    try {
+      const url = new URL(cloudinaryUrl);
+      cloudName = url.hostname;
+      apiKey = url.username;
+      apiSecret = url.password;
+    } catch (err) {
+      console.error('Failed to parse CLOUDINARY_URL');
+    }
+  }
 
   // Use Cloudinary if configured
   if (cloudName && (uploadPreset || (apiKey && apiSecret))) {
@@ -16,11 +29,22 @@ export async function uploadFile(file: File, buffer: Buffer): Promise<{ url: str
       const formData = new FormData();
       formData.append('file', new Blob([buffer], { type: file.type }));
       
+      let endpoint = `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`;
+      
       if (uploadPreset) {
         formData.append('upload_preset', uploadPreset);
+      } else if (apiKey && apiSecret) {
+        // Signed upload
+        const timestamp = Math.round(new Date().getTime() / 1000).toString();
+        formData.append('timestamp', timestamp);
+        formData.append('api_key', apiKey);
+        
+        // Generate signature
+        const { createHash } = await import('crypto');
+        const signatureStr = `timestamp=${timestamp}${apiSecret}`;
+        const signature = createHash('sha1').update(signatureStr).digest('hex');
+        formData.append('signature', signature);
       }
-      
-      const endpoint = `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`;
       
       const res = await fetch(endpoint, {
         method: 'POST',
