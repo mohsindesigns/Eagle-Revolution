@@ -139,6 +139,18 @@ export default function ServicesAdminPage() {
   };
 
   const handleEdit = (idx: number) => {
+    const s = filteredServices[idx];
+    const originalIdx = services.findIndex(orig => orig.id === s.id);
+    setForm({
+      ...s,
+      features: s.features || [],
+      stats: s.stats || [],
+      benefits: s.benefits || [],
+      process: s.process || [],
+      faq: s.faq || []
+    });
+    setSeo(s.seo || {});
+    setIsEditing(originalIdx);
     setActiveTab("general");
   };
 
@@ -281,8 +293,8 @@ export default function ServicesAdminPage() {
                              <div className="flex justify-between items-center"><h3 className="text-sm font-bold">Service Stats</h3><button onClick={() => setForm({ ...form, stats: [...(form.stats || []), { value: "", label: "", icon: "Star" }] })} className="text-[#2271b1] text-xs underline">+ Add Stat</button></div>
                              {form.stats?.map((s:any, i:number) => (
                                 <div key={i} className="flex gap-2 bg-[#f6f7f7] p-2 border border-[#c3c4c7]">
-                                   <input placeholder="Value" value={s.value} onChange={(e) => { const ns = [...form.stats]; ns[i].value = e.target.value; setForm({...form, stats: ns}); }} className="w-20 border border-[#8c8f94] px-2 py-1 text-xs" />
-                                   <input placeholder="Label" value={s.label} onChange={(e) => { const ns = [...form.stats]; ns[i].label = e.target.value; setForm({...form, stats: ns}); }} className="flex-1 border border-[#8c8f94] px-2 py-1 text-xs" />
+                                   <input placeholder="Value" value={s.value} onChange={(e) => { const ns = [...form.stats]; ns[i] = { ...ns[i], value: e.target.value }; setForm({...form, stats: ns}); }} className="w-20 border border-[#8c8f94] px-2 py-1 text-xs" />
+                                   <input placeholder="Label" value={s.label} onChange={(e) => { const ns = [...form.stats]; ns[i] = { ...ns[i], label: e.target.value }; setForm({...form, stats: ns}); }} className="flex-1 border border-[#8c8f94] px-2 py-1 text-xs" />
                                    <button onClick={() => { const ns = form.stats.filter((_:any,idx:number)=>idx!==i); setForm({...form, stats: ns}); }} className="text-[#d63638] text-xs">Remove</button>
                                 </div>
                              ))}
@@ -291,10 +303,10 @@ export default function ServicesAdminPage() {
                              <div className="flex justify-between items-center"><h3 className="text-sm font-bold">Key Benefits</h3><button onClick={() => setForm({ ...form, benefits: [...(form.benefits || []), { title: "", description: "", icon: "Shield" }] })} className="text-[#2271b1] text-xs underline">+ Add Benefit</button></div>
                              {form.benefits?.map((b:any, i:number) => (
                                 <div key={i} className="bg-[#f6f7f7] border border-[#c3c4c7] p-3 space-y-2">
-                                   <input placeholder="Title" value={b.title} onChange={(e) => { const nb = [...form.benefits]; nb[i].title = e.target.value; setForm({...form, benefits: nb}); }} className="w-full border border-[#8c8f94] px-2 py-1 text-xs" />
+                                   <input placeholder="Title" value={b.title} onChange={(e) => { const nb = [...form.benefits]; nb[i] = { ...nb[i], title: e.target.value }; setForm({...form, benefits: nb}); }} className="w-full border border-[#8c8f94] px-2 py-1 text-xs" />
                                    <RichTextEditor 
                                      content={b.description} 
-                                     onChange={(v) => { const nb = [...form.benefits]; nb[i].description = v; setForm({...form, benefits: nb}); }} 
+                                     onChange={(v) => { const nb = [...form.benefits]; nb[i] = { ...nb[i], description: v }; setForm({...form, benefits: nb}); }} 
                                    />
                                    <button onClick={() => { const nb = form.benefits.filter((_:any,idx:number)=>idx!==i); setForm({...form, benefits: nb}); }} className="text-[#d63638] text-xs">Remove Benefit</button>
                                 </div>
@@ -310,10 +322,10 @@ export default function ServicesAdminPage() {
                              <div key={i} className="bg-[#f6f7f7] border border-[#c3c4c7] p-4 flex gap-4">
                                 <div className="w-8 h-8 bg-[#2271b1] text-white rounded-full flex items-center justify-center shrink-0 text-xs font-bold">{i+1}</div>
                                 <div className="flex-1 space-y-2">
-                                   <input value={step.title} onChange={(e) => { const np = [...form.process]; np[i].title = e.target.value; setForm({...form, process: np}); }} placeholder="Step Title" className="w-full border border-[#8c8f94] px-2 py-1 text-xs font-bold" />
+                                   <input value={step.title} onChange={(e) => { const np = [...form.process]; np[i] = { ...np[i], title: e.target.value }; setForm({...form, process: np}); }} placeholder="Step Title" className="w-full border border-[#8c8f94] px-2 py-1 text-xs font-bold" />
                                    <RichTextEditor 
                                      content={step.description} 
-                                     onChange={(v) => { const np = [...form.process]; np[i].description = v; setForm({...form, process: np}); }} 
+                                     onChange={(v) => { const np = [...form.process]; np[i] = { ...np[i], description: v }; setForm({...form, process: np}); }} 
                                    />
                                    <button onClick={() => { const np = form.process.filter((_:any,idx:number)=>idx!==i); setForm({...form, process: np}); }} className="text-[#d63638] text-xs">Remove Step</button>
                                 </div>
@@ -327,10 +339,10 @@ export default function ServicesAdminPage() {
                           <button onClick={() => setForm({ ...form, faq: [...(form.faq || []), { question: "", answer: "" }] })} className="text-[#2271b1] text-xs underline font-bold">+ Add FAQ Item</button>
                           {form.faq?.map((item:any, i:number) => (
                              <div key={i} className="bg-white border border-[#c3c4c7] p-4 space-y-3 shadow-sm">
-                                <input value={item.question} onChange={(e) => { const nf = [...form.faq]; nf[i].question = e.target.value; setForm({...form, faq: nf}); }} placeholder="Question" className="w-full border border-[#8c8f94] px-2 py-1 text-xs font-bold" />
+                                <input value={item.question} onChange={(e) => { const nf = [...form.faq]; nf[i] = { ...nf[i], question: e.target.value }; setForm({...form, faq: nf}); }} placeholder="Question" className="w-full border border-[#8c8f94] px-2 py-1 text-xs font-bold" />
                                 <RichTextEditor 
                                   content={item.answer} 
-                                  onChange={(v) => { const nf = [...form.faq]; nf[i].answer = v; setForm({...form, faq: nf}); }} 
+                                  onChange={(v) => { const nf = [...form.faq]; nf[i] = { ...nf[i], answer: v }; setForm({...form, faq: nf}); }} 
                                 />
                                 <button onClick={() => { const nf = form.faq.filter((_:any,idx:number)=>idx!==i); setForm({...form, faq: nf}); }} className="text-[#d63638] text-xs">Remove FAQ</button>
                              </div>

@@ -61,133 +61,96 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   return (
-    <article className="min-h-screen bg-white selection:bg-blue-100 selection:text-blue-900">
+    <article className="min-h-screen bg-white">
       <ReadingProgress />
 
-      {/* Ultra-Premium Hero Breadcrumb Section */}
-      <div className="relative h-[75vh] min-h-[550px] w-full bg-[#0B0F1A] overflow-hidden">
+      {/* Clean Hero Section */}
+      <div className="relative h-[300px] w-full bg-slate-900 overflow-hidden flex items-center">
         {post.featuredImage && (
           <div className="absolute inset-0">
             <img 
               src={post.featuredImage} 
               alt={post.title}
-              className="absolute inset-0 w-full h-full object-cover scale-110 blur-[2px] opacity-40 animate-pulse-slow"
+              className="w-full h-full object-cover opacity-30"
             />
-            <img 
-              src={post.featuredImage} 
-              alt={post.title}
-              className="absolute inset-0 w-full h-full object-contain z-10 p-20 hidden md:block"
-            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent" />
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0B0F1A]/80 to-[#0B0F1A] z-20" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(37,99,235,0.15)_0%,_transparent_50%)] z-20" />
         
-        <div className="relative h-full container mx-auto px-4 flex flex-col justify-end pb-20 items-center text-center z-30">
-          <div className="mb-10 flex items-center gap-3 text-white/40 text-[10px] font-black uppercase tracking-[0.4em] animate-fade-in">
-            <Link href="/" className="hover:text-blue-400 transition-colors">Home</Link>
-            <div className="w-1 h-1 rounded-full bg-white/20" />
-            <Link href="/blog" className="hover:text-blue-400 transition-colors">Insights</Link>
-            <div className="w-1 h-1 rounded-full bg-white/20" />
-            <span className="text-white/20 truncate max-w-[150px]">{post.title}</span>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
-            {post.categories?.map((cat: any) => (
-              <span key={cat._id} className="bg-blue-600/10 text-blue-400 border border-blue-500/20 backdrop-blur-md px-5 py-2 text-[10px] font-black uppercase tracking-[0.2em] rounded-full">
-                {cat.name}
-              </span>
-            ))}
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <div className="flex items-center justify-center gap-2 text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+            <span>/</span>
+            <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
           </div>
           
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-10 max-w-6xl leading-[0.95] tracking-tighter drop-shadow-2xl">
+          <h1 className="text-3xl md:text-5xl font-bold text-white mb-6 max-w-4xl mx-auto leading-tight">
             {post.title}
           </h1>
           
-          <div className="flex flex-wrap justify-center items-center gap-8 text-white/60 text-xs border-t border-white/5 pt-10 w-full max-w-2xl">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center">
-                <User className="w-5 h-5 text-blue-400" />
-              </div>
-              <div className="text-left">
-                <span className="block text-[9px] uppercase tracking-[0.3em] text-white/30 mb-0.5">Editor</span>
-                <span className="block font-black text-white text-sm tracking-tight">{post.author?.username || 'Eagle Admin'}</span>
-              </div>
+          <div className="flex justify-center items-center gap-6 text-slate-400 text-xs">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-3.5 h-3.5" />
+              <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
             </div>
-            <div className="w-px h-10 bg-white/5 hidden sm:block" />
-            <div className="text-left">
-              <span className="block text-[9px] uppercase tracking-[0.3em] text-white/30 mb-0.5">Date</span>
-              <div className="flex items-center gap-2 font-black text-white text-sm tracking-tight">
-                <Calendar className="w-4 h-4 text-blue-500" />
-                <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-              </div>
-            </div>
-            <div className="w-px h-10 bg-white/5 hidden sm:block" />
-            <div className="text-left">
-              <span className="block text-[9px] uppercase tracking-[0.3em] text-white/30 mb-0.5">Read Time</span>
-              <div className="flex items-center gap-2 font-black text-white text-sm tracking-tight">
-                <Clock className="w-4 h-4 text-blue-500" />
-                <span>8 Min</span>
-              </div>
+            <div className="w-1 h-1 rounded-full bg-slate-700" />
+            <div className="flex items-center gap-2">
+              <Clock className="w-3.5 h-3.5" />
+              <span>8 min read</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Sophisticated Grid Layout */}
-      <div className="bg-[#F8FAFC]">
-        <div className="container mx-auto px-4 py-32">
-          <div className="flex flex-col lg:flex-row gap-20 relative">
+      {/* Clean Grid Layout */}
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row gap-12">
             
-            {/* Left Side: Content with Premium Typography */}
+            {/* Content Area */}
             <div className="flex-1 min-w-0">
               <div 
-                className="prose prose-xl md:prose-2xl max-w-none 
-                  prose-headings:text-[#0F172A] prose-headings:font-black prose-headings:tracking-tight
-                  prose-h1:text-5xl prose-h2:text-4xl prose-h2:mt-24 prose-h2:mb-10 prose-h2:border-l-8 prose-h2:border-blue-600 prose-h2:pl-8
-                  prose-p:text-slate-600 prose-p:leading-[2] prose-p:mb-10
-                  prose-a:text-blue-600 prose-a:font-black prose-a:no-underline prose-a:border-b-4 prose-a:border-blue-100 hover:prose-a:border-blue-600 transition-all
-                  prose-img:rounded-[3rem] prose-img:shadow-2xl prose-img:my-20
-                  prose-blockquote:border-none prose-blockquote:bg-blue-600 prose-blockquote:text-white prose-blockquote:p-12 prose-blockquote:rounded-[3rem] prose-blockquote:font-black prose-blockquote:text-3xl prose-blockquote:tracking-tighter prose-blockquote:leading-tight
-                  prose-strong:text-[#0F172A] prose-strong:font-black
-                  [&>*:first-child]:mt-0"
+                className="prose prose-lg max-w-none 
+                  prose-headings:text-slate-900 prose-headings:font-bold
+                  prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
+                  prose-p:text-slate-600 prose-p:leading-relaxed prose-p:mb-6
+                  prose-a:text-blue-600 prose-a:no-underline hover:underline
+                  prose-img:rounded-xl prose-img:my-8
+                  prose-blockquote:border-l-4 prose-blockquote:border-blue-600 prose-blockquote:bg-slate-50 prose-blockquote:p-6 prose-blockquote:rounded-r-xl"
                 dangerouslySetInnerHTML={{ __html: processedContent }}
               />
 
-              {/* Tags Section */}
+              {/* Tags */}
               {post.tags && post.tags.length > 0 && (
-                <div className="mt-24 pt-16 border-t border-slate-200 flex flex-wrap gap-4">
+                <div className="mt-12 pt-8 border-t border-slate-100 flex flex-wrap gap-2">
                   {post.tags.map((tag: any) => (
-                    <span key={tag._id} className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white text-slate-500 text-xs font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white hover:scale-105 transition-all cursor-pointer shadow-sm border border-slate-100">
-                      <TagIcon className="w-3.5 h-3.5" /> {tag.name}
+                    <span key={tag._id} className="px-4 py-1.5 rounded-full bg-slate-100 text-slate-600 text-xs font-medium hover:bg-blue-600 hover:text-white transition-all cursor-pointer">
+                      # {tag.name}
                     </span>
                   ))}
                 </div>
               )}
             </div>
 
-            {/* Right Side: Glassmorphism Sidebar */}
-            <aside className="lg:w-[380px] shrink-0">
-              <div className="sticky top-32 space-y-12">
+            {/* Simple Sidebar */}
+            <aside className="lg:w-80 shrink-0">
+              <div className="sticky top-24 space-y-8">
                 
-                {/* Table of Contents - Glass */}
+                {/* TOC */}
                 {tableOfContents.length > 0 && (
-                  <div className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] p-10 border border-white shadow-2xl shadow-blue-900/5">
-                    <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-blue-600 mb-8 flex items-center gap-3">
-                      <div className="w-6 h-1 bg-blue-600 rounded-full" /> Navigation
-                    </h3>
-                    <nav className="space-y-6">
+                  <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 mb-4">Table of Contents</h3>
+                    <nav className="space-y-3">
                       {tableOfContents.map((item, idx) => (
                         <a 
                           key={idx}
                           href={`#${item.id}`}
-                          className={`group flex items-start gap-4 text-sm transition-all hover:text-blue-600 ${
+                          className={`block text-sm transition-all hover:text-blue-600 ${
                             item.level === 1 
-                              ? "font-black text-slate-900 text-base" 
-                              : "pl-6 text-slate-500 font-bold"
+                              ? "font-bold text-slate-900" 
+                              : "pl-4 text-slate-500"
                           }`}
                         >
-                          <span className="text-blue-200 group-hover:text-blue-600 transition-colors">0{idx + 1}.</span>
                           {item.text}
                         </a>
                       ))}
@@ -195,22 +158,18 @@ export default async function BlogPostPage({ params }: Props) {
                   </div>
                 )}
 
-                {/* Shared Widget - Impactful */}
-                <div className="bg-[#0B0F1A] rounded-[2.5rem] p-10 text-white relative overflow-hidden group shadow-2xl shadow-blue-900/20">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/20 blur-[50px] -mr-16 -mt-16 group-hover:bg-blue-600/40 transition-all" />
-                  <h4 className="text-2xl font-black mb-4 tracking-tighter leading-none">Spread the <br/><span className="text-blue-500">Revolution.</span></h4>
-                  <p className="text-white/50 text-sm mb-10 leading-relaxed font-medium">Found this insight valuable? Share it with your colleagues and network.</p>
-                  
+                {/* Share */}
+                <div className="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 mb-4">Share Article</h4>
                   <ShareButton title={post.title} url={slug} />
                 </div>
 
-                {/* Newsletter-ish Card */}
-                <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-[2.5rem] p-10 text-white shadow-2xl shadow-blue-600/30">
-                  <BookOpen className="w-10 h-10 mb-6 text-white/30" />
-                  <h4 className="font-black text-2xl mb-2 tracking-tighter">Stay Updated</h4>
-                  <p className="text-white/80 text-sm mb-8 leading-relaxed font-medium">Join 2,000+ professionals receiving weekly digital strategies.</p>
-                  <Link href="/contact" className="block w-full text-center bg-white text-blue-600 py-4 rounded-2xl font-black text-sm hover:bg-slate-100 transition-all">
-                    Get Started
+                {/* Simple CTA */}
+                <div className="p-6 bg-blue-600 rounded-2xl text-white">
+                  <h4 className="font-bold text-lg mb-2">Need a Quote?</h4>
+                  <p className="text-blue-100 text-xs mb-6 leading-relaxed">Contact Eagle Revolution for premium exterior solutions.</p>
+                  <Link href="/contact" className="block w-full text-center bg-white text-blue-600 py-3 rounded-xl font-bold text-xs hover:bg-slate-50 transition-all">
+                    Contact Us
                   </Link>
                 </div>
 
