@@ -6,7 +6,8 @@ import {
   Save, Loader2, Eye, Calendar, Settings,
   Image as ImageIcon, Tag, Folder,
   ChevronRight, ArrowLeft, ExternalLink, Globe,
-  CheckCircle2, AlertCircle, BarChart3, Search
+  CheckCircle2, AlertCircle, BarChart3, Search,
+  Plus, Trash2, HelpCircle
 } from "lucide-react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -48,12 +49,13 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
       ogDescription: "",
       ogImage: "",
       twitterCard: "summary_large_image"
-    }
+    },
+    faq: []
   });
 
   const [categories, setCategories] = useState<any[]>([]);
   const [tags, setTags] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState<'content' | 'seo'>('content');
+  const [activeTab, setActiveTab] = useState<'content' | 'seo' | 'faq'>('content');
   const [showMediaSelector, setShowMediaSelector] = useState(false);
 
   useEffect(() => {
@@ -151,7 +153,7 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
 
       <div className="flex flex-col lg:flex-row gap-5 items-start">
         {/* Main Column */}
-        <div className="flex-1 w-full space-y-4">
+        <div className="flex-1 w-full min-w-0 space-y-4">
           <div className="bg-white">
             <input
               type="text"
@@ -165,7 +167,7 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
 
           <div className="flex items-center gap-1 text-[12px] text-[#646970]">
             <strong>Permalink:</strong>
-            <span className="bg-[#f0f0f1] px-1 rounded border border-[#c3c4c7]">https://eaglerevolution.com/blog/{post.slug}</span>
+            <span className="bg-[#f0f0f1] px-1 rounded border border-[#c3c4c7] truncate max-w-[200px] sm:max-w-md">https://eaglerevolution.com/blog/{post.slug}</span>
             <button onClick={() => {
               const s = prompt("Enter slug:", post.slug);
               if (s) setPost({ ...post, slug: s });
@@ -187,6 +189,12 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
               >
                 SEO (Yoast-style)
               </button>
+              <button
+                onClick={() => setActiveTab('faq')}
+                className={`px-4 py-2.5 text-[13px] font-semibold border-r border-[#c3c4c7] transition-all ${activeTab === 'faq' ? "bg-white text-[#1d2327]" : "text-[#2271b1] hover:text-[#135e96]"}`}
+              >
+                FAQs
+              </button>
             </div>
 
             <div className="p-0">
@@ -198,7 +206,7 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
                     showStatusBar={true}
                   />
                 </div>
-              ) : (
+              ) : activeTab === 'seo' ? (
                 <SeoEditor
                   data={post.seo}
                   setData={(seo) => setPost({ ...post, seo })}
@@ -206,6 +214,80 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
                   pageTitle={post.title}
                   pageContent={post.content}
                 />
+              ) : (
+                <div className="p-6 bg-white min-h-[500px]">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h3 className="text-lg font-medium text-slate-900">Manage FAQs</h3>
+                      <p className="text-sm text-slate-500">Add questions and answers that will appear at the bottom of your post.</p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        const newFaq = [...(post.faq || []), { question: "", answer: "" }];
+                        setPost({ ...post, faq: newFaq });
+                      }}
+                      className="bg-[#2271b1] text-white text-[12px] font-semibold px-4 py-1.5 rounded-[3px] border border-[#135e96] shadow-[0_1px_0_#135e96] hover:bg-[#135e96] flex items-center gap-2"
+                    >
+                      <Plus className="w-4 h-4" /> Add New FAQ
+                    </button>
+                  </div>
+
+                  <div className="space-y-4">
+                    {(post.faq || []).map((item: any, idx: number) => (
+                      <div key={idx} className="p-6 border border-slate-200 rounded-lg bg-slate-50/30 relative group hover:border-primary/30 transition-colors">
+                        <button
+                          onClick={() => {
+                            const newFaq = post.faq.filter((_: any, i: number) => i !== idx);
+                            setPost({ ...post, faq: newFaq });
+                          }}
+                          className="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors"
+                          title="Remove FAQ"
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+
+                        <div className="grid gap-4">
+                          <div className="space-y-1.5">
+                            <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Question {idx + 1}</label>
+                            <input
+                              type="text"
+                              value={item.question}
+                              onChange={(e) => {
+                                const newFaq = [...post.faq];
+                                newFaq[idx].question = e.target.value;
+                                setPost({ ...post, faq: newFaq });
+                              }}
+                              placeholder="e.g. What are the benefits of professional roofing?"
+                              className="w-full border border-[#c3c4c7] px-4 py-2.5 text-sm outline-none focus:border-[#2271b1] bg-white rounded shadow-sm"
+                            />
+                          </div>
+                          <div className="space-y-1.5">
+                            <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Answer</label>
+                            <textarea
+                              value={item.answer}
+                              onChange={(e) => {
+                                const newFaq = [...post.faq];
+                                newFaq[idx].answer = e.target.value;
+                                setPost({ ...post, faq: newFaq });
+                              }}
+                              rows={4}
+                              placeholder="Provide a detailed answer here..."
+                              className="w-full border border-[#c3c4c7] p-4 text-sm outline-none focus:border-[#2271b1] resize-none bg-white rounded shadow-sm"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+
+                    {(!post.faq || post.faq.length === 0) && (
+                      <div className="text-center py-20 bg-slate-50/50 rounded-xl border border-dashed border-slate-200">
+                        <HelpCircle className="w-12 h-12 text-slate-200 mx-auto mb-4" />
+                        <h4 className="text-slate-900 font-medium">No FAQs Yet</h4>
+                        <p className="text-slate-500 text-sm mt-1">Click the button above to add your first question.</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
               )}
             </div>
           </div>
@@ -316,6 +398,7 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
               <button onClick={() => router.push('/admin/blog/categories')} className="text-[#2271b1] underline text-[11px] block mt-2">+ Add New Category</button>
             </div>
           </div>
+
 
           {/* Tags Box */}
           <div className="bg-white border border-[#c3c4c7] shadow-sm rounded-sm">

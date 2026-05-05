@@ -33,8 +33,16 @@ const PostSchema = new Schema({
     featuredImage: String,
     featuredImageAlt: String
   },
+  faq: [{
+    question: String,
+    answer: String
+  }],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 }, { timestamps: true });
+
+if (mongoose.models.Post) {
+  delete mongoose.models.Post;
+}
 
 export default mongoose.models.Post || mongoose.model('Post', PostSchema);

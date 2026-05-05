@@ -11,6 +11,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 import ReadingProgress from '@/components/blog/ReadingProgress';
 import ShareButton from '@/components/blog/ShareButton';
+import PageInlineFaqs from '@/components/PageInlineFaqs';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -75,7 +76,8 @@ export default async function BlogPostPage({ params }: Props) {
   await connectToDatabase();
 
   const post = await Post.findOne({ slug, status: 'published' })
-    .populate('categories tags author');
+    .populate('categories tags author')
+    .lean();
 
   if (!post) notFound();
 
@@ -83,6 +85,8 @@ export default async function BlogPostPage({ params }: Props) {
   console.log(`[Blog Debug] Post Location: "${post.location}"`);
   console.log(`[Blog Debug] Post Categories: ${post.categories?.length || 0}`);
   if (post.categories?.length > 0) console.log(`[Blog Debug] First Category: ${post.categories[0].name}`);
+  console.log(`[Blog Debug] FAQ Count: ${post.faq?.length || 0}`);
+  if (post.faq?.length > 0) console.log(`[Blog Debug] First FAQ: ${post.faq[0].question}`);
 
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://eaglerevolution.com";
   const url = `${BASE_URL}/blog/${slug}`;
@@ -352,6 +356,12 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
         </div>
       </div>
+      {/* FAQ Section */}
+      {post.faq && post.faq.length > 0 && (
+        <div className="mt-12">
+          <PageInlineFaqs faqs={post.faq} />
+        </div>
+      )}
     </article>
   );
 }

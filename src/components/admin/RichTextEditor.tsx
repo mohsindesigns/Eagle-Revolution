@@ -404,6 +404,7 @@ export default function RichTextEditor({ content, onChange, placeholder, label, 
         }
         .ProseMirror {
           outline: none !important;
+          padding-left: 50px !important; /* Space for heading indicators */
           padding-bottom: 50px !important; /* Space for sticky bar */
         }
         .ProseMirror h1, .ProseMirror h2, .ProseMirror h3, 
