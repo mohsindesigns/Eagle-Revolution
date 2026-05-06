@@ -25,24 +25,73 @@ export const useContent = () => {
             // Normalize: if it's already an array, wrap it in the expected object structure
             return Array.isArray(s) ? { services: s } : s;
         })(),
-        leadership: getSafe(completeData, 'leadership', { 
-            section: { badge: "", headline: "", description: "" },
-            ceo: { name: "", title: "", image: {}, alt: "", badges: { top: "", bottom: "" }, quotes: [], description: [], socials: [] }
-        }),
-        portfolio: getSafe(completeData, 'portfolio', {
-            section: { badge: "", headline: "" },
-            projects: [],
-            button: { text: "", link: "" }
-        }),
+        leadership: (() => {
+            const l = getSafe(completeData, 'leadership', {});
+            // If it's effectively empty, use fallback
+            if (!l.ceo || !l.ceo.name) {
+                return {
+                    section: {
+                        badge: "Our Leadership",
+                        headline: "Meet the Team Behind <span class=\"text-primary\">Eagle Revolution</span>",
+                        description: "Veterans and experts dedicated to soaring beyond your expectations."
+                    },
+                    ceo: {
+                        name: "Brandon Anderson",
+                        title: "Owner & Founder",
+                        image: { src: "/src/assets/ownerupdatedimage.jpeg" },
+                        alt: "Brandon Anderson - Owner of Eagle Revolution",
+                        badges: { top: "U.S. Army Veteran", bottom: "Combat Sports Official" },
+                        quotes: ["At Eagle Revolution, we bring military precision and battlefield discipline to every roof, window, and deck we build."],
+                        description: "<p>Brandon Anderson is a U.S. Army veteran and globally licensed combat sports official who founded Eagle Revolution to bring a higher standard of excellence to the construction industry in St. Louis.</p>",
+                        socials: [{ icon: "Linkedin", url: "https://www.linkedin.com/company/eagle-revolution" }]
+                    }
+                };
+            }
+            return l;
+        })(),
+        portfolio: (() => {
+            const p = getSafe(completeData, 'portfolio', {});
+            // If it's effectively empty (no projects), use fallback
+            if (!p.projects || !Array.isArray(p.projects) || p.projects.length === 0) {
+                return {
+                    section: {
+                        badge: "Recent Projects",
+                        headline: "Our Recent <span class=\"text-primary\">Transformations</span>"
+                    },
+                    projects: [
+                        {
+                            number: "01",
+                            title: "Lakeside Composite Deck",
+                            category: "Decks",
+                            location: "Lake Ozark, MO",
+                            year: "2024",
+                            desc: "Expansive composite deck with built-in lighting.",
+                            image: "/src/assets/outdoor-sitting-desk.png"
+                        },
+                        {
+                            number: "02",
+                            title: "St. Louis Roofing Project",
+                            category: "Roofing",
+                            location: "St. Louis, MO",
+                            year: "2024",
+                            desc: "Full asphalt shingle replacement with 50-year warranty.",
+                            image: "/src/assets/roof1.jpg.jpeg"
+                        }
+                    ],
+                    button: { text: "View Full Gallery", link: "/gallery" }
+                };
+            }
+            return p;
+        })(),
         testimonials: getSafe(completeData, 'testimonials', {
             section: { badge: "", headline: "", description: "" },
             items: []
         }),
-        whyChooseUs: getSafe(completeData, 'whyChooseUs', { 
-            section: { badge: "", headline: "", description: "" }, 
-            features: [], 
-            stats: [], 
-            cta: { badge: "", title: "", description: "", trustBadges: [], buttons: [] } 
+        whyChooseUs: getSafe(completeData, 'whyChooseUs', {
+            section: { badge: "", headline: "", description: "" },
+            features: [],
+            stats: [],
+            cta: { badge: "", title: "", description: "", trustBadges: [], buttons: [] }
         }),
         faq: getSafe(completeData, 'faq', {
             section: { badge: "", headline: "", title: "", description: "" },
@@ -120,4 +169,4 @@ export const useContent = () => {
         }),
         allBlogs: Array.isArray(completeData?.allBlogs) ? completeData.allBlogs : [],
     };
-};
+};

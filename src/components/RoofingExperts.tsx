@@ -9,6 +9,8 @@ import RichTextRenderer from "./ui/RichTextRenderer";
 
 const Counter = memo(({ value, suffix = "", duration = 1.8 }: { value: number; suffix?: string; duration?: number }) => {
     const ref = useRef(null);
+    // Coerce value to a safe number — DB may return strings or null
+    const safeValue = typeof value === 'number' && !isNaN(value) ? value : parseFloat(String(value)) || 0;
     const [display, setDisplay] = useState(0);
     const inView = useInView(ref, { once: true, margin: "-50px" });
     const shouldReduceMotion = useReducedMotion();
@@ -20,13 +22,13 @@ const Counter = memo(({ value, suffix = "", duration = 1.8 }: { value: number; s
         hasAnimatedRef.current = true;
 
         if (shouldReduceMotion) {
-            setDisplay(value);
+            setDisplay(safeValue);
             return;
         }
 
         let startTime: number;
         const startValue = 0;
-        const endValue = value;
+        const endValue = safeValue;
         const durationMs = duration * 1000;
 
         const animate = (timestamp: number) => {
@@ -50,11 +52,11 @@ const Counter = memo(({ value, suffix = "", duration = 1.8 }: { value: number; s
                 cancelAnimationFrame(animationFrameRef.current);
             }
         };
-    }, [inView, value, duration, shouldReduceMotion]);
+    }, [inView, safeValue, duration, shouldReduceMotion]);
 
     return (
         <span ref={ref} className="tabular-nums">
-            {display.toLocaleString()}
+            {(display ?? 0).toLocaleString()}
             {suffix}
         </span>
     );

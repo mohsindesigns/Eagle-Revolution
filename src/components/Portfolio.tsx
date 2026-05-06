@@ -238,7 +238,7 @@ const InfiniteMarquee = ({
     if (!marqueeRef.current) return;
 
     const marquee = marqueeRef.current;
-    const itemWidth = globalThis.window?.innerWidth < 640 ? 216 : globalThis.window?.innerWidth < 768 ? 256 : 296;
+    const itemWidth = typeof window !== 'undefined' ? (window.innerWidth < 640 ? 216 : window.innerWidth < 768 ? 256 : 296) : 296;
     const totalWidth = itemWidth * projects.length;
     const distance = direction === "left" ? -totalWidth : totalWidth;
 
@@ -363,11 +363,15 @@ const Portfolio = () => {
   const { portfolio: portfolioData } = useContent();
   const sectionRef = useRef<HTMLElement>(null);
   const [lightbox, setLightbox] = useState<any>(null);
-  const [isClient, setIsClient] = useState(false);
+  const [scrollTarget, setScrollTarget] = useState<any>(undefined);
   const router = useRouter();
 
+  useEffect(() => {
+    setScrollTarget(sectionRef);
+  }, []);
+
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
+    target: scrollTarget,
     offset: ["start end", "end start"],
   });
 
@@ -383,10 +387,6 @@ const Portfolio = () => {
   const section: Section = portfolioData?.section || {};
   const projects: Project[] = portfolioData?.projects || [];
   const button: Button = portfolioData?.button || {};
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const row1 = projects.slice(0, 3);
   const row2 = projects.slice(2, 5);

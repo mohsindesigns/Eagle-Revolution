@@ -21,8 +21,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ParallaxLayer = ({ children, speed = 0.05, className = "" }: { children: React.ReactNode; speed?: number; className?: string }) => {
   const ref = useRef(null);
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => setIsClient(true), []);
+
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: isClient ? ref : undefined,
     offset: ["start end", "end start"]
   });
 

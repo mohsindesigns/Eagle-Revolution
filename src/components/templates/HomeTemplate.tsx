@@ -4,9 +4,10 @@ import dynamic from "next/dynamic";
 import Hero from "@/components/Hero";
 import AggressiveRoofingSection from "@/components/RoofingExperts";
 import Services from "@/components/Services";
-import TeamValues from "@/components/TeamValues";
 
-const Portfolio = dynamic(() => import("@/components/Portfolio"), { ssr: false });
+
+const Portfolio = dynamic(() => import("@/components/Portfolio"));
+const Leadership = dynamic(() => import("@/components/Leadership"));
 const BrandStore = dynamic(() => import("@/components/BrandStore"), { ssr: false });
 const Testimonials = dynamic(() => import("@/components/Testimonials"), { ssr: false });
 const HowWeWork = dynamic(() => import("@/components/HowWeWork"), { ssr: false });
@@ -29,7 +30,9 @@ export default function HomeTemplate({ pageData, params }: { pageData?: any, par
       <section id="services">
         <Services />
       </section>
-      <TeamValues />
+      <section id="leadership">
+        <Leadership />
+      </section>
       <section id="portfolio">
         <Portfolio />
       </section>

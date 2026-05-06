@@ -1,10 +1,24 @@
 import { MetadataRoute } from 'next';
-import completeData from '../src/data/completeData.json';
+import connectToDatabase from '@/lib/mongodb';
+import SiteContent from '@/models/Content';
 
 const BASE_URL = 'https://eaglerevolution.com';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
+
+  // Fetch dynamic content from DB
+  let dynamicServices = [];
+  try {
+    await connectToDatabase();
+    const content = await SiteContent.findOne({ key: 'complete_data' });
+    if (content?.data?.services) {
+        const sData = content.data.services;
+        dynamicServices = Array.isArray(sData) ? sData : (sData.services || []);
+    }
+  } catch (e) {
+    console.error("Sitemap: Failed to fetch services", e);
+  }
 
   // Static pages
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -65,8 +79,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // Dynamic service detail pages
-  const services = (completeData.services as any).services || [];
-  const serviceRoutes: MetadataRoute.Sitemap = services.map(
+  const serviceRoutes: MetadataRoute.Sitemap = dynamicServices.map(
     (service: any) => ({
       url: `${BASE_URL}/${service.slug}`,
       lastModified: now,

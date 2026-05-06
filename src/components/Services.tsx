@@ -292,9 +292,15 @@ const Services = () => {
   const { services: servicesData } = useContent();
   const sectionRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
+  const [scrollTarget, setScrollTarget] = useState<any>(undefined);
+
+  useEffect(() => {
+    setIsClient(true);
+    setScrollTarget(sectionRef);
+  }, []);
 
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
+    target: scrollTarget,
     offset: ["start end", "end start"]
   });
 
@@ -346,9 +352,7 @@ const Services = () => {
   const featuredService = servicesList.length > 0 ? servicesList[0] : null;
   const gridServices = servicesList.length > 1 ? servicesList.slice(1) : servicesList;
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+
 
   useEffect(() => {
     if (!sectionRef.current || !isClient) return;

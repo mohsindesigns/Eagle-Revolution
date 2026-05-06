@@ -1,9 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import staticData from '../src/data/completeData.json';
-
-const ContentContext = createContext<any>(staticData);
+const ContentContext = createContext<any>({});
 
 const deepMerge = (target: any, source: any) => {
   if (!source) return target;
@@ -32,7 +30,7 @@ const deepMerge = (target: any, source: any) => {
 export const ContentProvider = ({ children, initialData }: { children: React.ReactNode, initialData?: any }) => {
   // Merge initialData with staticData immediately to ensure global sections (navbar/footer) 
   // are available even if the page-specific data is limited.
-  const [content, setContent] = useState<any>(initialData ? deepMerge(staticData, initialData) : staticData);
+  const [content, setContent] = useState<any>(initialData || {});
   const [blogs, setBlogs] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(!initialData);
 

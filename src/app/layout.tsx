@@ -120,6 +120,15 @@ export default async function RootLayout({
   const bodyStartScripts = activeScripts.filter((s) => s.location === 'body_start');
   const bodyEndScripts   = activeScripts.filter((s) => s.location === 'body_end');
 
+  // ── Fetch Global Content for the Provider ──
+  let initialGlobalData = null;
+  try {
+    const globalContent = await SiteContent.findOne({ key: 'complete_data' });
+    if (globalContent?.data) initialGlobalData = globalContent.data;
+  } catch (e) {
+    console.error("Failed to fetch global content for provider", e);
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -138,7 +147,7 @@ export default async function RootLayout({
         {bodyStartScripts.map((s) => (
           <div key={s.id} dangerouslySetInnerHTML={{ __html: s.code }} />
         ))}
-        <ContentProvider>
+        <ContentProvider initialData={initialGlobalData}>
           <Providers>
             <div className="relative min-h-screen flex flex-col">
               {/* Common background grid for all pages */}

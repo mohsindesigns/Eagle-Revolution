@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Save, Loader2, LayoutTemplate, Type, Image as ImageIcon, ChevronRight, Star, Phone, Plus, Trash2, Mail } from "lucide-react";
+import { Save, Loader2, LayoutTemplate, Type, Image as ImageIcon, ChevronRight, Star, Phone, Plus, Trash2, Mail, Users } from "lucide-react";
 import Link from "next/link";
 import ImageField from "@/components/admin/ImageField";
 import dynamic from "next/dynamic";
@@ -69,7 +69,7 @@ export default function HomeEditor() {
     { id: "hero", label: "Hero Section", icon: LayoutTemplate },
     { id: "about", label: "About Section", icon: Type },
     { id: "services", label: "Services Section", icon: LayoutTemplate },
-    { id: "founder", label: "Founder Section", icon: Type },
+    { id: "leadership", label: "Leadership", icon: Users },
     { id: "portfolio", label: "Portfolio Section", icon: ImageIcon },
     { id: "testimonials", label: "Testimonials", icon: Type },
     { id: "whyChooseUs", label: "Why Choose Us", icon: ImageIcon },
@@ -697,10 +697,10 @@ export default function HomeEditor() {
               </motion.div>
             )}
 
-            {activeTab === "founder" && (
-              <motion.div key="founder" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-8">
+            {activeTab === "leadership" && (
+              <motion.div key="leadership" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-8">
                 <div className="flex items-center justify-between border-b border-gray-200 pb-4">
-                  <h2 className="text-2xl font-bold text-gray-900">Founder Section</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">Leadership Section</h2>
                   <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">Section 4</span>
                 </div>
 
@@ -744,12 +744,12 @@ export default function HomeEditor() {
                 <div className="bg-white shadow-sm border border-gray-200 rounded-2xl p-6 shadow-xl">
                   <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <ImageIcon className="w-5 h-5 text-primary" />
-                    Left Side: Founder Portrait
+                    Leadership Media: Portrait & Badges
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-3">
                       <ImageField 
-                        label="Founder Portrait"
+                        label="Leader Portrait"
                         value={data.leadership?.ceo?.image?.src || ""}
                         onChange={(url) => {
                           setData((prev: any) => ({
@@ -809,12 +809,12 @@ export default function HomeEditor() {
                 <div className="bg-white shadow-sm border border-gray-200 rounded-2xl p-6 shadow-xl">
                   <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <LayoutTemplate className="w-5 h-5 text-primary" />
-                    Right Side: Founder Details
+                    Leadership Details & Text
                   </h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
                     <div className="space-y-2">
-                      <label className="text-xs uppercase tracking-widest text-gray-500 font-bold">Founder Name</label>
+                      <label className="text-xs uppercase tracking-widest text-gray-500 font-bold">Leader/CEO Name</label>
                       <input
                         type="text"
                         value={data.leadership?.ceo?.name || ""}
@@ -823,7 +823,7 @@ export default function HomeEditor() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs uppercase tracking-widest text-primary font-bold">Founder Title / Keypoint</label>
+                      <label className="text-xs uppercase tracking-widest text-primary font-bold">Leader Title / Keypoint</label>
                       <input
                         type="text"
                         value={data.leadership?.ceo?.title || ""}
@@ -862,7 +862,7 @@ export default function HomeEditor() {
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
                       <ChevronRight className="w-5 h-5 text-primary" />
-                      Founder Social Links
+                      Leadership Social Links
                     </h3>
                     <button
                       onClick={() => {
