@@ -210,7 +210,7 @@ const MarqueeItem = ({ project }: { project: Project }) => {
         </div>
 
         <div className="absolute top-2 sm:top-3 left-2 sm:left-3 text-white/30 text-2xl sm:text-3xl font-black">
-          {project.number}
+          {project.number || ""}
         </div>
       </div>
     </motion.div>
@@ -385,14 +385,23 @@ const Portfolio = () => {
 
   // Safely extract data with proper defaults
   const section: Section = portfolioData?.section || {};
-  const projects: Project[] = portfolioData?.projects || [];
   const button: Button = portfolioData?.button || {};
 
-  const row1 = projects.slice(0, 3);
-  const row2 = projects.slice(2, 5);
+  const projects: Project[] = useMemo(() => {
+    const raw = Array.isArray(portfolioData?.projects) ? portfolioData.projects : [];
+    return raw.map((p: any, idx: number) => ({
+      ...p,
+      number: p.number || (idx + 1).toString().padStart(2, '0'),
+      // Fallback for image if it's in a different field
+      image: p.image || p.src || p.overviewImage || ""
+    }));
+  }, [portfolioData?.projects]);
+
+  const row1 = projects.length > 0 ? projects : [];
+  const row2 = projects.length > 3 ? projects.slice(Math.ceil(projects.length / 2)) : [];
 
   // Don't render marquee if no projects
-  if (row1.length === 0 && row2.length === 0) {
+  if (projects.length === 0) {
     return null;
   }
 
@@ -426,17 +435,18 @@ const Portfolio = () => {
             </span>
             <div className="w-8 sm:w-10 md:w-12 h-0.5 bg-gradient-to-l from-primary to-primary/60" />
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground leading-[1.1] tracking-tight px-2">
-            {typeof section.headline === 'string'
-              ? section.headline.replace(/<[^>]*>/g, '')
-              : section.headline || "Featured Projects"}
-          </h2>
+          <h2 
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground leading-[1.1] tracking-tight px-2"
+            dangerouslySetInnerHTML={{ 
+              __html: section.headline || "Featured Projects" 
+            }}
+          />
         </motion.div>
 
         {/* MARQUEE SECTION */}
         <div className="space-y-1 sm:space-y-2 md:space-y-0">
-          <InfiniteMarquee projects={row1} direction="left" speed={45} />
-          <InfiniteMarquee projects={row2} direction="right" speed={40} />
+          {row1.length > 0 && <InfiniteMarquee projects={row1} direction="left" speed={45} />}
+          {row2.length > 0 && <InfiniteMarquee projects={row2} direction="right" speed={40} />}
         </div>
 
         <motion.div

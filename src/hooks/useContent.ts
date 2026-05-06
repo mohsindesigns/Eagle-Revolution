@@ -51,37 +51,38 @@ export const useContent = () => {
         })(),
         portfolio: (() => {
             const p = getSafe(completeData, 'portfolio', {});
-            // If it's effectively empty (no projects), use fallback
-            if (!p.projects || !Array.isArray(p.projects) || p.projects.length === 0) {
-                return {
-                    section: {
-                        badge: "Recent Projects",
-                        headline: "Our Recent <span class=\"text-primary\">Transformations</span>"
+            const hasProjects = p.projects && Array.isArray(p.projects) && p.projects.length > 0;
+            
+            return {
+                section: p.section || {
+                    badge: "OUR WORK",
+                    headline: "Eagle Revolution <span class='text-primary'>Transformations</span>"
+                },
+                projects: hasProjects ? p.projects : [
+                    {
+                        number: "01",
+                        title: "Lakeside Composite Deck",
+                        category: "Decks",
+                        location: "Lake Ozark, MO",
+                        year: "2024",
+                        desc: "Expansive composite deck with built-in lighting.",
+                        image: "/src/assets/outdoor-sitting-desk.png"
                     },
-                    projects: [
-                        {
-                            number: "01",
-                            title: "Lakeside Composite Deck",
-                            category: "Decks",
-                            location: "Lake Ozark, MO",
-                            year: "2024",
-                            desc: "Expansive composite deck with built-in lighting.",
-                            image: "/src/assets/outdoor-sitting-desk.png"
-                        },
-                        {
-                            number: "02",
-                            title: "St. Louis Roofing Project",
-                            category: "Roofing",
-                            location: "St. Louis, MO",
-                            year: "2024",
-                            desc: "Full asphalt shingle replacement with 50-year warranty.",
-                            image: "/src/assets/roof1.jpg.jpeg"
-                        }
-                    ],
-                    button: { text: "View Full Gallery", link: "/gallery" }
-                };
-            }
-            return p;
+                    {
+                        number: "02",
+                        title: "Suburban Roof Replacement",
+                        category: "Roofing",
+                        location: "St. Louis, MO",
+                        year: "2023",
+                        desc: "Complete architectural shingle replacement with improved ventilation.",
+                        image: "/src/assets/roof1.jpg.jpeg"
+                    }
+                ],
+                button: p.button || {
+                    text: "View Full Gallery",
+                    link: "/gallery"
+                }
+            };
         })(),
         testimonials: getSafe(completeData, 'testimonials', {
             section: { badge: "", headline: "", description: "" },

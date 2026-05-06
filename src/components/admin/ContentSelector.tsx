@@ -24,7 +24,7 @@ export default function ContentSelector({ type, selectedItems = [], onSelect, la
 
         let masterList: any[] = [];
         if (type === "services") masterList = data.services?.services || [];
-        if (type === "projects") masterList = data.portfolio?.projects || [];
+        if (type === "projects") masterList = data.galleryPage?.projects || [];
         if (type === "reviews") masterList = data.testimonials?.testimonials || [];
         if (type === "faq") masterList = data.faq?.items || [];
 
