@@ -3,6 +3,7 @@ import connectToDatabase from '@/lib/mongodb';
 import SiteContent from '@/models/Content';
 import Page from '@/models/Page';
 import { BASE_URL } from '@/lib/constants';
+export const revalidate = 0;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
@@ -27,6 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }).lean();
 
     dynamicPages = pages;
+    console.log(`Sitemap: Fetched ${dynamicPages.length} dynamic pages. Slugs: ${dynamicPages.map(p => p.slug).join(', ')}`);
   } catch (e) {
     console.error("Sitemap: Failed to fetch dynamic data", e);
   }
