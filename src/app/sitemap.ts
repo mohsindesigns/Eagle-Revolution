@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import connectToDatabase from '@/lib/mongodb';
 import SiteContent from '@/models/Content';
 import Page from '@/models/Page';
+import Post from '@/models/Post';
 import { BASE_URL } from '@/lib/constants';
 export const revalidate = 0;
 
@@ -11,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch dynamic content from DB
   let dynamicServices: any[] = [];
   let dynamicPages: any[] = [];
+  let dynamicBlogPosts: any[] = [];
   try {
     await connectToDatabase();
 
@@ -28,6 +30,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }).lean();
 
     dynamicPages = pages;
+
+    // Fetch published blog posts
+    const posts = await Post.find({
+      status: 'published',
+      isTrashed: { $ne: true }
+    }).lean();
+
+    dynamicBlogPosts = posts;
   } catch (e) {
     console.error("Sitemap: Failed to fetch dynamic data", e);
   }
@@ -52,17 +62,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'yearly',
       priority: 0.3,
     },
+    {
+      url: `${BASE_URL}/blog`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.7,
+    },
   ];
 
   // Dynamic service detail pages
-  const serviceRoutes: MetadataRoute.Sitemap = dynamicServices.map(
-    (service: any) => ({
-      url: `${BASE_URL}/${service.slug}`,
+  const serviceRoutes: MetadataRoute.Sitemap = dynamicServices.map((service: any) => {
+    const slug = String(service.slug || '')
+      .replace(/^\/+/, '')
+      .replace(/\/+$|^services\//, '');
+
+    return {
+      url: `${BASE_URL}/services/${slug}`,
       lastModified: now,
       changeFrequency: 'weekly' as const,
       priority: 0.85,
-    })
-  );
+    };
+  });
+
+  const blogRoutes: MetadataRoute.Sitemap = dynamicBlogPosts.map((post: any) => {
+    const slug = String(post.slug || '').replace(/^\/+/, '').replace(/\/+$/, '');
+
+    return {
+      url: `${BASE_URL}/blog/${slug}`,
+      lastModified: post.updatedAt ? new Date(post.updatedAt).toISOString() : now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.75,
+    };
+  });
 
   // Dynamic custom pages
   // Filter out slugs that are already in staticRoutes to avoid duplicates
@@ -80,5 +111,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     }));
 
-  return [...staticRoutes, ...serviceRoutes, ...customPageRoutes];
+  return [...staticRoutes, ...serviceRoutes, ...blogRoutes, ...customPageRoutes];
 }
