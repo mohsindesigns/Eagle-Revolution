@@ -28,7 +28,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }).lean();
 
     dynamicPages = pages;
-    console.log(`Sitemap: Fetched ${dynamicPages.length} dynamic pages. Slugs: ${dynamicPages.map(p => p.slug).join(', ')}`);
   } catch (e) {
     console.error("Sitemap: Failed to fetch dynamic data", e);
   }
