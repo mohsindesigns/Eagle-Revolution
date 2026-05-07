@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Fetch dynamic Pages
     const pages = await Page.find({
       status: 'published',
-      isTrashed: false
+      isTrashed: { $ne: true }
     }).lean();
 
     dynamicPages = pages;
