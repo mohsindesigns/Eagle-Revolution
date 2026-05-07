@@ -1,22 +1,34 @@
 import { MetadataRoute } from 'next';
 import connectToDatabase from '@/lib/mongodb';
 import SiteContent from '@/models/Content';
+import Page from '@/models/Page';
 import { BASE_URL } from '@/lib/constants';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
 
   // Fetch dynamic content from DB
-  let dynamicServices = [];
+  let dynamicServices: any[] = [];
+  let dynamicPages: any[] = [];
   try {
     await connectToDatabase();
+
+    // Fetch Services
     const content = await SiteContent.findOne({ key: 'complete_data' });
     if (content?.data?.services) {
-        const sData = content.data.services;
-        dynamicServices = Array.isArray(sData) ? sData : (sData.services || []);
+      const sData = content.data.services;
+      dynamicServices = Array.isArray(sData) ? sData : (sData.services || []);
     }
+
+    // Fetch dynamic Pages
+    const pages = await Page.find({
+      status: 'published',
+      isTrashed: false
+    }).lean();
+
+    dynamicPages = pages;
   } catch (e) {
-    console.error("Sitemap: Failed to fetch services", e);
+    console.error("Sitemap: Failed to fetch dynamic data", e);
   }
 
   // Static pages
@@ -26,42 +38,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: 'weekly',
       priority: 1.0,
-    },
-    {
-      url: `${BASE_URL}/services`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/about`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/contact`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/gallery`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-    {
-      url: `${BASE_URL}/reviews`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-    {
-      url: `${BASE_URL}/faq`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.6,
     },
     {
       url: `${BASE_URL}/privacy`,
@@ -87,5 +63,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   );
 
-  return [...staticRoutes, ...serviceRoutes];
+  // Dynamic custom pages
+  // Filter out slugs that are already in staticRoutes to avoid duplicates
+  const staticSlugs = staticRoutes.map(r => r.url.replace(BASE_URL, '').replace(/^\//, ''));
+  const customPageRoutes: MetadataRoute.Sitemap = dynamicPages
+    .filter((page: any) =>
+      !staticSlugs.includes(page.slug) &&
+      page.slug !== '' &&
+      page.slug !== 'home'
+    )
+    .map((page: any) => ({
+      url: `${BASE_URL}/${page.slug}`,
+      lastModified: page.updatedAt ? new Date(page.updatedAt).toISOString() : now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    }));
+
+  return [...staticRoutes, ...serviceRoutes, ...customPageRoutes];
 }
