@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import {
-  Plus, Pencil, Trash2, Loader2, HelpCircle, Save, X,
+  Plus, Pencil, Trash2, Loader2, CircleHelp, Save, X,
   ChevronRight, Globe, Layers, ListFilter, Layout,
-  Settings, Info, Shield, CheckCircle, HelpCircle as FaqIcon,
+  Settings, Info, Shield, CheckCircle, CircleHelp as FaqIcon,
   Search, ExternalLink, Image as ImageIcon, Upload,
   Check, MoveUp, MoveDown, Home, Building2, Building,
   Droplets, ShieldCheck, Clock, Award, Users, TrendingUp,
@@ -27,10 +27,12 @@ import {
   Smartphone, Tablet, Laptop, Headphones, Wallet, CreditCard,
   ShoppingCart, Gift, Coffee, Utensils, Pizza, Beer
 } from "lucide-react";
+import * as LucideIcons from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import ImageField from "@/components/admin/ImageField";
 import SeoEditor from "@/components/admin/SeoEditor";
+import BlogSelector from "@/components/admin/BlogSelector";
 import dynamic from "next/dynamic";
 const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), {
   ssr: false,
@@ -70,11 +72,11 @@ const ICON_LIST = Array.from(new Set([
   "Voicemail", "Volume", "Watch", "Wifi", "X", "Youtube"
 ]));
 
-const IconComponentMap: Record<string, any> = require('lucide-react');
+const IconComponentMap: Record<string, any> = LucideIcons;
 
 function IconSelector({ value, onChange }: { value: string, onChange: (v: string) => void }) {
   const [isOpen, setIsOpen] = useState(false);
-  const SelectedIcon = IconComponentMap[value] || HelpCircle;
+  const SelectedIcon = IconComponentMap[value] || CircleHelp;
 
   return (
     <div className="relative inline-block">
@@ -102,7 +104,11 @@ function IconSelector({ value, onChange }: { value: string, onChange: (v: string
                   className={`p-1.5 rounded hover:bg-[#f0f0f1] ${value === iconName ? "bg-[#2271b1] text-white" : "text-[#50575e]"}`}
                   title={iconName}
                 >
-                  <IconComp className="w-4 h-4" />
+                  {IconComp ? (
+                    <IconComp className="w-4 h-4" />
+                  ) : (
+                    <div className="w-4 h-4 border border-dashed rounded-full" />
+                  )}
                 </button>
               );
             })}
@@ -304,6 +310,7 @@ export default function ServicesAdminPage() {
                   { id: "features", label: "Stats & Benefits" },
                   { id: "steps", label: "Process" },
                   { id: "faq", label: "FAQs" },
+                  { id: "blog", label: "Blog" },
                   { id: "seo", label: "SEO" }
                 ].map(tab => (
                   <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`px-4 py-2 text-[13px] border-b-2 transition-all ${activeTab === tab.id ? 'border-[#2271b1] text-[#1d2327] font-bold' : 'border-transparent text-[#2271b1] hover:text-[#135e96]'}`}>
@@ -441,6 +448,35 @@ export default function ServicesAdminPage() {
                         <button onClick={() => { const nf = form.faq.filter((_: any, idx: number) => idx !== i); setForm({ ...form, faq: nf }); }} className="text-[#d63638] text-xs">Remove FAQ</button>
                       </div>
                     ))}
+                  </div>
+                )}
+
+                {activeTab === "blog" && (
+                  <div className="space-y-6">
+                    <div className="space-y-4">
+                      <div className="space-y-1">
+                        <label className="text-[13px] font-bold">Blog Section Title</label>
+                        <input type="text" value={form.blogSection?.title || ""} onChange={(e) => setForm({ ...form, blogSection: { ...(form.blogSection || {}), title: e.target.value } })} className="w-full border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[13px] font-bold">Blog Section Subtitle</label>
+                        <input type="text" value={form.blogSection?.subtitle || ""} onChange={(e) => setForm({ ...form, blogSection: { ...(form.blogSection || {}), subtitle: e.target.value } })} className="w-full border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[13px] font-bold">Blog Section Description</label>
+                        <RichTextEditor
+                          content={form.blogSection?.description || ""}
+                          onChange={(v) => setForm({ ...form, blogSection: { ...(form.blogSection || {}), description: v } })}
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-4 pt-6 border-t border-[#c3c4c7]">
+                      <h3 className="text-sm font-bold">Select Featured Posts</h3>
+                      <BlogSelector
+                        selectedIds={form.blogSection?.selectedPosts || []}
+                        onChange={(ids) => setForm({ ...form, blogSection: { ...(form.blogSection || {}), selectedPosts: ids } })}
+                      />
+                    </div>
                   </div>
                 )}
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Save, Loader2, Type, ChevronRight, HelpCircle, Plus } from "lucide-react";
+import { Save, Loader2, Type, ChevronRight, CircleHelp, Plus } from "lucide-react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
@@ -94,7 +94,7 @@ export default function FAQPageEditor() {
       <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm space-y-10">
         <div className="flex items-center gap-3 border-b border-slate-100 pb-6">
           <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
-            <HelpCircle className="w-5 h-5 text-primary" />
+            <CircleHelp className="w-5 h-5 text-primary" />
           </div>
           <h2 className="text-xl font-extrabold text-slate-900 uppercase tracking-tight">Page Identity</h2>
         </div>

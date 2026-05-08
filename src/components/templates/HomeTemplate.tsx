@@ -46,11 +46,11 @@ export default function HomeTemplate({ pageData, params }: { pageData?: any, par
       </section>
 
 
-      <BlogSection
-        title={blogSection?.title}
-        subtitle={blogSection?.subtitle}
-        description={blogSection?.description}
-        posts={allBlogs.filter((p: any) => blogSection?.selectedPosts?.includes(p._id))}
+       <BlogSection
+        title={pageData?.content?.blogSection?.title || blogSection?.title}
+        subtitle={pageData?.content?.blogSection?.subtitle || blogSection?.subtitle}
+        description={pageData?.content?.blogSection?.description || blogSection?.description}
+        posts={allBlogs.filter((p: any) => (pageData?.content?.blogSection?.selectedPosts || blogSection?.selectedPosts || []).includes(p._id))}
       />
 
       <QuickQuote />

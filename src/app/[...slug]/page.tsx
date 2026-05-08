@@ -47,11 +47,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     robots: {
       index: seo.metaRobotsIndex !== 'noindex',
       follow: seo.metaRobotsFollow !== 'nofollow',
-      ...(seo.metaRobotsIndex !== 'noindex' && {
+      nocache: true,
+      googleBot: {
+        index: seo.metaRobotsIndex !== 'noindex',
+        follow: seo.metaRobotsFollow !== 'nofollow',
         'max-video-preview': -1,
         'max-image-preview': 'large',
         'max-snippet': -1,
-      })
+      },
     },
     openGraph: {
       title: seo.ogTitle || seo.metaTitle || page.title,

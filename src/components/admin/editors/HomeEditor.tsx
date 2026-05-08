@@ -42,12 +42,39 @@ export default function HomeEditor({ pageId, data, setData }: { pageId: string, 
 
    if (!data) return <div className="flex items-center justify-center h-64"><Loader2 className="w-5 h-5 text-[#2271b1] animate-spin" /></div>;
 
-   const updateSection = (section: string, field: string | null, value: any) => {
-      if (field) {
-         setData({ ...data, [section]: { ...(data[section] || {}), [field]: value } });
-      } else {
-         setData({ ...data, [section]: value });
-      }
+   const updateSection = (section: string | null, field: string | null, value: any) => {
+      setData((prev: any) => {
+         const currentData = prev || {};
+
+         if (!section) {
+            let newValue = value;
+            if (typeof value === 'function') {
+               newValue = value(currentData[field as string]);
+            }
+            return { ...currentData, [field as string]: newValue };
+         }
+
+         const sectionData = currentData[section] || {};
+         let newValue = value;
+         if (typeof value === 'function') {
+            const currentValue = field ? sectionData[field] : sectionData;
+            newValue = value(currentValue);
+         }
+
+         if (field) {
+            return {
+               ...currentData,
+               [section]: {
+                  ...sectionData,
+                  [field]: newValue
+               }
+            };
+         }
+         return {
+            ...currentData,
+            [section]: newValue
+         };
+      });
    };
 
    const tabs = [
@@ -142,13 +169,16 @@ export default function HomeEditor({ pageId, data, setData }: { pageId: string, 
                         <div className="space-y-4">
                            {(data.hero?.stats || []).map((s: any, i: number) => (
                               <div key={i} className={UI.card + " space-y-4"}>
-                                 <div className="space-y-1.5"><label className={UI.label}>Value</label><input type="text" value={s.value || ""} onChange={(e) => { const newS = [...data.hero.stats]; newS[i].value = e.target.value; updateSection("hero", "stats", newS); }} className={UI.inputLarge} /></div>
-                                 <div className="space-y-1.5"><label className={UI.label}>Label</label><input type="text" value={s.label || ""} onChange={(e) => { const newS = [...data.hero.stats]; newS[i].label = e.target.value; updateSection("hero", "stats", newS); }} className={UI.input} /></div>
-                                 <IconSelector label="Icon" value={s.icon} onChange={(val) => { const newS = [...data.hero.stats]; newS[i].icon = val; updateSection("hero", "stats", newS); }} />
-                                 <button onClick={() => { const newS = data.hero.stats.filter((_: any, idx: number) => idx !== i); updateSection("hero", "stats", newS); }} className="text-[#d63638] text-[11px] font-bold">Remove Stat</button>
+                                 <div className="flex justify-between items-center pb-2 border-b border-[#f0f0f1]">
+                                    <span className="text-[10px] font-bold text-[#646970] uppercase">Stat #{i + 1}</span>
+                                    <button onClick={() => { updateSection("hero", "stats", (prev: any[]) => prev.filter((_: any, idx: number) => idx !== i)); }} className="text-[#d63638]"><Trash2 className="w-4 h-4" /></button>
+                                 </div>
+                                 <div className="space-y-1.5"><label className={UI.label}>Value</label><input type="text" value={s.value || ""} onChange={(e) => { const val = e.target.value; updateSection("hero", "stats", (prev: any[]) => { const newS = [...prev]; newS[i].value = val; return newS; }); }} className={UI.inputLarge} /></div>
+                                 <div className="space-y-1.5"><label className={UI.label}>Label</label><input type="text" value={s.label || ""} onChange={(e) => { const val = e.target.value; updateSection("hero", "stats", (prev: any[]) => { const newS = [...prev]; newS[i].label = val; return newS; }); }} className={UI.input} /></div>
+                                 <IconSelector label="Icon" value={s.icon} onChange={(val) => { updateSection("hero", "stats", (prev: any[]) => { const newS = [...prev]; newS[i].icon = val; return newS; }); }} />
                               </div>
                            ))}
-                           <button onClick={() => updateSection("hero", "stats", [...(data.hero?.stats || []), { label: "", value: "", icon: "Shield" }])} className={UI.buttonAdd}>+ Add Stat</button>
+                           <button onClick={() => updateSection("hero", "stats", (prev: any[]) => [...(prev || []), { value: "", label: "", icon: "Star" }])} className={UI.buttonAdd}>+ Add Stat</button>
                         </div>
                      </div>
                      <div className="space-y-6">
@@ -157,9 +187,11 @@ export default function HomeEditor({ pageId, data, setData }: { pageId: string, 
                            label="Background Image"
                            value={data.hero?.images?.[0]}
                            onChange={(url) => {
-                              const imgs = [...(data.hero?.images || [])];
-                              imgs[0] = url;
-                              updateSection("hero", "images", imgs);
+                              updateSection("hero", "images", (prev: any[]) => {
+                                 const next = [...(prev || [])];
+                                 next[0] = url;
+                                 return next;
+                              });
                            }}
                            altValue={data.hero?.bgImageAlt || ""}
                            onAltChange={(alt) => updateSection("hero", "bgImageAlt", alt)}

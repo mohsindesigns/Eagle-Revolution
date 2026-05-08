@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Save, Loader2, LayoutTemplate, Type, Image as ImageIcon, 
   ChevronRight, Star, Phone, Plus, Trash2, Mail, Upload, 
-  List, Heart, HelpCircle, Check, Target, Award, Shield, 
+  List, Heart, CircleHelp, Check, Target, Award, Shield, 
   ArrowRight, Globe, Share2, Facebook, Instagram, Linkedin,
   Navigation, PanelBottom as FooterIcon, Clock, MapPin, Sparkles,
   Zap, Calendar, Settings as SettingsIcon, MousePointer2, X

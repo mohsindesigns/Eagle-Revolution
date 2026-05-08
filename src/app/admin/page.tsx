@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  FileText, Briefcase, Star, HelpCircle,
+  FileText, Briefcase, Star, CircleHelp,
   ImageIcon, Phone, Settings, Plus, ExternalLink,
   Home, Layers, Users, Settings2, MessageSquare,
   Activity, Clock, CheckCircle, XCircle, RefreshCw,

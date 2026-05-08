@@ -96,10 +96,10 @@ export default function ServicesTemplate({ pageData, params }: { pageData?: any,
             <PageInlineFaqs faqs={faq.items} />
 
             <BlogSection
-                title={blogSection?.title}
-                subtitle={blogSection?.subtitle}
-                description={blogSection?.description}
-                posts={allBlogs.filter((p: any) => blogSection?.selectedPosts?.includes(p._id))}
+                title={pageData?.content?.blogSection?.title || blogSection?.title}
+                subtitle={pageData?.content?.blogSection?.subtitle || blogSection?.subtitle}
+                description={pageData?.content?.blogSection?.description || blogSection?.description}
+                posts={allBlogs.filter((p: any) => (pageData?.content?.blogSection?.selectedPosts || blogSection?.selectedPosts || []).includes(p._id))}
             />
 
         </main>

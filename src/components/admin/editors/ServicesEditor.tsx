@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Save, Loader2, LayoutTemplate, Type, Image as ImageIcon,
   ChevronRight, Star, Phone, Plus, Trash2, Mail, Upload,
-  List, Heart, HelpCircle, Check, Target, Award, Shield,
+  List, Heart, CircleHelp, Check, Target, Award, Shield,
   ArrowRight, Zap, Globe, ShieldCheck, Building2, Droplets, Building,
   Home, Layout, TreePine, TrendingUp, BadgeCheck, Sparkles, Box, PenTool as Tool
 } from "lucide-react";
@@ -37,29 +37,41 @@ export default function ServicesEditor({ pageId, data, setData }: { pageId: stri
   if (!data) return <div className="flex items-center justify-center h-64"><Loader2 className="w-5 h-5 text-[#2271b1] animate-spin" /></div>;
 
   const updateServices = (section: string | null, field: string | null, value: any) => {
-    const currentData = data.services || {
-      badge: "",
-      headline: { prefix: "", highlight: "", suffix: "" },
-      description: "",
-      services: []
-    };
+    setData((prev: any) => {
+      const currentData = prev || {};
+      const servicesContent = currentData.services || {
+        badge: "",
+        headline: { prefix: "", highlight: "", suffix: "" },
+        description: "",
+        services: []
+      };
 
-    if (!section) {
-      setData({ ...data, services: { ...currentData, [field as string]: value } });
-      return;
-    }
+      let newValue = value;
+      if (typeof value === 'function') {
+        const currentValue = section ? servicesContent[section as keyof typeof servicesContent] : servicesContent;
+        const targetValue = field && section ? (currentValue as any)[field] : currentValue;
+        newValue = value(targetValue);
+      }
 
-    const targetSectionData = currentData[section as keyof typeof currentData] || {};
+      if (!section) {
+        return {
+          ...currentData,
+          services: { ...servicesContent, [field as string]: newValue }
+        };
+      }
 
-    setData({
-      ...data,
-      services: {
+      const targetSectionData = servicesContent[section as keyof typeof servicesContent] || {};
+
+      return {
         ...currentData,
-        [section]: field ? {
-          ...targetSectionData,
-          [field]: value,
-        } : value,
-      },
+        services: {
+          ...servicesContent,
+          [section]: field ? {
+            ...targetSectionData,
+            [field]: newValue,
+          } : newValue,
+        },
+      };
     });
   };
 

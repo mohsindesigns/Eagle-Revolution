@@ -324,12 +324,11 @@ const Hero = ({ content: passedContent }: { content?: any }) => {
 };
 
 // ==================== FOUNDER PORTRAIT ====================
-const FounderPortrait = () => {
+const FounderPortrait = ({ content }: { content?: any }) => {
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
-  const { aboutPage } = useContent();
-  const story = aboutPage?.story || { portrait: {}, founder: {} };
+  const story = content || { portrait: {}, founder: {} };
 
   return (
     <motion.div
@@ -492,7 +491,7 @@ const FounderStory = ({ content: passedContent }: { content?: any }) => {
 
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 xl:gap-20 items-start">
           <div className="founder-reveal lg:sticky lg:top-24">
-            <FounderPortrait />
+            <FounderPortrait content={story} />
           </div>
 
           <div className="space-y-6 sm:space-y-8 md:space-y-10 founder-reveal">
@@ -857,10 +856,10 @@ export default function AboutTemplate({ pageData, params }: { pageData?: any, pa
       </div>
 
       <BlogSection
-        title={blogSection?.title}
-        subtitle={blogSection?.subtitle}
-        description={blogSection?.description}
-        posts={allBlogs.filter((p: any) => blogSection?.selectedPosts?.includes(p._id))}
+        title={content.blogSection?.title || blogSection?.title}
+        subtitle={content.blogSection?.subtitle || blogSection?.subtitle}
+        description={content.blogSection?.description || blogSection?.description}
+        posts={allBlogs.filter((p: any) => (content.blogSection?.selectedPosts || blogSection?.selectedPosts || []).includes(p._id))}
       />
 
     </main>

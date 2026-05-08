@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, FileText, Briefcase, Star,
-  HelpCircle, ImageIcon, Phone, Settings, LogOut,
+  CircleHelp, ImageIcon, Phone, Settings, LogOut,
   Shield, Menu, X, Globe, Folder, Code2, ExternalLink, User, Plus, ChevronDown, Loader2
 } from "lucide-react";
 
@@ -22,7 +22,7 @@ const navItems = [
   { label: "Media",       href: "/admin/media",      icon: ImageIcon, module: 'media', sub: [{label: "Library", href: "/admin/media"}, {label: "Add New", href: "/admin/media"}] },
   { label: "Reviews",     href: "/admin/reviews",    icon: Star, module: 'pages' }, 
   { label: "Projects",    href: "/admin/projects",   icon: Folder, module: 'pages' },
-  { label: "FAQ",         href: "/admin/faq",        icon: HelpCircle, module: 'pages' },
+  { label: "FAQ",         href: "/admin/faq",        icon: CircleHelp, module: 'pages' },
   { label: "Services",    href: "/admin/services",   icon: Briefcase, module: 'pages' },
   { label: "Submissions", href: "/admin/submissions", icon: Phone, module: 'submissions' },
   { label: "Users",       href: "/admin/users",       icon: User, module: 'users', sub: [{label: "All Users", href: "/admin/users"}, {label: "Add User", href: "/admin/users"}, {label: "Roles", href: "/admin/roles"}] },

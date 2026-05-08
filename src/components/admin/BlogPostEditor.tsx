@@ -7,7 +7,7 @@ import {
   Image as ImageIcon, Tag, Folder,
   ChevronRight, ArrowLeft, ExternalLink, Globe,
   CheckCircle2, AlertCircle, BarChart3, Search,
-  Plus, Trash2, HelpCircle
+  Plus, Trash2, CircleHelp
 } from "lucide-react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -282,7 +282,7 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
 
                     {(!post.faq || post.faq.length === 0) && (
                       <div className="text-center py-20 bg-slate-50/50 rounded-xl border border-dashed border-slate-200">
-                        <HelpCircle className="w-12 h-12 text-slate-200 mx-auto mb-4" />
+                        <AlertCircle className="w-12 h-12 text-slate-200 mx-auto mb-4" />
                         <h4 className="text-slate-900 font-medium">No FAQs Yet</h4>
                         <p className="text-slate-500 text-sm mt-1">Click the button above to add your first question.</p>
                       </div>

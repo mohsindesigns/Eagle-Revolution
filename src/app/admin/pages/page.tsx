@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Plus, ChevronRight, Loader2, Search, Trash2, X, ExternalLink, Edit3, Check, Copy, MoreHorizontal,
-  Info, Briefcase, HelpCircle, Mail, UserCheck, ArrowRight, Eye, EyeOff, Image as GalleryIcon
+  Info, Briefcase, CircleHelp, Mail, UserCheck, ArrowRight, Eye, EyeOff, Image as GalleryIcon
 } from "lucide-react";
 
 export default function PagesDashboard() {

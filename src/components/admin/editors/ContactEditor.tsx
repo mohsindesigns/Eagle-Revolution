@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Save, Loader2, LayoutTemplate, Type, Image as ImageIcon, 
   ChevronRight, Star, Phone, Plus, Trash2, Mail, Upload, 
-  List, Heart, HelpCircle, Check, Target, Award, Shield, 
+  List, Heart, CircleHelp, Check, Target, Award, Shield, 
   ArrowRight, MapPin, Clock, Facebook, Instagram, Linkedin, Send,
   User, MessageSquare, Smartphone, Hash, Sparkles
 } from "lucide-react";

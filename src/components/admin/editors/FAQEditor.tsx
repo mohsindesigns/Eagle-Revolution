@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Save, Loader2, LayoutTemplate, Type, Image as ImageIcon, 
   ChevronRight, Star, Phone, Plus, Trash2, Mail, Upload, 
-  List, Heart, HelpCircle, Check, Target, Award, Shield, 
+  List, Heart, CircleHelp, Check, Target, Award, Shield, 
   ArrowRight, MessageSquare, Filter, BookOpen, Sparkles
 } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -39,30 +39,33 @@ export default function FAQEditor({ pageId, data, setData }: { pageId: string, d
   if (!data) return <div className="flex items-center justify-center h-64"><Loader2 className="w-5 h-5 text-[#2271b1] animate-spin" /></div>;
 
   const updateFAQ = (section: string, field: string | null, value: any) => {
-    const currentFAQ = data.faq || {
-      section: { headline: "", description: "" },
-      categories: [],
-      items: []
-    };
+    setData((prev: any) => {
+      const currentData = prev || {};
+      const currentFAQ = currentData.faq || {
+        section: { headline: "", description: "" },
+        categories: [],
+        items: []
+      };
 
-    const targetSectionData = currentFAQ[section as keyof typeof currentFAQ] || {};
+      const targetSectionData = currentFAQ[section as keyof typeof currentFAQ] || {};
 
-    setData({
-      ...data,
-      faq: {
-        ...currentFAQ,
-        [section]: field ? {
-          ...targetSectionData,
-          [field]: value,
-        } : value,
-      },
+      return {
+        ...currentData,
+        faq: {
+          ...currentFAQ,
+          [section]: field ? {
+            ...targetSectionData,
+            [field]: value,
+          } : value,
+        },
+      };
     });
   };
 
   const tabs = [
     { id: "header", label: "Support Header", icon: Type, title: "Support Knowledge Base Introduction" },
     { id: "categories", label: "Filter Taxonomy", icon: Filter, title: "Filtering Categories" },
-    { id: "items", label: "Q&A Database", icon: HelpCircle, title: "Comprehensive Q&A Database" },
+    { id: "items", label: "Q&A Database", icon: CircleHelp, title: "Comprehensive Q&A Database" },
   ];
 
   const activeTabTitle = tabs.find(t => t.id === activeTab)?.title;
