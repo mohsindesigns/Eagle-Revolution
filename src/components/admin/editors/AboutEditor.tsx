@@ -6,6 +6,7 @@ import { Trash2, Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import IconSelector from "@/components/admin/IconSelector";
 import BlogSelector from "@/components/admin/BlogSelector";
+import ImageField from "@/components/admin/ImageField";
 const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), { 
   ssr: false,
   loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
@@ -20,7 +21,7 @@ export default function AboutEditor({ pageId, data, setData }: { pageId: string,
       setData({
         hero: { headline: { line1: "", line2: "", line3: "" }, description: "", cta: "", phone: "", phoneLabel: "", trustLabel: "", stats: [] },
         mission: { badge: "", headline: "", highlight: "", description: "", stats: [], principles: [] },
-        story: { badge: "", headline: "", highlight: "", description: "", portrait: { badgeLeft: "", badgeRight: "" }, founder: { name: "", title: "", quote: "", bio: "", secondaryQuote: "", footer: "", email: "", social: { linkedin: "" } } },
+        story: { badge: "", headline: "", highlight: "", description: "", portrait: { image: "", alt: "", badgeLeft: "", badgeRight: "" }, founder: { name: "", title: "", quote: "", bio: "", secondaryQuote: "", footer: "", email: "", social: { linkedin: "" } } },
         values: { badge: "", headline: "", highlight: "", description: "", items: [] },
         capabilities: { badge: "", headline: "", highlight: "", description: "", cta: "" },
         ctaBanner: { badge: "", headline: "", highlight: "", description: "", features: [], primaryCta: "", secondaryCta: "" },
@@ -88,6 +89,16 @@ export default function AboutEditor({ pageId, data, setData }: { pageId: string,
                     content={data.hero?.description || ""} 
                     onChange={(html) => updateSection("hero", "description", html)} 
                   />
+                  <div className="pt-4 border-t border-[#f0f0f1]">
+                     <h4 className={UI.label}>Background Media</h4>
+                     <ImageField 
+                        label="Hero Background"
+                        value={data.hero?.bgImage || ""}
+                        onChange={(url) => updateSection("hero", "bgImage", url)}
+                        altValue={data.hero?.bgImageAlt || ""}
+                        onAltChange={(alt) => updateSection("hero", "bgImageAlt", alt)}
+                     />
+                  </div>
                </div>
                <div className="space-y-6">
                   <h3 className={UI.sectionHeader}>2. Contact Info</h3>
@@ -188,8 +199,17 @@ export default function AboutEditor({ pageId, data, setData }: { pageId: string,
                     onChange={(html) => updateSection("story", "description", html)} 
                   />
                </div>
-               <div className="space-y-6">
-                  <h3 className={UI.sectionHeader}>2. Portrait Badges</h3>
+                <div className="space-y-6">
+                  <h3 className={UI.sectionHeader}>2. Portrait & Badges</h3>
+                  <div className="space-y-6 mb-6">
+                    <ImageField 
+                      label="Founder Portrait"
+                      value={data.story?.portrait?.image || ""}
+                      onChange={(url) => updateSection("story", "portrait", { ...(data.story?.portrait || {}), image: url })}
+                      altValue={data.story?.portrait?.alt || ""}
+                      onAltChange={(alt) => updateSection("story", "portrait", { ...(data.story?.portrait || {}), alt: alt })}
+                    />
+                  </div>
                   <div className="grid grid-cols-2 gap-4">
                      <div className="space-y-1.5"><label className={UI.label}>Left Badge</label><input type="text" value={data.story?.portrait?.badgeLeft || ""} onChange={(e) => updateSection("story", "portrait", { ...(data.story?.portrait || {}), badgeLeft: e.target.value })} className={UI.input} /></div>
                      <div className="space-y-1.5"><label className={UI.label}>Right Badge</label><input type="text" value={data.story?.portrait?.badgeRight || ""} onChange={(e) => updateSection("story", "portrait", { ...(data.story?.portrait || {}), badgeRight: e.target.value })} className={UI.input} /></div>

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
    Plus, Trash2, Loader2, Image as ImageIcon,
    LayoutTemplate, Type, Settings, Star,
-   CheckCircle2, List, HelpCircle, Mail, Briefcase,
+   CheckCircle2, List, CircleHelp, Mail, Briefcase,
    ChevronRight, X
 } from "lucide-react";
 import dynamic from "next/dynamic";

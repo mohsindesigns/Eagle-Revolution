@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Loader2, Type, Image as ImageIcon, 
-  Plus, Trash2, Mail, List, Heart, HelpCircle, 
+  Plus, Trash2, Mail, List, Heart, CircleHelp, 
   Check, Target, Award, Shield, ArrowRight, 
   Settings, Info, Box, TrendingUp, X
 } from "lucide-react";
@@ -147,22 +147,33 @@ export default function ServiceDetailEditor({ pageId, data, setData }: { pageId:
                                }} className="text-[#d63638]"><Trash2 className="w-4 h-4" /></button>
                             </div>
                             <div className="space-y-4">
-                               <div className="space-y-1.5">
+                                <div className="space-y-1.5">
                                   <label className={UI.label}>Label</label>
-                                  <input type="text" value={typeof f === 'string' ? f : f.text} onChange={(e) => {
-                                    const newF = [...(data.features || [])]; 
-                                    if (typeof f === 'string') newF[i] = { text: e.target.value, icon: "CheckCircle" };
-                                    else newF[i].text = e.target.value;
-                                    updateField("features", newF);
-                                  }} className={UI.input + " font-bold"} />
+                                  <input 
+                                    type="text" 
+                                    value={(typeof f === 'string' ? f : f.text) || ""} 
+                                    onChange={(e) => {
+                                      const newF = [...(data.features || [])]; 
+                                      if (typeof f === 'string') {
+                                        newF[i] = { text: e.target.value, icon: "CheckCircle" };
+                                      } else {
+                                        newF[i] = { ...newF[i], text: e.target.value };
+                                      }
+                                      updateField("features", newF);
+                                    }} 
+                                    className={UI.input + " font-bold"} 
+                                  />
                                </div>
                                <IconSelector 
                                   label="Icon Representation"
                                   value={f.icon || "CheckCircle"} 
                                   onChange={(val) => {
                                     const newF = [...(data.features || [])]; 
-                                    if (typeof f === 'string') newF[i] = { text: f, icon: val };
-                                    else newF[i].icon = val;
+                                    if (typeof f === 'string') {
+                                      newF[i] = { text: f, icon: val };
+                                    } else {
+                                      newF[i] = { ...newF[i], icon: val };
+                                    }
                                     updateField("features", newF);
                                   }} 
                                />
@@ -185,23 +196,40 @@ export default function ServiceDetailEditor({ pageId, data, setData }: { pageId:
                                }} className="text-[#d63638]"><Trash2 className="w-4 h-4" /></button>
                             </div>
                             <div className="space-y-4">
-                               <div className="space-y-1.5">
+                                <div className="space-y-1.5">
                                   <label className={UI.label}>Metric Value</label>
-                                  <input type="text" value={s.value} onChange={(e) => {
-                                    const newS = [...(data.stats || [])]; newS[i].value = e.target.value; updateField("stats", newS);
-                                  }} className={UI.inputLarge} placeholder="500+" />
+                                  <input 
+                                    type="text" 
+                                    value={s.value || ""} 
+                                    onChange={(e) => {
+                                      const newS = [...(data.stats || [])]; 
+                                      newS[i] = { ...newS[i], value: e.target.value }; 
+                                      updateField("stats", newS);
+                                    }} 
+                                    className={UI.inputLarge} 
+                                    placeholder="500+" 
+                                  />
                                </div>
                                <div className="space-y-1.5">
                                   <label className={UI.label}>Label</label>
-                                  <input type="text" value={s.label} onChange={(e) => {
-                                    const newS = [...(data.stats || [])]; newS[i].label = e.target.value; updateField("stats", newS);
-                                  }} className={UI.input} />
+                                  <input 
+                                    type="text" 
+                                    value={s.label || ""} 
+                                    onChange={(e) => {
+                                      const newS = [...(data.stats || [])]; 
+                                      newS[i] = { ...newS[i], label: e.target.value }; 
+                                      updateField("stats", newS);
+                                    }} 
+                                    className={UI.input} 
+                                  />
                                </div>
                                <IconSelector 
                                  label="Icon"
                                  value={s.icon || "Shield"} 
                                  onChange={(val) => {
-                                   const newS = [...(data.stats || [])]; newS[i].icon = val; updateField("stats", newS);
+                                   const newS = [...(data.stats || [])]; 
+                                   newS[i] = { ...newS[i], icon: val }; 
+                                   updateField("stats", newS);
                                  }} 
                                />
                             </div>

@@ -3,11 +3,13 @@
 import { useState, useMemo } from "react";
 import * as LucideIcons from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, Check } from "lucide-react";
+import { Search, X, Check, CircleHelp, ChevronDown } from "lucide-react";
 
 // Filter out non-icon exports from Lucide
 const ICON_NAMES = Array.from(new Set(Object.keys(LucideIcons).filter(
-  (key) => typeof (LucideIcons as any)[key] === "function" || typeof (LucideIcons as any)[key] === "object"
+  (key) => (typeof (LucideIcons as any)[key] === "function" || typeof (LucideIcons as any)[key] === "object") && 
+           key !== "default" && 
+           /^[A-Z]/.test(key) // Lucide icons start with uppercase
 ))).sort();
 
 export default function IconSelector({ 
@@ -23,13 +25,14 @@ export default function IconSelector({
   const [search, setSearch] = useState("");
 
   const filteredIcons = useMemo(() => {
-    if (!search) return ICON_NAMES.slice(0, 100); // Limit initial view for performance
+    if (!search) return ICON_NAMES.slice(0, 100); 
     return ICON_NAMES.filter(name => 
       name.toLowerCase().includes(search.toLowerCase())
     ).slice(0, 100);
   }, [search]);
 
-  const SelectedIcon = (LucideIcons as any)[value] || LucideIcons.HelpCircle;
+  // Use CircleHelp as guaranteed fallback
+  const SelectedIcon = (LucideIcons as any)[value] || CircleHelp;
 
   return (
     <div className="space-y-2">
@@ -45,7 +48,7 @@ export default function IconSelector({
             <SelectedIcon className="w-4 h-4 text-slate-600 group-hover:text-primary transition-colors" />
           </div>
           <span className="text-sm font-medium text-slate-700 flex-1">{value || "Choose an icon..."}</span>
-          <LucideIcons.ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+          <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`} />
         </button>
 
         <AnimatePresence>
@@ -78,6 +81,8 @@ export default function IconSelector({
                 <div className="max-h-[300px] overflow-y-auto p-2 grid grid-cols-4 gap-2 custom-scrollbar">
                   {filteredIcons.map((name) => {
                     const IconComp = (LucideIcons as any)[name];
+                    if (!IconComp) return null; // Safety check
+                    
                     const isSelected = value === name;
                     
                     return (
