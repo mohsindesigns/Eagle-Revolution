@@ -762,6 +762,119 @@
           "answer": "Gutters don't cause ice dams (poor attic ventilation does), but clogged gutters can exacerbate them by trapping freezing water."
         }
       ]
+    },
+    {
+      "slug": "vinyl-aluminum-fencing",
+      "title": "Vinyl & Aluminum Fencing",
+      "tagline": "Strength That Defines Boundaries.",
+      "tag": "Fencing",
+      "icon": "Shield",
+      "description": "Professional vinyl and aluminum fencing services designed to deliver security, privacy, and long-lasting curb appeal. We specialize in durable, low-maintenance fencing solutions built to handle Missouri’s changing weather conditions while enhancing the beauty and value of your property.",
+      "overview": "Define and secure your property with the ultimate boundary solutions. Our premium **Vinyl Fencing** delivers maximum privacy with zero maintenance, resisting moisture, insects, and cracking. Our structural **Aluminum Fencing** brings elegant security, utilizing marine-grade powder coating that resists rust, fading, and chipping. Both systems are professionally anchored and engineered to stand tall through high winds and harsh weather.",
+      "features": [
+        "Durable Materials",
+        "Low Maintenance",
+        "Enhanced Security",
+        "Custom Styles"
+      ],
+      "stats": [
+        {
+          "value": "49 Year",
+          "label": "Warranty",
+          "icon": "Shield"
+        },
+        {
+          "value": "296",
+          "label": "Fencing Built",
+          "icon": "TreePine"
+        },
+        {
+          "value": "128 MPH",
+          "label": "Wind Rating",
+          "icon": "Zap"
+        },
+        {
+          "value": "98%",
+          "label": "Damage-Free Rating",
+          "icon": "ThumbsUp"
+        }
+      ],
+      "benefits": [
+        {
+          "icon": "Shield",
+          "title": "Durable Materials",
+          "description": "High-quality vinyl and aluminum fencing built to withstand harsh weather, rust, fading, and everyday wear."
+        },
+        {
+          "icon": "Clock",
+          "title": "Low Maintenance",
+          "description": "Enjoy a clean, modern fence with minimal upkeep — no painting, staining, or frequent repairs required."
+        },
+        {
+          "icon": "Lock",
+          "title": "Enhanced Security",
+          "description": "Strong and reliable fencing solutions designed to improve privacy, safety, and property protection."
+        },
+        {
+          "icon": "Palette",
+          "title": "Custom Styles",
+          "description": "Choose from a variety of colors, heights, and designs to match your home’s style and curb appeal."
+        }
+      ],
+      "process": [
+        {
+          "icon": "FileText",
+          "title": "Property Assessment",
+          "description": "We inspect your property layout, measurements, and installation requirements to recommend the best fencing solution."
+        },
+        {
+          "icon": "Palette",
+          "title": "Design Selection",
+          "description": "Choose from a variety of vinyl and aluminum fence styles, colors, heights, and customization options."
+        },
+        {
+          "icon": "Truck",
+          "title": "Material Delivery",
+          "description": "All fencing materials are delivered safely and prepared for a smooth, organized installation process."
+        },
+        {
+          "icon": "ClipboardCheck",
+          "title": "Site Preparation",
+          "description": "Our team prepares the installation area by marking boundaries and ensuring proper alignment and stability."
+        },
+        {
+          "icon": "Hammer",
+          "title": "Precision Installation",
+          "description": "Your fence is professionally installed with attention to durability, security, and clean finishing details."
+        },
+        {
+          "icon": "Award",
+          "title": "Final Inspection",
+          "description": "We complete a full quality check and walkthrough to ensure your new fence meets our craftsmanship standards."
+        }
+      ],
+      "faq": [
+        {
+          "question": "How long does vinyl or aluminum fencing last?",
+          "answer": "Both options are designed for exceptional longevity. Premium aluminum fencing can easily last 30 to 50+ years because it is rust-resistant, and high-grade vinyl fencing typically lasts 20 to 30+ years without warping or cracking, backed by our 49-year warranty."
+        },
+        {
+          "question": "Which fencing option is better for low maintenance?",
+          "answer": "Both vinyl and aluminum are highly low-maintenance compared to wood. They do not require painting, sealing, or staining. Vinyl can be cleaned easily with soap and water, while aluminum holds its powder-coated finish perfectly over decades without rust or corrosion."
+        },
+        {
+          "question": "Is aluminum fencing good for security?",
+          "answer": "Yes, aluminum fencing is extremely strong and durable, providing excellent security and perimeter protection. Its rigid structure makes it highly secure, and when customized with spear-top pickets or secure lock gates, it serves as an excellent deterrent."
+        },
+        {
+          "question": "Can I customize the style and color of my fence?",
+          "answer": "Absolutely. Our vinyl fences are available in classic white, tan, and wood-grain textures, in privacy, semi-privacy, or picket styles. Aluminum fences come in multiple architectural grades, picket spacings, spear styles, and custom powder-coated colors (black, bronze, white) to perfectly complement your property."
+        },
+        {
+          "question": "How long does fence installation take?",
+          "answer": "Most standard residential fence installations in the St. Louis area take between 1 and 3 days, depending on the property size, terrain, and soil conditions. We handle utility marking, boundary alignment, and precision post-setting to ensure a robust, durable, and prompt installation."
+        }
+      ]
     }
   ]
 }

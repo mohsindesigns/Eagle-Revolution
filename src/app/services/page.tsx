@@ -29,6 +29,7 @@ import commercialImg from '../../assets/commercial-tpo.png';
 import sidingImg from '../../assets/siding5.jpg.jpeg';
 import gutter from '../../assets/gutterinstallation.jpg.jpeg';
 import pvcdecks from '../../assets/pvcdecks.jpg.jpeg';
+import fencingImg from '../../assets/vinyl-aluminum-fencing.png';
 
 const iconMap = {
   Home, Layout, TreePine, Building2, Building, Droplets,
@@ -43,8 +44,8 @@ const imageMap = {
   'Commercial Roofing': commercialImg,
   'Siding, Soffit & Fascia': sidingImg,
   'Gutters & Protection': gutter,
-  'PVC Decking': pvcdecks
-
+  'PVC Decking': pvcdecks,
+  'Vinyl & Aluminum Fencing': fencingImg
 };
 
 // --- Counter Component ---

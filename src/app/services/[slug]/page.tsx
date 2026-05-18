@@ -31,6 +31,7 @@ import commercialImg from '../../../assets/commercial-tpo.png';
 import sidingImg from '../../../assets/siding5.jpg.jpeg';
 import gutter from '../../../assets/gutterinstallation.jpg.jpeg';
 import pvcdecks from '../../../assets/pvcdecks.jpg.jpeg';
+import fencingImg from '../../../assets/vinyl-aluminum-fencing.png';
 
 const iconMap = {
   Home, Layout, TreePine, Building2, Building, Droplets,
@@ -45,8 +46,8 @@ const imageMap = {
   'Commercial Roofing': commercialImg,
   'Siding, Soffit & Fascia': sidingImg,
   'Gutters & Protection': gutter,
-  'PVC Decking': pvcdecks
-
+  'PVC Decking': pvcdecks,
+  'Vinyl & Aluminum Fencing': fencingImg
 };
 
 // --- Counter Component ---
@@ -331,9 +332,7 @@ const ProcessCard = ({ step, index }: { step: any, index: number }) => {
             {step.description}
           </p>
 
-          <div className="hidden md:block absolute bottom-3 right-4 sm:bottom-4 sm:right-6 text-6xl sm:text-8xl font-black text-primary/40 select-none">
-            {String(index + 1).padStart(2, '0')}
-          </div>
+
 
           <motion.div
             className="mt-5 sm:mt-6 h-[2px] bg-gradient-to-r from-primary to-primary/40 rounded-full"

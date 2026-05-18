@@ -27,7 +27,8 @@
           "Pressure Treated Wood",
           "Custom Designs",
           "Covered Decks",
-          "Pergolas"
+          "Pergolas",
+          "Vinyl & Aluminum Fencing"
         ],
         "features": [
           "Wolf Home Products Certified",
@@ -329,6 +330,19 @@
           "Gutter Guards",
           "Downspouts",
           "Leaf Protection"
+        ]
+      },
+      {
+        "number": "07",
+        "title": "Vinyl & Aluminum Fencing",
+        "description": "Professional vinyl and aluminum fencing services designed to deliver security, privacy, and long-lasting curb appeal.",
+        "icon": "Shield",
+        "tag": "Fencing",
+        "features": [
+          "Durable Materials",
+          "Low Maintenance",
+          "Enhanced Security",
+          "Custom Styles"
         ]
       }
     ],
@@ -818,6 +832,12 @@
         "title": "Free Inspection",
         "desc": "No obligation consultation",
         "icon": "◈"
+      },
+      {
+        "id": 7,
+        "title": "Vinyl & Aluminum Fencing",
+        "desc": "Durable, low-maintenance fencing",
+        "icon": "🛡"
       }
     ],
     "projectTypes": [
@@ -840,6 +860,10 @@
       {
         "value": "commercial",
         "label": "Commercial Roofing"
+      },
+      {
+        "value": "fencing",
+        "label": "Vinyl & Aluminum Fencing"
       }
     ],
     "timelines": [
@@ -906,6 +930,11 @@
           "label": "Gutters & Protection",
           "href": "/services/gutters-protection",
           "icon": "Droplets"
+        },
+        {
+          "label": "Vinyl & Aluminum Fencing",
+          "href": "/services/vinyl-aluminum-fencing",
+          "icon": "Shield"
         }
       ],
       "materials": {
@@ -1123,6 +1152,10 @@
       {
         "value": "emergency",
         "label": "Emergency Service"
+      },
+      {
+        "value": "fencing",
+        "label": "Vinyl & Aluminum Fencing"
       }
     ],
     "formLabels": {

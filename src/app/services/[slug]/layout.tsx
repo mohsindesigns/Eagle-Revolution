@@ -652,6 +652,116 @@ const seoMap: Record<
       ],
     },
   },
+  "vinyl-aluminum-fencing": {
+    title: "Vinyl & Aluminum Fencing St. Louis MO | Fence Installation | Eagle Revolution",
+    description: "Premium vinyl & aluminum fence installation in St. Louis, MO. 49-year warranty, veteran-owned, low-maintenance privacy & security fencing. Free estimates. Call 636-449-9714.",
+    keywords: [
+      "vinyl fencing St. Louis MO",
+      "aluminum fencing St. Louis",
+      "fence installation St. Louis MO",
+      "fencing contractor St. Louis",
+      "vinyl fence builders Missouri",
+      "aluminum fence builders St. Louis",
+      "privacy fencing St. Louis MO",
+      "low maintenance fencing Missouri",
+      "decorative aluminum fencing St. Louis",
+      "residential fencing St. Louis MO",
+      "49 year fence warranty Missouri",
+      "veteran owned fencing company St. Louis",
+      "free fencing estimate St. Louis MO",
+      "best fence company St. Louis",
+      "top rated fencing contractor Missouri",
+      "commercial fencing St. Louis MO",
+      "backyard fence installation St. Louis",
+      "security fence installation Missouri",
+      "vinyl picket fence St. Louis",
+      "black aluminum fence installer Missouri"
+    ],
+    serviceJsonLd: {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": "https://eagle-revolution.vercel.app/services/vinyl-aluminum-fencing/#service",
+      name: "Vinyl & Aluminum Fencing St. Louis MO",
+      alternateName: ["Vinyl Fence Installation St. Louis", "Aluminum Fence Installation St. Louis", "Fencing Contractor St. Louis"],
+      serviceType: "Fence Installation",
+      provider: { "@id": "https://eagle-revolution.vercel.app/#organization" },
+      areaServed: [
+        { "@type": "City", name: "St. Louis" },
+        { "@type": "City", name: "Chesterfield" },
+        { "@type": "City", name: "O'Fallon" },
+        { "@type": "City", name: "Wildwood" },
+        { "@type": "City", name: "Ballwin" },
+        { "@type": "State", name: "Missouri" }
+      ],
+      description: "Professional residential and commercial vinyl and aluminum fence installation in St. Louis, MO. Built to withstand Missouri weather conditions, providing security, privacy, and curb appeal with a 49-year warranty.",
+      url: "https://eagle-revolution.vercel.app/services/vinyl-aluminum-fencing",
+      image: "https://eagle-revolution.vercel.app/eagle-logo.png",
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "USD",
+        priceSpecification: {
+          "@type": "PriceSpecification",
+          priceCurrency: "USD",
+          minPrice: "3500",
+          maxPrice: "15000"
+        },
+        availability: "https://schema.org/InStock"
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.9",
+        reviewCount: "500",
+        bestRating: "5",
+        worstRating: "1"
+      }
+    },
+    faqJsonLd: {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "How long does vinyl or aluminum fencing last?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Both options are designed for exceptional longevity. Premium aluminum fencing can easily last 30 to 50+ years because it is rust-resistant, and high-grade vinyl fencing typically lasts 20 to 30+ years without warping or cracking, backed by our 49-year warranty."
+          }
+        },
+        {
+          "@type": "Question",
+          name: "Which fencing option is better for low maintenance?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Both vinyl and aluminum are highly low-maintenance compared to wood. They do not require painting, sealing, or staining. Vinyl can be cleaned easily with soap and water, while aluminum holds its powder-coated finish perfectly over decades without rust or corrosion."
+          }
+        },
+        {
+          "@type": "Question",
+          name: "Is aluminum fencing good for security?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, aluminum fencing is extremely strong and durable, providing excellent security and perimeter protection. Its rigid structure makes it highly secure, and when customized with spear-top pickets or secure lock gates, it serves as an excellent deterrent."
+          }
+        },
+        {
+          "@type": "Question",
+          name: "Can I customize the style and color of my fence?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Absolutely. Our vinyl fences are available in classic white, tan, and wood-grain textures, in privacy, semi-privacy, or picket styles. Aluminum fences come in multiple architectural grades, picket spacings, spear styles, and custom powder-coated colors (black, bronze, white) to perfectly complement your property."
+          }
+        },
+        {
+          "@type": "Question",
+          name: "How long does fence installation take?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Most standard residential fence installations in the St. Louis area take between 1 and 3 days, depending on the property size, terrain, and soil conditions. We handle utility marking, boundary alignment, and precision post-setting to ensure a robust, durable, and prompt installation."
+          }
+        }
+      ]
+    }
+  },
 };
 
 type Props = {
