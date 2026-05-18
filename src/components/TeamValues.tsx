@@ -12,7 +12,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Icon } from "../config/icons";
 import { useContent } from "../hooks/useContent";
-import brandonImg from "@/assets/ownerupdatedimage.jpeg";
+import brandonImg from "@/assets/ownerimage2.png";
 
 gsap.registerPlugin(ScrollTrigger);
 

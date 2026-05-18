@@ -9,7 +9,7 @@ import {
 } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import brandon from '../../../assets/ownerteam.jpeg'
+import brandon from '../../../assets/ownerimage2.png'
 import chrissy from '../../../assets/Chrissyteam.jpeg'
 import austin from '../../../assets/Austinteam.jpeg'
 import brandonsutton from '../../../assets/suttonteam.jpeg'
@@ -325,7 +325,7 @@ export default function MeetTheTeamPage() {
                       Brandon carried those lessons into his service in the United States Army, where he developed discipline, resilience, and the ability to perform under pressure. The military reinforced a mindset that still defines him today. No excuses. No shortcuts. Just execution.
                     </p>
                     <p>
-                      After his service, he pursued a career in high-performance environments, earning multiple promotions and working with top-tier organizations. At the center of Brandon's life is his family—his devoted wife Cassandra and their children. Everything he builds is rooted in creating stability, opportunity, and a legacy reflecting strength, integrity, and purpose.
+                      After his service, he pursued a career in high-performance environments, earning multiple promotions and working with top-tier organizations.  Everything he builds is rooted in creating stability, opportunity, and a legacy reflecting strength, integrity, and purpose.
                     </p>
                   </div>
                 </div>
@@ -333,90 +333,7 @@ export default function MeetTheTeamPage() {
             </div>
           </div>
 
-          {/* ====================== */}
-          {/* TEAM MEMBER 2 (Allan) - IMAGE RIGHT */}
-          {/* ====================== */}
-          <div className="grid lg:grid-cols-12 gap-8 min-[350px]:gap-12 sm:gap-16 md:gap-20 items-center lg:items-start mb-24 sm:mb-32 md:mb-40 relative">
-            <div className="lg:col-span-7 space-y-8 order-2 lg:order-1 leadership-reveal relative z-10 lg:pr-6 w-full">
-              <div className="bg-white/70 backdrop-blur-xl rounded-[2rem] sm:rounded-[2.5rem] p-6 min-[350px]:p-8 sm:p-10 border border-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
-                <h3 className="text-2xl min-[350px]:text-3xl sm:text-4xl md:text-5xl font-light text-slate-900 mb-2 sm:mb-3">
-                  Allan
-                  <span className="block text-[10px] sm:text-xs font-mono font-bold text-blue-600 mt-2 sm:mt-3 tracking-[0.2em] uppercase">
-                    Value Member & Construction Expert
-                  </span>
-                </h3>
-
-                <div className="mt-8 sm:mt-10 relative">
-                  <div className="absolute -left-3 sm:-left-6 -top-4 sm:-top-6 text-blue-100/60 scale-[1.2] sm:scale-[1.8] pointer-events-none">
-                    <Icons.Quote />
-                  </div>
-                  <div className="space-y-4 sm:space-y-6 text-slate-600 text-[13px] min-[350px]:text-sm sm:text-base md:text-lg leading-relaxed relative z-10">
-                    <p>
-                      We're excited to spotlight a valued member of the Eagle Revolution team, Allan! 🦅
-                    </p>
-                    <p>
-                      A Navy veteran with 15 years in diverse construction trades, Allan brings top-notch expertise in windows, doors, and beyond.. and when he's off the clock, he's our very own Happy Gilmore—golfing his way to the green! ⛳️
-                    </p>
-                    <p>
-                      We're so grateful for his dedication and all the energy he brings every day!
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="lg:col-span-5 order-1 lg:order-2 leadership-reveal lg:sticky lg:top-32 relative z-10 w-full max-w-[400px] lg:max-w-none mx-auto lg:mx-0">
-              <TeamPortrait
-                image={Images.Allan}
-                title="Allan - Team Member"
-                badge1="NAVY VETERAN"
-                badge2="EXPERTISE • ENERGY"
-                alignRight
-              />
-            </div>
-          </div>
-
-          {/* ====================== */}
-          {/* TEAM MEMBER 3 (Chrissy Long) - IMAGE LEFT */}
-          {/* ====================== */}
-          <div className="grid lg:grid-cols-12 gap-8 min-[350px]:gap-12 sm:gap-16 md:gap-20 items-center lg:items-start mb-24 sm:mb-32 md:mb-40 relative">
-            <div className="lg:col-span-5 leadership-reveal lg:sticky lg:top-32 relative z-10 w-full max-w-[400px] lg:max-w-none mx-auto lg:mx-0">
-              <TeamPortrait
-                image={Images.ChrissyLong}
-                title="Chrissy Long - Executive Assistant"
-                badge1="EXECUTIVE ASSISTANT"
-                badge2="RELIABLE • PURPOSEFUL"
-              />
-            </div>
-
-            <div className="lg:col-span-7 space-y-8 leadership-reveal relative z-10 lg:pl-6 w-full">
-              <div className="bg-white/70 backdrop-blur-xl rounded-[2rem] sm:rounded-[2.5rem] p-6 min-[350px]:p-8 sm:p-10 border border-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
-                <h3 className="text-2xl min-[350px]:text-3xl sm:text-4xl md:text-5xl font-light text-slate-900 mb-2 sm:mb-3">
-                  Chrissy Long
-                  <span className="block text-[10px] sm:text-xs font-mono font-bold text-blue-600 mt-2 sm:mt-3 tracking-[0.2em] uppercase">
-                    Executive Assistant
-                  </span>
-                </h3>
-
-                <div className="mt-8 sm:mt-10 relative">
-                  <div className="absolute -left-3 sm:-left-6 -top-4 sm:-top-6 text-blue-100/60 scale-[1.2] sm:scale-[1.8] pointer-events-none">
-                    <Icons.Quote />
-                  </div>
-                  <div className="space-y-4 sm:space-y-6 text-slate-600 text-[13px] min-[350px]:text-sm sm:text-base md:text-lg leading-relaxed relative z-10">
-                    <p>
-                      Say hello to the newest powerhouse at Eagle Revolution- our amazing new executive assistant, Chrissy Long! She is the backbone that ensures nothing falls through the cracks - because every great company needs a reliable teammate, and every great customer deserves amazing work!
-                    </p>
-                    <p>
-                      Here is a little bit about Chrissy and what she has to say about working at Eagle Revolution:
-                    </p>
-                    <p className="italic font-medium text-slate-700">
-                      " I have found my home, a place with genuine people who really care about their customers and employees, which today is sometimes rare. I truly believe my calling in life is to help others, and this job is exactly that, purposeful and fulfilling. It also gives me the opportunity to live a better-tuned life, take care of my daughters, and still have time for the hobbies I enjoy. When I'm not at work; I am either napping, training for a kickboxing match, serving at my local church, or enjoying time with my family. I really love a simplistic, peaceful lifestyle and I hope to bring those attributes into my work life. "
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+         
 
           {/* ====================== */}
           {/* TEAM MEMBER 4 (Austin) - IMAGE RIGHT */}

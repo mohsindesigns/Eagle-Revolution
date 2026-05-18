@@ -9,7 +9,7 @@ import { Icon } from "../../config/icons";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import owner from "@/assets/ownerupdatedimage.jpeg";
+import owner from "@/assets/ownerimage2.png";
 import roofingImg from '../../assets/roof1.jpg.jpeg';
 import windowsImg from '../../assets/window5.jpeg';
 import decksImg from '../../assets/outdoor-sitting-desk.png';
