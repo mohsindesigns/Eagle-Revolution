@@ -3,7 +3,6 @@
 import { useGlobalLoading } from "./LoadingContext";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import PageTransition from "./PageTransition";
 import LoadingScreen from "./LoadingScreen";
 import { AnimatePresence, motion, easeOut } from "framer-motion"; // Add easeOut import
 import { useEffect, useState } from "react";
@@ -62,7 +61,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
           </motion.div>
           
           <motion.main variants={itemVariants} className="flex-grow">
-            <PageTransition>{children}</PageTransition>
+            {children}
           </motion.main>
           
           <motion.div variants={itemVariants}>
