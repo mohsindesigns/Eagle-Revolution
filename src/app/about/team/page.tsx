@@ -9,7 +9,7 @@ import {
 } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import brandon from '../../../assets/ownerimage2.png'
+import brandon from '../../../assets/realpic.jpeg'
 import chrissy from '../../../assets/Chrissyteam.jpeg'
 import austin from '../../../assets/Austinteam.jpeg'
 import brandonsutton from '../../../assets/suttonteam.jpeg'
@@ -333,7 +333,7 @@ export default function MeetTheTeamPage() {
             </div>
           </div>
 
-         
+
 
           {/* ====================== */}
           {/* TEAM MEMBER 4 (Austin) - IMAGE RIGHT */}
