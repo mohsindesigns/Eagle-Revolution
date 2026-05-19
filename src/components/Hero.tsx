@@ -216,7 +216,7 @@ const Hero = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                   {/* Simple Icon + Text */}
-                  <div className="flex flex-col items-center gap-4 relative z-10">
+                                  <div className="flex flex-col items-center gap-4 relative z-10">
                     <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 group-hover:scale-110 transition-all duration-300">
                       <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
@@ -234,6 +234,31 @@ const Hero = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                       </svg>
                     </span>
+
+                    {/* Trust Badges */}
+                    <div className="w-full border-t border-white/10 pt-5 mt-3 flex flex-col gap-4">
+                      <div className="flex items-center gap-3 text-left">
+                        <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 text-blue-400 font-extrabold text-sm tracking-wide">
+                          A+
+                        </div>
+                        <div>
+                          <div className="text-sm font-bold text-white leading-tight">BBB Accredited</div>
+                          <div className="text-xs text-white/50">A+ Rating for integrity & trust</div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3 text-left">
+                        <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <div className="text-sm font-bold text-white leading-tight">Good Contractors List</div>
+                          <div className="text-xs text-white/50">Vetted, approved, & $25k backed</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               </a>
