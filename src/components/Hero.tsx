@@ -8,6 +8,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 import bgfair from "../assets/bgfair.jpg";
+import bbblogo from "../assets/bbblogo.png";
+import goodcontracterlist from "../assets/goodcontracterlist.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -237,25 +239,21 @@ const Hero = () => {
 
                     {/* Trust Badges */}
                     <div className="w-full border-t border-white/10 pt-5 mt-3 flex flex-col gap-4">
-                      <div className="flex items-center gap-3 text-left">
-                        <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 text-blue-400 font-extrabold text-sm tracking-wide">
-                          A+
+                      <div className="flex items-center gap-4 text-left">
+                        <div className="flex-shrink-0 w-16 h-10 bg-white rounded-xl p-1.5 flex items-center justify-center border border-white/20 relative">
+                          <Image src={bbblogo} alt="BBB Accredited A+" className="object-contain" fill />
                         </div>
                         <div>
-                          <div className="text-sm font-bold text-white leading-tight">BBB Accredited</div>
-                          <div className="text-xs text-white/50">A+ Rating for integrity & trust</div>
+                          <div className="text-xs text-white/50 leading-normal">A+ Rated for integrity & trust</div>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-3 text-left">
-                        <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400">
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                          </svg>
+                      <div className="flex items-center gap-4 text-left">
+                        <div className="flex-shrink-0 w-16 h-10 bg-white rounded-xl p-1.5 flex items-center justify-center border border-white/20 relative">
+                          <Image src={goodcontracterlist} alt="Good Contractors List" className="object-contain" fill />
                         </div>
                         <div>
-                          <div className="text-sm font-bold text-white leading-tight">Good Contractors List</div>
-                          <div className="text-xs text-white/50">Vetted, approved, & $25k backed</div>
+                          <div className="text-xs text-white/50 leading-normal">Vetted, approved, & $25k backed</div>
                         </div>
                       </div>
                     </div>
