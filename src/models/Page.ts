@@ -16,7 +16,8 @@ const PageSchema = new mongoose.Schema({
       'contact', 
       'gallery', 
       'services', 
-      'service-detail'
+      'service-detail',
+      'service-area'
     ] 
   },
   status: { type: String, enum: ['draft', 'published'], default: 'published' },
@@ -44,5 +45,10 @@ const PageSchema = new mongoose.Schema({
   isTrashed: { type: Boolean, default: false },
   trashedAt: { type: Date, default: null },
 }, { timestamps: true });
+
+// Clear cache in development to prevent HMR mongoose enum mismatch
+if (process.env.NODE_ENV === 'development') {
+  delete (mongoose.models as any).Page;
+}
 
 export default mongoose.models.Page || mongoose.model('Page', PageSchema);

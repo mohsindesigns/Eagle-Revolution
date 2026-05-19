@@ -69,6 +69,17 @@ export async function PATCH(
       ip: req.headers.get('x-forwarded-for') || (req as any).ip || 'unknown'
     });
 
+    if (updatedPage && updatedPage.slug) {
+      try {
+        const { revalidatePath } = await import('next/cache');
+        const pagePath = updatedPage.slug.startsWith('/') ? updatedPage.slug : `/${updatedPage.slug}`;
+        revalidatePath(pagePath);
+        revalidatePath('/');
+      } catch (err) {
+        console.error('Failed to revalidate path:', err);
+      }
+    }
+
     return NextResponse.json(updatedPage);
   } catch (error: any) {
     console.error('Page update error:', error);

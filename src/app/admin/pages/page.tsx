@@ -426,6 +426,7 @@ export default function PagesDashboard() {
                         <option value="reviews">Reviews</option>
                         <option value="faq">Knowledge Base</option>
                         <option value="contact">Contact Portal</option>
+                        <option value="service-area">Service Area Page</option>
                       </select>
                    </div>
                 </div>
@@ -494,6 +495,7 @@ export default function PagesDashboard() {
                         <option value="reviews">Reviews</option>
                         <option value="faq">Knowledge Base</option>
                         <option value="contact">Contact Portal</option>
+                        <option value="service-area">Service Area Page</option>
                       </select>
                     </div>
                     <div>

@@ -12,4 +12,5 @@ export const TemplateEditors: Record<string, any> = {
   reviews: dynamic(() => import('./ReviewsEditor')),
   'service-detail': dynamic(() => import('./ServiceDetailEditor')),
   settings: dynamic(() => import('./SettingsEditor')),
+  'service-area': dynamic(() => import('./ServiceAreaEditor')),
 };
