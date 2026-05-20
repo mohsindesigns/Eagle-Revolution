@@ -404,8 +404,20 @@ const StatCounter = ({ value, label, suffix = "", delay = 0 }: { value: string |
     const [isHovered, setIsHovered] = useState(false);
     const inView = useInView(ref, { once: true, margin: "-50px" });
 
-    // Handle both string and number values
-    const numericValue = typeof value === 'number' ? value : parseInt(String(value), 10);
+    // Extract suffix from value if not provided explicitly (e.g. "500+" -> numeric: 500, suffix: "+")
+    let cleanValue = value;
+    let autoSuffix = suffix;
+    if (typeof value === "string") {
+        const match = value.match(/^(\d+)(.*)$/);
+        if (match) {
+            cleanValue = parseInt(match[1], 10);
+            if (!autoSuffix && match[2]) {
+                autoSuffix = match[2];
+            }
+        }
+    }
+
+    const numericValue = typeof cleanValue === 'number' ? cleanValue : parseInt(String(cleanValue), 10);
     const isValidNumber = !isNaN(numericValue) && isFinite(numericValue);
 
     useEffect(() => {
@@ -449,7 +461,7 @@ const StatCounter = ({ value, label, suffix = "", delay = 0 }: { value: string |
                             y: isHovered ? -2 : 0
                         }}
                     >
-                        <span>{String(value)}</span>{suffix}
+                        <span>{String(value)}</span>{autoSuffix}
                     </motion.div>
                 </div>
                 <div className="text-xs font-semibold tracking-wider text-muted-foreground mt-2 uppercase">
@@ -477,7 +489,7 @@ const StatCounter = ({ value, label, suffix = "", delay = 0 }: { value: string |
                         y: isHovered ? -2 : 0
                     }}
                 >
-                    <span>{displayValue}</span>{suffix}
+                    <span>{displayValue}</span>{autoSuffix}
                 </motion.div>
 
                 <motion.div

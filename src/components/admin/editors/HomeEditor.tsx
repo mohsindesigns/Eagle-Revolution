@@ -370,13 +370,26 @@ export default function HomeEditor({ pageId, data, setData }: { pageId: string, 
                         <h3 className={UI.sectionHeader}>3. Metrics</h3>
                         <div className="space-y-4">
                            {(data.whyChooseUs?.stats || []).map((s: any, i: number) => (
-                              <div key={i} className={UI.card + " space-y-3"}>
-                                 <input type="text" value={s.value || ""} onChange={(e) => { const newS = [...data.whyChooseUs.stats]; newS[i].value = e.target.value; updateSection("whyChooseUs", "stats", newS); }} className={UI.inputLarge} />
-                                 <input type="text" value={s.label || ""} onChange={(e) => { const newS = [...data.whyChooseUs.stats]; newS[i].label = e.target.value; updateSection("whyChooseUs", "stats", newS); }} className={UI.input} />
-                                 <button onClick={() => { const newS = data.whyChooseUs.stats.filter((_: any, idx: number) => idx !== i); updateSection("whyChooseUs", "stats", newS); }} className="text-[#d63638] text-[11px] font-bold">Remove</button>
+                              <div key={i} className={UI.card + " space-y-4"}>
+                                 <div className="flex justify-between items-center pb-2 border-b border-[#f0f0f1]">
+                                    <span className="text-[10px] font-bold text-[#646970] uppercase">Metric #{i + 1}</span>
+                                    <button onClick={() => { const newS = data.whyChooseUs.stats.filter((_: any, idx: number) => idx !== i); updateSection("whyChooseUs", "stats", newS); }} className="text-[#d63638]"><Trash2 className="w-4 h-4" /></button>
+                                 </div>
+                                 <div className="space-y-1.5">
+                                    <label className={UI.label}>Value</label>
+                                    <input type="text" value={s.value || ""} onChange={(e) => { const newS = [...data.whyChooseUs.stats]; newS[i].value = e.target.value; updateSection("whyChooseUs", "stats", newS); }} className={UI.inputLarge} placeholder="e.g. 500" />
+                                 </div>
+                                 <div className="space-y-1.5">
+                                    <label className={UI.label}>Suffix (e.g. +, %)</label>
+                                    <input type="text" value={s.suffix || ""} onChange={(e) => { const newS = [...data.whyChooseUs.stats]; newS[i].suffix = e.target.value; updateSection("whyChooseUs", "stats", newS); }} className={UI.input} placeholder="e.g. +" />
+                                 </div>
+                                 <div className="space-y-1.5">
+                                    <label className={UI.label}>Label</label>
+                                    <input type="text" value={s.label || ""} onChange={(e) => { const newS = [...data.whyChooseUs.stats]; newS[i].label = e.target.value; updateSection("whyChooseUs", "stats", newS); }} className={UI.input} />
+                                 </div>
                               </div>
                            ))}
-                           <button onClick={() => updateSection("whyChooseUs", "stats", [...(data.whyChooseUs?.stats || []), { value: "", label: "" }])} className={UI.buttonAdd}>+ Add Metric</button>
+                           <button onClick={() => updateSection("whyChooseUs", "stats", [...(data.whyChooseUs?.stats || []), { value: "", suffix: "", label: "" }])} className={UI.buttonAdd}>+ Add Metric</button>
                         </div>
                      </div>
                   </div>
