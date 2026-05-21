@@ -156,8 +156,24 @@ export default function TeamTemplate({ pageData, params }: { pageData?: any, par
               <div className="w-6 sm:w-8 h-[2px] bg-gradient-to-r from-blue-500 to-blue-300" />
             </div>
             <h1 className="text-3xl min-[350px]:text-4xl sm:text-5xl lg:text-6xl font-light text-slate-900 mb-4 leading-tight">
-              {teamData?.section?.headline?.split('with')[0]} <br />
-              <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-950">{teamData?.section?.headline?.split('with')[1]}</span>
+              {teamData?.section?.headlinePrefix || teamData?.section?.headlineHighlight || teamData?.section?.headlineSuffix ? (
+                <>
+                  {teamData.section.headlinePrefix} <br />
+                  {teamData.section.headlineHighlight && (
+                    <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-950">
+                      {teamData.section.headlineHighlight}
+                    </span>
+                  )}
+                  {teamData.section.headlineSuffix ? ` ${teamData.section.headlineSuffix}` : ""}
+                </>
+              ) : (
+                <>
+                  {teamData?.section?.headline?.split('with')[0]} <br />
+                  <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-950">
+                    {teamData?.section?.headline?.split('with')[1]}
+                  </span>
+                </>
+              )}
             </h1>
             <div className="text-slate-500 text-[13px] min-[350px]:text-sm sm:text-lg font-light max-w-2xl mx-auto px-4 leading-relaxed">
               <RichTextRenderer content={teamData?.section?.description} />

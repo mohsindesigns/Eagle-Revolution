@@ -24,12 +24,29 @@ export default function GalleryEditor({ pageId, data, setData }: { pageId: strin
     if (data && Object.keys(data).length === 0) {
        setData({
          galleryPage: {
-           header: { badge: "Our Work", title: "Project Gallery", description: "Browse our completed projects across St. Louis." }
+           header: { badge: "Our Work", titlePrefix: "Project", titleHighlight: "Gallery", titleSuffix: "", description: "Browse our completed projects across St. Louis." }
          },
          portfolio: {
            projects: []
          }
        });
+    } else if (data && data.galleryPage?.header?.title && !data.galleryPage?.header?.titlePrefix && !data.galleryPage?.header?.titleHighlight) {
+      // Migrate legacy single title field to the new three-part highlight system
+      const words = (data.galleryPage.header.title as string).split(" ");
+      const prefix = words.length > 1 ? words.slice(0, Math.ceil(words.length / 2)).join(" ") : words[0];
+      const highlight = words.length > 1 ? words.slice(Math.ceil(words.length / 2)).join(" ") : "";
+      setData({
+        ...data,
+        galleryPage: {
+          ...data.galleryPage,
+          header: {
+            ...data.galleryPage.header,
+            titlePrefix: prefix,
+            titleHighlight: highlight,
+            titleSuffix: ""
+          }
+        }
+      });
     }
   }, [data, setData]);
 
@@ -104,10 +121,33 @@ export default function GalleryEditor({ pageId, data, setData }: { pageId: strin
                        <label className={UI.label}>Gallery Badge</label>
                        <input type="text" value={data.galleryPage?.header?.badge || ""} onChange={(e) => updateHeader("badge", e.target.value)} className={UI.input} />
                     </div>
-                    <div className="space-y-1.5">
-                       <label className={UI.label}>Main Headline</label>
-                       <input type="text" value={data.galleryPage?.header?.title || ""} onChange={(e) => updateHeader("title", e.target.value)} className={UI.inputLarge} />
-                    </div>
+                     <div className="space-y-1.5">
+                        <label className={UI.label}>Main Headline (With Highlight)</label>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <input
+                            type="text"
+                            value={data.galleryPage?.header?.titlePrefix || ""}
+                            onChange={(e) => updateHeader("titlePrefix", e.target.value)}
+                            className={UI.input}
+                            placeholder="Prefix (e.g. Project)"
+                          />
+                          <input
+                            type="text"
+                            value={data.galleryPage?.header?.titleHighlight || ""}
+                            onChange={(e) => updateHeader("titleHighlight", e.target.value)}
+                            className={UI.input + " text-[#2271b1] font-bold bg-[#f0f6fb]"}
+                            placeholder="Highlight (e.g. Gallery)"
+                          />
+                          <input
+                            type="text"
+                            value={data.galleryPage?.header?.titleSuffix || ""}
+                            onChange={(e) => updateHeader("titleSuffix", e.target.value)}
+                            className={UI.input}
+                            placeholder="Suffix (Optional)"
+                          />
+                        </div>
+                        <p className="text-[11px] text-[#8c8f94] mt-1">The <span className="font-semibold text-[#2271b1]">Highlight</span> word will appear with a colored accent on the front-end.</p>
+                     </div>
                     <div className="space-y-1.5">
                        <label className={UI.label}>Intro Description</label>
                        <RichTextEditor 

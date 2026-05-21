@@ -24,6 +24,19 @@ export default function TeamPageEditor() {
         if (!json.team) json.team = {};
         if (!json.team.section) json.team.section = {};
         if (!json.team.members) json.team.members = [];
+        
+        // Migrate old headline format if new fields are empty
+        if (json.team.section.headline && !json.team.section.headlinePrefix && !json.team.section.headlineHighlight) {
+          const parts = json.team.section.headline.split('with');
+          if (parts.length > 1) {
+            json.team.section.headlinePrefix = parts[0];
+            json.team.section.headlineHighlight = "with" + parts[1];
+            json.team.section.headlineSuffix = "";
+          } else {
+            json.team.section.headlinePrefix = json.team.section.headline;
+          }
+        }
+        
         setData(json);
       })
       .catch((err) => console.error("Failed to load content:", err));
@@ -182,27 +195,45 @@ export default function TeamPageEditor() {
             <h2 className="text-xl font-extrabold text-slate-900 uppercase tracking-tight">Page Header Content</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6">
             <div className="space-y-2">
               <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Section Badge</label>
               <input
                 type="text"
                 value={data.team?.section?.badge || ""}
                 onChange={(e) => updateSection("badge", e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 font-bold focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-inner"
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 font-bold focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-inner md:w-1/2"
                 placeholder="e.g. Our Leadership"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Section Headline</label>
-              <input
-                type="text"
-                value={data.team?.section?.headline || ""}
-                onChange={(e) => updateSection("headline", e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 font-bold focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-inner"
-                placeholder="e.g. Leading with Integrity"
-              />
+              <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold flex items-center gap-1">
+                Section Headline (With Highlight)
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <input
+                  type="text"
+                  value={data.team?.section?.headlinePrefix || ""}
+                  onChange={(e) => updateSection("headlinePrefix", e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 font-bold focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-inner"
+                  placeholder="Prefix (e.g. Leading)"
+                />
+                <input
+                  type="text"
+                  value={data.team?.section?.headlineHighlight || ""}
+                  onChange={(e) => updateSection("headlineHighlight", e.target.value)}
+                  className="w-full bg-primary/5 border border-primary/20 rounded-2xl px-6 py-4 text-primary font-bold focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-inner placeholder:text-primary/50"
+                  placeholder="Highlight (e.g. with Integrity)"
+                />
+                <input
+                  type="text"
+                  value={data.team?.section?.headlineSuffix || ""}
+                  onChange={(e) => updateSection("headlineSuffix", e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 font-bold focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-inner"
+                  placeholder="Suffix (Optional)"
+                />
+              </div>
             </div>
           </div>
 

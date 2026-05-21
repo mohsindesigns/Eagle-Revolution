@@ -189,7 +189,21 @@ export default function GalleryTemplate({ pageData, params }: { pageData?: any; 
           transition={{ delay: 0.1 }}
           className="text-4xl sm:text-6xl font-bold mb-4 text-foreground"
         >
-          {galleryPage?.header?.title || "Project Gallery"}
+          {(galleryPage?.header?.titlePrefix || galleryPage?.header?.titleHighlight) ? (
+            <>
+              {galleryPage?.header?.titlePrefix && (
+                <span>{galleryPage.header.titlePrefix} </span>
+              )}
+              {galleryPage?.header?.titleHighlight && (
+                <span className="text-primary">{galleryPage.header.titleHighlight}</span>
+              )}
+              {galleryPage?.header?.titleSuffix && (
+                <span> {galleryPage.header.titleSuffix}</span>
+              )}
+            </>
+          ) : (
+            galleryPage?.header?.title || "Project Gallery"
+          )}
         </motion.h1>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

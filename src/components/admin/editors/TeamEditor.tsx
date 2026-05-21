@@ -15,6 +15,10 @@ const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor")
   ssr: false,
   loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
 });
+const QuillEditor = dynamic(() => import("@/components/admin/QuillEditor"), {
+  ssr: false,
+  loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Quill Editor...</div>
+});
 
 
 export default function TeamEditor({ pageId, data, setData }: { pageId: string, data: any, setData: (d: any) => void }) {
@@ -26,6 +30,23 @@ export default function TeamEditor({ pageId, data, setData }: { pageId: string, 
          team: {
            section: { badge: "Our Leadership", headline: "Expert hands with Visionary minds", description: "Meet the dedicated professionals leading the charge at Eagle Revolution." },
            members: []
+         }
+       });
+    } else if (data && data.team && data.team.section && data.team.section.headline && !data.team.section.headlinePrefix && !data.team.section.headlineHighlight) {
+       const parts = data.team.section.headline.split('with');
+       const prefix = parts.length > 1 ? parts[0].trim() + " " : data.team.section.headline;
+       const highlight = parts.length > 1 ? "with" + parts[1] : "";
+       
+       setData({
+         ...data,
+         team: {
+           ...data.team,
+           section: {
+             ...data.team.section,
+             headlinePrefix: prefix,
+             headlineHighlight: highlight,
+             headlineSuffix: ""
+           }
          }
        });
     }
@@ -101,8 +122,12 @@ export default function TeamEditor({ pageId, data, setData }: { pageId: string, 
                        <input type="text" value={data.team?.section?.badge || ""} onChange={(e) => updateTeam("section", "badge", e.target.value)} className={UI.input} />
                     </div>
                     <div className="space-y-1.5">
-                       <label className={UI.label}>Main Headline</label>
-                       <input type="text" value={data.team?.section?.headline || ""} onChange={(e) => updateTeam("section", "headline", e.target.value)} className={UI.inputLarge} placeholder="Expert hands with Visionary minds" />
+                       <label className={UI.label}>Main Headline (With Highlight)</label>
+                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                         <input type="text" value={data.team?.section?.headlinePrefix || ""} onChange={(e) => updateTeam("section", "headlinePrefix", e.target.value)} className={UI.input} placeholder="Prefix (e.g. Leading)" />
+                         <input type="text" value={data.team?.section?.headlineHighlight || ""} onChange={(e) => updateTeam("section", "headlineHighlight", e.target.value)} className={UI.input + " text-[#2271b1] font-bold bg-[#f0f6fb]"} placeholder="Highlight (e.g. with Integrity)" />
+                         <input type="text" value={data.team?.section?.headlineSuffix || ""} onChange={(e) => updateTeam("section", "headlineSuffix", e.target.value)} className={UI.input} placeholder="Suffix (Optional)" />
+                       </div>
                     </div>
                     <RichTextEditor 
                         label="Intro Narrative" 
@@ -162,11 +187,11 @@ export default function TeamEditor({ pageId, data, setData }: { pageId: string, 
                                   </div>
                                </div>
 
-                               <RichTextEditor 
-                                  label="Biography" 
-                                  content={typeof member.description === 'string' ? member.description : (member.description || []).join("")} 
-                                  onChange={(html) => { const newM = [...data.team.members]; newM[i].description = html; updateTeam("members", null, newM); }} 
-                               />
+                               <QuillEditor 
+                                   label="Biography" 
+                                   content={typeof member.description === 'string' ? member.description : (member.description || []).join("")} 
+                                   onChange={(html) => { const newM = [...data.team.members]; newM[i].description = html; updateTeam("members", null, newM); }} 
+                                />
 
                                <div className="space-y-4 border-t border-[#f0f0f1] pt-6">
                                   <div className="space-y-1.5">
