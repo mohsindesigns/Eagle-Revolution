@@ -512,31 +512,28 @@ export default function ServiceAreaTemplate({ pageData }: { pageData?: any }) {
         </div>
 
         {/* Regions grid - folder structure */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredRegions.map((region, idx) => (
-            <motion.div
-              key={region.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.05 }}
-              className="bg-white border border-slate-200 rounded-3xl overflow-hidden flex flex-col group hover:shadow-lg hover:border-slate-350 transition-all duration-300"
-            >
-              <div className="p-6 bg-slate-50/50 border-b border-slate-200 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-                    <Map className="w-4 h-4" />
-                  </div>
-                  <h3 className="font-heading font-black text-sm text-slate-900 uppercase tracking-wide">
-                    {region.name}
-                  </h3>
-                </div>
-              </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  {filteredRegions.map((region, idx) => (
+    <motion.div
+      key={region.name}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: idx * 0.03 }}
+      className="group"
+    >
+      <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white px-5 py-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg">
+        
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary/80 to-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        
+        <h3 className="font-heading font-bold text-slate-900 text-base tracking-tight">
+          {region.name}
+        </h3>
 
-             
-            </motion.div>
-          ))}
-        </div>
+      </div>
+    </motion.div>
+  ))}
+</div>
       </section>
 
       {/* ================= 3. ACTIVE SERVICE CARDS ================= */}
