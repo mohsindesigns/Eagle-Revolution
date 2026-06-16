@@ -533,17 +533,7 @@ export default function ServiceAreaTemplate({ pageData }: { pageData?: any }) {
                 </div>
               </div>
 
-              <div className="p-8 flex-1">
-                {region.description ? (
-                  <RichTextRenderer
-                    content={region.description}
-                  />
-                ) : (
-                  <p className="text-slate-400 text-xs italic">
-                    Proudly providing certified roofing, siding updates, custom deck installations, and gutter repair solutions with veteran precision across this region.
-                  </p>
-                )}
-              </div>
+             
             </motion.div>
           ))}
         </div>
