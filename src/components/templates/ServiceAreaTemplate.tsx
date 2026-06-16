@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
@@ -95,8 +95,6 @@ const ServiceCard = ({ service, index }: any) => {
 export default function ServiceAreaTemplate({ pageData }: { pageData?: any }) {
   const { services: dataRaw, faq } = useContent();
   const services = ((dataRaw as any)?.services || []).filter((s: any) => s.status === 'published' || s.status === undefined);
-
-  const [activeTab, setActiveTab] = useState<string>("all");
 
   // Safely extract content overrides or fallbacks
   const content = pageData?.content || {};
@@ -210,10 +208,7 @@ export default function ServiceAreaTemplate({ pageData }: { pageData?: any }) {
     buttonHref: "#contact"
   };
 
-  const filteredRegions = useMemo(() => {
-    if (activeTab === "all") return regions;
-    return regions.filter(r => r.name === activeTab);
-  }, [regions, activeTab]);
+
 
   return (
     <div className="relative bg-slate-50 text-slate-900 min-h-screen font-body overflow-x-hidden">
@@ -492,28 +487,9 @@ export default function ServiceAreaTemplate({ pageData }: { pageData?: any }) {
           )}
         </div>
 
-        {/* Tab Selectors */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-12">
-          <button
-            onClick={() => setActiveTab("all")}
-            className={`px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-wider transition-all border-2 ${activeTab === "all" ? 'bg-primary text-white border-primary shadow-md' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'}`}
-          >
-            All Counties
-          </button>
-          {regions.map((region) => (
-            <button
-              key={region.name}
-              onClick={() => setActiveTab(region.name)}
-              className={`px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-wider transition-all border-2 ${activeTab === region.name ? 'bg-primary text-white border-primary shadow-md' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'}`}
-            >
-              {region.name}
-            </button>
-          ))}
-        </div>
-
         {/* Regions grid - folder structure */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-  {filteredRegions.map((region, idx) => (
+  {regions.map((region, idx) => (
     <motion.div
       key={region.name}
       initial={{ opacity: 0, y: 20 }}
