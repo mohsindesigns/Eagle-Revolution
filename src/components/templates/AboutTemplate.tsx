@@ -879,7 +879,7 @@ export default function AboutTemplate({ pageData, params }: { pageData?: any, pa
         <AwardCTABanner content={content.ctaBanner} />
       </div>
 
-      <PageInlineFaqs faqs={content.faqs} />
+      <PageInlineFaqs faqs={content.faqs} faqSchemaMarkup={content.faqSchemaMarkup} />
 
       <BlogSection
         title={content.blogSection?.title || blogSection?.title}

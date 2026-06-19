@@ -217,7 +217,7 @@ export default function ServicesAdminPage() {
     processBadge: "",
     processDescription: "",
     overview: "", overviewImage: "", overviewStats: [],
-    cta: { text: "Start Your Project", link: "/contact" }, icon: "Layout", tag: "", status: "published", features: [], stats: [], benefits: [], process: [], faq: [],
+    cta: { text: "Start Your Project", link: "/contact" }, icon: "Layout", tag: "", status: "published", features: [], stats: [], benefits: [], process: [], faq: [], faqSchemaMarkup: "",
     ...DEFAULT_FEATURED_CATEGORY
   });
 
@@ -265,6 +265,27 @@ export default function ServicesAdminPage() {
 
   const handleSaveService = () => {
     if (!form.title || !form.slug) return alert("Title and slug are required.");
+
+    // Validate bulk FAQ JSON-LD schema markup
+    const bulkSchema = (form.faqSchemaMarkup || "").trim();
+    if (bulkSchema) {
+      try {
+        let cleaned = bulkSchema;
+        if (cleaned.startsWith("<script")) {
+          const closeBracket = cleaned.indexOf(">");
+          if (closeBracket !== -1) cleaned = cleaned.substring(closeBracket + 1);
+        }
+        if (cleaned.endsWith("</script>")) {
+          cleaned = cleaned.substring(0, cleaned.length - 9);
+        }
+        JSON.parse(cleaned.trim());
+      } catch (e) {
+        alert("Invalid JSON in FAQ Schema Markup. Please correct it before saving.");
+        return;
+      }
+    }
+
+
     const newServices = [...services];
     const serviceData = { ...form, seo: seo, id: form.id || Date.now().toString(), number: form.number || (services.length + 1).toString().padStart(2, '0') };
     if (isEditing !== null && isEditing < services.length) newServices[isEditing] = serviceData;
@@ -282,6 +303,7 @@ export default function ServicesAdminPage() {
       benefits: service.benefits || [],
       process: service.process || [],
       faq: service.faq || [],
+      faqSchemaMarkup: service.faqSchemaMarkup || "",
       benefitsDescription: service.benefitsDescription || "",
       processDescription: service.processDescription || "",
       featuredComparison: {
@@ -1241,6 +1263,18 @@ export default function ServicesAdminPage() {
                         <button onClick={() => { const nf = form.faq.filter((_: any, idx: number) => idx !== i); setForm({ ...form, faq: nf }); }} className="text-[#d63638] text-xs">Remove FAQ</button>
                       </div>
                     ))}
+
+                    <div className="pt-4 border-t border-[#c3c4c7] space-y-1">
+                      <label className="text-[13px] font-bold">FAQ Schema Markup (Bulk JSON-LD)</label>
+                      <p className="text-[11px] text-[#646970]">Paste a single JSON-LD schema block covering all FAQs for this service.</p>
+                      <textarea
+                        value={form.faqSchemaMarkup || ""}
+                        onChange={(e) => setForm({ ...form, faqSchemaMarkup: e.target.value })}
+                        placeholder='e.g. {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [...]}'
+                        className="w-full border border-[#8c8f94] px-2 py-1.5 text-xs font-mono"
+                        rows={8}
+                      />
+                    </div>
                   </div>
                 )}
 

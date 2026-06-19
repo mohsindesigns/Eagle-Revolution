@@ -634,7 +634,7 @@ export default function ServiceAreaTemplate({ pageData }: { pageData?: any }) {
 
       {/* ================= FAQ SECTION ================= */}
       <section className="bg-white">
-        <PageInlineFaqs faqs={(content.faqs && content.faqs.length > 0) ? content.faqs : faq.items} />
+        <PageInlineFaqs faqs={(content.faqs && content.faqs.length > 0) ? content.faqs : faq.items} faqSchemaMarkup={content.faqSchemaMarkup} />
       </section>
 
       {/* ================= FINAL CTA SECTION ================= */}

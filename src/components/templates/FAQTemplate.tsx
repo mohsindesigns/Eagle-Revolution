@@ -63,22 +63,49 @@ export default function FAQTemplate({ pageData, params }: { pageData?: any, para
         return items.filter((item: any) => activeCategory === 'all' || item.category === activeCategory);
     }, [items, activeCategory]);
 
-    return (
-        <section className="relative bg-background py-24 min-h-screen">
+    const bulkSchema = pageData?.content?.faqSchemaMarkup || pageData?.faqSchemaMarkup;
+    let bulkSchemaObj = null;
+    if (typeof bulkSchema === "string" && bulkSchema.trim()) {
+        try {
+            let cleaned = bulkSchema.trim();
+            if (cleaned.startsWith("<script")) {
+                const closeBracket = cleaned.indexOf(">");
+                if (closeBracket !== -1) cleaned = cleaned.substring(closeBracket + 1);
+            }
+            if (cleaned.endsWith("</script>")) {
+                cleaned = cleaned.substring(0, cleaned.length - 9);
+            }
+            bulkSchemaObj = JSON.parse(cleaned.trim());
+        } catch (e) {
+            console.error("Failed to parse bulk FAQ schema:", e);
+        }
+    }
 
-            <div className="max-w-7xl mx-auto px-4">
-                <div className="text-center mb-16">
-                    <h1 className="text-4xl sm:text-6xl font-medium mb-4">{section?.headline}</h1>
-                    <div className="text-muted-foreground text-lg">
-                        <RichTextRenderer content={section?.description} />
+    return (
+        <>
+            {bulkSchemaObj && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(bulkSchemaObj) }}
+                />
+            )}
+            <section className="relative bg-background py-24 min-h-screen">
+
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="text-center mb-16">
+                        <h1 className="text-4xl sm:text-6xl font-medium mb-4">{section?.headline}</h1>
+                        <div className="text-muted-foreground text-lg">
+                            <RichTextRenderer content={section?.description} />
+                        </div>
+                    </div>
+                    <div className="space-y-4">
+                        {filteredItems.map((item: any, index: number) => (
+                            <AccordionItem key={index} item={item} index={index} isOpen={openItems.includes(index)} onToggle={() => setOpenItems(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index])} />
+                        ))}
                     </div>
                 </div>
-                <div className="space-y-4">
-                    {filteredItems.map((item: any, index: number) => (
-                        <AccordionItem key={index} item={item} index={index} isOpen={openItems.includes(index)} onToggle={() => setOpenItems(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index])} />
-                    ))}
-                </div>
-            </div>
-        </section>
+            </section>
+        </>
     );
 }
+

@@ -358,9 +358,9 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
       </div>
       {/* FAQ Section */}
-      {post.faq && post.faq.length > 0 && (
+      {((post.faq && post.faq.length > 0) || (post.faqSchemaMarkup && post.faqSchemaMarkup.trim())) && (
         <div className="mt-12">
-          <PageInlineFaqs faqs={post.faq} />
+          <PageInlineFaqs faqs={post.faq} faqSchemaMarkup={post.faqSchemaMarkup} />
         </div>
       )}
     </article>

@@ -87,6 +87,9 @@ export default function FAQAdminPage() {
 
   const handleSaveFAQ = () => {
     if (!form.question || !form.answer) return alert("Question and Answer are required.");
+
+
+
     const newFaqs = [...faqs];
     if (isEditing !== null && isEditing < faqs.length) newFaqs[isEditing] = { ...form };
     else newFaqs.push({ ...form });

@@ -34,21 +34,17 @@ export const getTemplate = (name: string) => {
 
 export const TemplateWrapper = ({ templateName, pageData, params }: any) => {
   const Template = getTemplate(templateName);
-  
-  // Only append the inline FAQ section if this page isn't already the FAQ template
-  // and it has page-specific FAQs defined in its content.
-  // We also exclude 'service-detail', 'about', and 'service-area' because those templates manually render their own FAQs.
-  const hasInlineFaqs = !['faq', 'service-detail', 'about', 'service-area'].includes(templateName) && 
-                        pageData?.content?.faqs && 
-                        Array.isArray(pageData.content.faqs) && 
-                        pageData.content.faqs.length > 0;
+
+  const hasInlineFaqs = !['faq', 'service-detail', 'about', 'service-area'].includes(templateName) &&
+    ((pageData?.content?.faqs && Array.isArray(pageData.content.faqs) && pageData.content.faqs.length > 0) ||
+      (pageData?.content?.faqSchemaMarkup && typeof pageData.content.faqSchemaMarkup === 'string' && pageData.content.faqSchemaMarkup.trim()));
 
   return (
     <ContentProvider initialData={pageData.content}>
-       <Template pageData={pageData} params={params} />
-       {hasInlineFaqs && (
-         <PageInlineFaqs faqs={pageData.content.faqs} />
-       )}
+      <Template pageData={pageData} params={params} />
+      {hasInlineFaqs && (
+        <PageInlineFaqs faqs={pageData.content.faqs} faqSchemaMarkup={pageData.content.faqSchemaMarkup} />
+      )}
     </ContentProvider>
   );
 };

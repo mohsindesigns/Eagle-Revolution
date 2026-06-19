@@ -90,8 +90,26 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
     const data = await res.json();
     if (res.ok) setTags(data);
   };
-
   const handleSave = async () => {
+    // Validate bulk FAQ JSON-LD schema markup
+    const bulkSchema = (post.faqSchemaMarkup || '').trim();
+    if (bulkSchema) {
+      try {
+        let cleaned = bulkSchema;
+        if (cleaned.startsWith("<script")) {
+          const closeBracket = cleaned.indexOf(">");
+          if (closeBracket !== -1) cleaned = cleaned.substring(closeBracket + 1);
+        }
+        if (cleaned.endsWith("</script>")) {
+          cleaned = cleaned.substring(0, cleaned.length - 9);
+        }
+        JSON.parse(cleaned.trim());
+      } catch (e) {
+        alert('Invalid JSON in FAQ Schema Markup. Please correct it before saving.');
+        return;
+      }
+    }
+
     setSaving(true);
     try {
       const url = id ? `/api/admin/blog/posts/${id}` : '/api/admin/blog/posts';
@@ -287,6 +305,19 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
                         <p className="text-slate-500 text-sm mt-1">Click the button above to add your first question.</p>
                       </div>
                     )}
+                  </div>
+
+                  {/* Bulk FAQ Schema Markup */}
+                  <div className="mt-8 space-y-2 border-t border-slate-200 pt-6">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">FAQ Schema Markup (Bulk JSON-LD)</label>
+                    <p className="text-xs text-slate-400">Paste a single JSON-LD schema block covering all your FAQs. This will be injected into the page as structured data.</p>
+                    <textarea
+                      value={post.faqSchemaMarkup || ""}
+                      onChange={(e) => setPost({ ...post, faqSchemaMarkup: e.target.value })}
+                      rows={8}
+                      placeholder='{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", ...}]}'
+                      className="w-full border border-[#c3c4c7] p-4 text-sm font-mono outline-none focus:border-[#2271b1] resize-y bg-white rounded shadow-sm"
+                    />
                   </div>
                 </div>
               )}

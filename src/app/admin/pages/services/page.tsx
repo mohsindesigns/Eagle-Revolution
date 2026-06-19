@@ -123,6 +123,26 @@ export default function ServicesPageEditor() {
   }, []);
 
   const handleSave = async () => {
+    // Validate bulk FAQ JSON-LD schema markup
+    const bulkSchema = (data?.services?.faqSchemaMarkup || "").trim();
+    if (bulkSchema) {
+      try {
+        let cleaned = bulkSchema;
+        if (cleaned.startsWith("<script")) {
+          const closeBracket = cleaned.indexOf(">");
+          if (closeBracket !== -1) cleaned = cleaned.substring(closeBracket + 1);
+        }
+        if (cleaned.endsWith("</script>")) {
+          cleaned = cleaned.substring(0, cleaned.length - 9);
+        }
+        JSON.parse(cleaned.trim());
+      } catch (e) {
+        alert("Invalid JSON in FAQ Schema Markup. Please correct it before saving.");
+        return;
+      }
+    }
+
+
     setSaving(true);
     setMessage("");
     try {
@@ -892,9 +912,50 @@ export default function ServicesPageEditor() {
                             placeholder="e.g. We provide comprehensive roofing services, including residential roofing, TPO commercial roofing, roof inspections, and repairs."
                           />
                         </div>
+
+                        <div className="flex justify-end pt-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setData((prev: any) => {
+                                const newFaqs = prev.services?.faqs?.filter((_: any, i: number) => i !== index) || [];
+                                return {
+                                  ...prev,
+                                  services: {
+                                    ...prev.services,
+                                    faqs: newFaqs
+                                  }
+                                };
+                              });
+                            }}
+                            className="flex items-center gap-2 text-rose-500 hover:text-rose-600 text-xs font-semibold uppercase tracking-wider transition-colors"
+                          >
+                            <Trash2 className="w-4 h-4" /> Remove FAQ
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}
+
+                  <div className="space-y-2 mt-8 pt-6 border-t border-slate-200">
+                    <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">FAQ Schema Markup (Bulk JSON-LD)</label>
+                    <p className="text-[11px] text-[#646970]">Paste a single JSON-LD schema block covering all FAQs for this page.</p>
+                    <textarea
+                      rows={8}
+                      value={data?.services?.faqSchemaMarkup || ""}
+                      onChange={(e) => {
+                        setData((prev: any) => ({
+                          ...prev,
+                          services: {
+                            ...prev.services,
+                            faqSchemaMarkup: e.target.value
+                          }
+                        }));
+                      }}
+                      className="w-full bg-white border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 font-mono focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-y"
+                      placeholder='e.g. {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [...]}'
+                    />
+                  </div>
                 </div>
               )}
             </motion.div>

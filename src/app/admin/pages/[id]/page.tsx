@@ -66,6 +66,26 @@ export default function DynamicPageEditor({ params }: { params: Promise<{ id: st
   };
 
   const handleSave = async () => {
+    // Validate bulk FAQ JSON-LD schema markup
+    const bulkSchema = (content.faqSchemaMarkup || "").trim();
+    if (bulkSchema) {
+      try {
+        let cleaned = bulkSchema;
+        if (cleaned.startsWith("<script")) {
+          const closeBracket = cleaned.indexOf(">");
+          if (closeBracket !== -1) cleaned = cleaned.substring(closeBracket + 1);
+        }
+        if (cleaned.endsWith("</script>")) {
+          cleaned = cleaned.substring(0, cleaned.length - 9);
+        }
+        JSON.parse(cleaned.trim());
+      } catch (e) {
+        alert("Invalid JSON in FAQ Schema Markup. Please correct it before saving.");
+        return;
+      }
+    }
+
+
     setSaving(true);
     try {
       const res = await fetch(`/api/admin/pages/${id}`, {
@@ -219,7 +239,7 @@ export default function DynamicPageEditor({ params }: { params: Promise<{ id: st
                     <div className="text-[13px] text-[#646970] italic">No FAQs added for this page yet.</div>
                   ) : (
                     <div className="space-y-4">
-                      {content.faqs.map((faq: any, idx: number) => (
+                       {content.faqs.map((faq: any, idx: number) => (
                         <div key={idx} className="bg-white border border-[#c3c4c7] p-4 rounded-sm space-y-3">
                           <div className="flex justify-between items-start gap-4">
                             <div className="flex-1 space-y-3">
@@ -242,6 +262,18 @@ export default function DynamicPageEditor({ params }: { params: Promise<{ id: st
                       ))}
                     </div>
                   )}
+
+                  <div className="pt-4 border-t border-[#c3c4c7] space-y-1">
+                    <label className="text-[13px] font-bold text-[#1d2327]">FAQ Schema Markup (Bulk JSON-LD)</label>
+                    <p className="text-[11px] text-[#646970]">Paste a single JSON-LD schema block covering all FAQs for this page.</p>
+                    <textarea
+                      value={content.faqSchemaMarkup || ""}
+                      onChange={e => setContent({ ...content, faqSchemaMarkup: e.target.value })}
+                      className="w-full border border-[#8c8f94] px-2 py-1.5 text-[13px] font-mono rounded-sm focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none"
+                      rows={8}
+                      placeholder='e.g. {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [...]}'
+                    />
+                  </div>
                 </div>
               )}
             </div>

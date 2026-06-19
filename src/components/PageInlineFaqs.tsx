@@ -175,10 +175,9 @@ const AccordionItem = ({
         className={`
           relative bg-card/90 backdrop-blur-sm rounded-2xl
           border transition-all duration-300
-          ${
-            isOpen
-              ? "border-primary/30 shadow-2xl shadow-primary/15"
-              : "border-primary/10 hover:border-primary/20 shadow-lg shadow-primary/5"
+          ${isOpen
+            ? "border-primary/30 shadow-2xl shadow-primary/15"
+            : "border-primary/10 hover:border-primary/20 shadow-lg shadow-primary/5"
           }
         `}
       >
@@ -219,11 +218,10 @@ const AccordionItem = ({
                     i % 2 === 0
                       ? "hsl(var(--primary))"
                       : "hsl(var(--primary)/80)",
-                  boxShadow: `0 0 8px ${
-                    i % 2 === 0
+                  boxShadow: `0 0 8px ${i % 2 === 0
                       ? "hsl(var(--primary))"
                       : "hsl(var(--primary)/80)"
-                  }`,
+                    }`,
                 }}
                 initial={{ x: "50%", y: "50%", scale: 0, opacity: 0.6 }}
                 animate={{
@@ -252,10 +250,9 @@ const AccordionItem = ({
             <h3
               className={`
                 text-base md:text-lg lg:text-xl font-light transition-all duration-300
-                ${
-                  isOpen
-                    ? "text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 font-medium"
-                    : "text-card-foreground group-hover:text-card-foreground/90"
+                ${isOpen
+                  ? "text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 font-medium"
+                  : "text-card-foreground group-hover:text-card-foreground/90"
                 }
               `}
             >
@@ -267,19 +264,19 @@ const AccordionItem = ({
                 animate={
                   isOpen
                     ? {
-                        rotate: 180,
-                        scale: 1.1,
-                        backgroundColor: "hsl(var(--primary))",
-                        borderColor: "hsl(var(--primary))",
-                      }
+                      rotate: 180,
+                      scale: 1.1,
+                      backgroundColor: "hsl(var(--primary))",
+                      borderColor: "hsl(var(--primary))",
+                    }
                     : {
-                        rotate: 0,
-                        scale: 1,
-                        backgroundColor: "hsl(var(--background))",
-                        borderColor: isHovered
-                          ? "hsl(var(--primary))"
-                          : "hsl(var(--border))",
-                      }
+                      rotate: 0,
+                      scale: 1,
+                      backgroundColor: "hsl(var(--background))",
+                      borderColor: isHovered
+                        ? "hsl(var(--primary))"
+                        : "hsl(var(--border))",
+                    }
                 }
                 transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 className={`
@@ -302,8 +299,8 @@ const AccordionItem = ({
                       isOpen
                         ? "white"
                         : isHovered
-                        ? "hsl(var(--primary))"
-                        : "hsl(var(--muted-foreground))"
+                          ? "hsl(var(--primary))"
+                          : "hsl(var(--muted-foreground))"
                     }
                     strokeWidth="1.8"
                     strokeLinecap="round"
@@ -451,10 +448,9 @@ const CategoryFilter = ({
           onClick={() => onCategoryChange(category.id)}
           className={`
             relative px-4 py-2 md:px-5 md:py-2.5 rounded-full text-xs md:text-sm font-bold transition-all duration-200
-            ${
-              activeCategory === category.id
-                ? "text-white"
-                : "text-muted-foreground hover:text-card-foreground bg-card/50 hover:bg-primary/5"
+            ${activeCategory === category.id
+              ? "text-white"
+              : "text-muted-foreground hover:text-card-foreground bg-card/50 hover:bg-primary/5"
             }
           `}
         >
@@ -496,10 +492,9 @@ const SearchBar = ({ onSearch }: { onSearch: (query: string) => void }) => {
       <div
         className={`
           relative flex items-center bg-card rounded-full border transition-all duration-200
-          ${
-            isFocused
-              ? "border-primary shadow-lg shadow-primary/10"
-              : "border-border hover:border-border/80 shadow-md"
+          ${isFocused
+            ? "border-primary shadow-lg shadow-primary/10"
+            : "border-border hover:border-border/80 shadow-md"
           }
         `}
       >
@@ -534,7 +529,7 @@ const SearchBar = ({ onSearch }: { onSearch: (query: string) => void }) => {
 
 // ── Main Export ────────────────────────────────────────────────────────────────
 
-export default function PageInlineFaqs({ faqs }: { faqs?: any[] }) {
+export default function PageInlineFaqs({ faqs, faqSchemaMarkup }: { faqs?: any[]; faqSchemaMarkup?: string }) {
   const { faq: globalFaq } = useContent();
   const sectionRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
@@ -618,102 +613,127 @@ export default function PageInlineFaqs({ faqs }: { faqs?: any[] }) {
     return () => ctx.revert();
   }, [isClient]);
 
+  let bulkSchemaObj = null;
+  if (typeof faqSchemaMarkup === "string" && faqSchemaMarkup.trim()) {
+    try {
+      let cleaned = faqSchemaMarkup.trim();
+      if (cleaned.startsWith("<script")) {
+        const closeBracket = cleaned.indexOf(">");
+        if (closeBracket !== -1) cleaned = cleaned.substring(closeBracket + 1);
+      }
+      if (cleaned.endsWith("</script>")) {
+        cleaned = cleaned.substring(0, cleaned.length - 9);
+      }
+      bulkSchemaObj = JSON.parse(cleaned.trim());
+    } catch (e) {
+      console.error("Failed to parse bulk FAQ schema:", e);
+    }
+  }
+
   const validFaqs = items.filter((item: any) => item && item.question && item.answer);
 
-  if (validFaqs.length === 0) return null;
+  if (validFaqs.length === 0 && !bulkSchemaObj) return null;
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": validFaqs.map((item: any) => ({
-      "@type": "Question",
-      "name": item.question.trim(),
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": item.answer.trim(),
-      },
-    })),
-  };
+  // Collect valid custom schema markups from each FAQ item (legacy fallback)
+  const customSchemas = validFaqs
+    .filter((item: any) => item.schemaMarkup && item.schemaMarkup.trim())
+    .map((item: any) => {
+      try {
+        return JSON.parse(item.schemaMarkup.trim());
+      } catch (e) {
+        return null;
+      }
+    })
+    .filter(Boolean);
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      {isClient && (
+      {bulkSchemaObj && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(bulkSchemaObj) }}
+        />
+      )}
+      {customSchemas.map((schema: any, idx: number) => (
+        <script
+          key={`custom-faq-schema-${idx}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
+      {validFaqs.length > 0 && isClient && (
         <section
-      ref={sectionRef}
-      className="relative bg-background py-20 md:py-24 lg:py-28 overflow-hidden"
-    >
-      <SubtleBackground />
-      <FloatingParticles />
+          ref={sectionRef}
+          className="relative bg-background py-20 md:py-24 lg:py-28 overflow-hidden"
+        >
+          <SubtleBackground />
+          <FloatingParticles />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16 inline-faq-reveal">
-          <span className="text-xs font-medium tracking-[0.2em] uppercase text-primary mb-3 block">
-            Knowledge Base
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-foreground mb-4">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-muted-foreground text-base md:text-lg">
-            Answers to common questions about our exterior remodeling services in St. Louis.
-          </p>
-          <div className="w-16 h-0.5 bg-gradient-to-r from-primary to-primary/60 mx-auto mt-6 rounded-full" />
-        </div>
-
-        {/* Filters + Search */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-10 md:mb-12 inline-faq-reveal">
-          <CategoryFilter
-            categories={rawCategories}
-            activeCategory={activeCategory}
-            onCategoryChange={handleCategoryChange}
-          />
-          <SearchBar onSearch={setSearchQuery} />
-        </div>
-
-        {/* FAQ Items */}
-        <div className="space-y-3 md:space-y-4 mb-12 md:mb-16">
-          {filteredItems.length > 0 ? (
-            filteredItems.map((item: any, index: number) => (
-              <AccordionItem
-                key={item.id || `inline-faq-${index}`}
-                item={item}
-                index={index}
-                isOpen={openItems.includes(index)}
-                onToggle={handleToggle}
-              />
-            ))
-          ) : (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="text-center py-16"
-            >
-              <div className="text-muted-foreground mb-3">
-                <Icon name="FileText" className="w-12 h-12 mx-auto opacity-50" />
-              </div>
-              <p className="text-muted-foreground text-base">
-                No questions found matching your criteria.
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
+            {/* Section Header */}
+            <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16 inline-faq-reveal">
+              <span className="text-xs font-medium tracking-[0.2em] uppercase text-primary mb-3 block">
+                Knowledge Base
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-foreground mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-muted-foreground text-base md:text-lg">
+                Answers to common questions about our exterior remodeling services in St. Louis.
               </p>
-              <button
-                onClick={() => {
-                  setActiveCategory("all");
-                  setSearchQuery("");
-                }}
-                className="mt-4 text-sm text-primary hover:text-primary/80 underline underline-offset-4"
-              >
-                Clear filters
-              </button>
-            </motion.div>
-          )}
-        </div>
-      </div>
-    </section>
-    )}
-  </>
-);
+              <div className="w-16 h-0.5 bg-gradient-to-r from-primary to-primary/60 mx-auto mt-6 rounded-full" />
+            </div>
+
+            {/* Filters + Search */}
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-10 md:mb-12 inline-faq-reveal">
+              <CategoryFilter
+                categories={rawCategories}
+                activeCategory={activeCategory}
+                onCategoryChange={handleCategoryChange}
+              />
+              <SearchBar onSearch={setSearchQuery} />
+            </div>
+
+            {/* FAQ Items */}
+            <div className="space-y-3 md:space-y-4 mb-12 md:mb-16">
+              {filteredItems.length > 0 ? (
+                filteredItems.map((item: any, index: number) => (
+                  <AccordionItem
+                    key={item.id || `inline-faq-${index}`}
+                    item={item}
+                    index={index}
+                    isOpen={openItems.includes(index)}
+                    onToggle={handleToggle}
+                  />
+                ))
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-center py-16"
+                >
+                  <div className="text-muted-foreground mb-3">
+                    <Icon name="FileText" className="w-12 h-12 mx-auto opacity-50" />
+                  </div>
+                  <p className="text-muted-foreground text-base">
+                    No questions found matching your criteria.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setActiveCategory("all");
+                      setSearchQuery("");
+                    }}
+                    className="mt-4 text-sm text-primary hover:text-primary/80 underline underline-offset-4"
+                  >
+                    Clear filters
+                  </button>
+                </motion.div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+    </>
+  );
 }

@@ -127,23 +127,6 @@ export function generateSchema(options: SchemaOptions) {
     mainEntitySchema["provider"] = { "@id": `${BASE_URL}/#organization` };
   }
 
-  // 6. FAQPage Schema (Conditional)
-  let faqSchema = null;
-  if (faqs && faqs.length > 0) {
-    faqSchema = {
-      "@type": "FAQPage",
-      "@id": `${pageUrl}/#faq`,
-      "mainEntity": faqs.map(faq => ({
-        "@type": "Question",
-        "name": faq.question,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": faq.answer
-        }
-      }))
-    };
-  }
-
   const graph = [
     organizationSchema,
     localBusinessSchema,
@@ -159,10 +142,6 @@ export function generateSchema(options: SchemaOptions) {
       "url": image,
       "contentUrl": image
     });
-  }
-
-  if (faqSchema) {
-    graph.push(faqSchema);
   }
 
   return {
