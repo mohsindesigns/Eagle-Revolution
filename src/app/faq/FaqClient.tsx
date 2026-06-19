@@ -1,13 +1,18 @@
 "use client";
 
 import { useContent } from "@/hooks/useContent";
-import FAQ from "@/components/FAQ";
+import PageInlineFaqs from "@/components/PageInlineFaqs";
 import { motion } from "framer-motion";
 import { CircleHelp, ChevronRight, Search } from "lucide-react";
 import Link from "next/link";
 
 export default function FAQPage() {
-  const { faqPage } = useContent();
+  const { faqPage, faq } = useContent();
+  const allItems = faq?.items || [];
+  const faqs = allItems.filter((item: any) => 
+    item.visibility === 'global' || 
+    (item.visibility === 'specific' && item.targetPages?.includes('faq'))
+  );
 
   return (
     <main className="min-h-screen bg-background">
@@ -64,7 +69,11 @@ export default function FAQPage() {
       </section>
 
       {/* Main FAQ Component with Page Specific Filtering */}
-      <FAQ currentPage="faq" hideHeader={true} />
+      <PageInlineFaqs 
+        faqs={faqs} 
+        faqSchemaMarkup={faqPage?.faqSchemaMarkup} 
+        hideHeader={true} 
+      />
 
       {/* CTA Section */}
       <section className="py-20 bg-background border-t border-primary/10">

@@ -529,7 +529,21 @@ const SearchBar = ({ onSearch }: { onSearch: (query: string) => void }) => {
 
 // ── Main Export ────────────────────────────────────────────────────────────────
 
-export default function PageInlineFaqs({ faqs, faqSchemaMarkup }: { faqs?: any[]; faqSchemaMarkup?: string }) {
+export default function PageInlineFaqs({
+  faqs,
+  faqSchemaMarkup,
+  hideHeader = false,
+  title,
+  subtitle,
+  badge
+}: {
+  faqs?: any[];
+  faqSchemaMarkup?: string;
+  hideHeader?: boolean;
+  title?: string;
+  subtitle?: string;
+  badge?: string;
+}) {
   const { faq: globalFaq } = useContent();
   const sectionRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
@@ -671,18 +685,28 @@ export default function PageInlineFaqs({ faqs, faqSchemaMarkup }: { faqs?: any[]
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
             {/* Section Header */}
-            <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16 inline-faq-reveal">
-              <span className="text-xs font-medium tracking-[0.2em] uppercase text-primary mb-3 block">
-                Knowledge Base
-              </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-foreground mb-4">
-                Frequently Asked Questions
-              </h2>
-              <p className="text-muted-foreground text-base md:text-lg">
-                Answers to common questions about our exterior remodeling services in St. Louis.
-              </p>
-              <div className="w-16 h-0.5 bg-gradient-to-r from-primary to-primary/60 mx-auto mt-6 rounded-full" />
-            </div>
+            {!hideHeader && (
+              <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16 inline-faq-reveal">
+                <span className="text-xs font-medium tracking-[0.2em] uppercase text-primary mb-3 block">
+                  {badge || section?.badge || "Knowledge Base"}
+                </span>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-foreground mb-4">
+                  {title || section?.headline || "Frequently Asked Questions"}
+                </h2>
+                <div className="text-muted-foreground text-base md:text-lg">
+                  {subtitle || section?.description ? (
+                    typeof (subtitle || section?.description) === "string" ? (
+                      <p>{subtitle || section?.description}</p>
+                    ) : (
+                      <RichTextRenderer content={subtitle || section?.description} />
+                    )
+                  ) : (
+                    <p>Answers to common questions about our exterior remodeling services in St. Louis.</p>
+                  )}
+                </div>
+                <div className="w-16 h-0.5 bg-gradient-to-r from-primary to-primary/60 mx-auto mt-6 rounded-full" />
+              </div>
+            )}
 
             {/* Filters + Search */}
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-10 md:mb-12 inline-faq-reveal">

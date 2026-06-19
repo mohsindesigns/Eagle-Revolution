@@ -23,16 +23,44 @@ export default function FAQPageEditor() {
   }, []);
 
   const handleSave = async () => {
+    const bulkSchema = (data.faqPage?.faqSchemaMarkup || "").trim();
+    let cleanedMarkup = bulkSchema;
+    if (bulkSchema) {
+      try {
+        if (cleanedMarkup.startsWith("<script")) {
+          const closeBracket = cleanedMarkup.indexOf(">");
+          if (closeBracket !== -1) cleanedMarkup = cleanedMarkup.substring(closeBracket + 1);
+        }
+        if (cleanedMarkup.endsWith("</script>")) {
+          cleanedMarkup = cleanedMarkup.substring(0, cleanedMarkup.length - 9);
+        }
+        cleanedMarkup = cleanedMarkup.trim();
+        JSON.parse(cleanedMarkup);
+      } catch (e) {
+        alert("Invalid JSON in FAQ Schema Markup. Please correct it before saving.");
+        return;
+      }
+    }
+
     setSaving(true);
     setMessage("");
     try {
+      const payload = {
+        ...data,
+        faqPage: {
+          ...data.faqPage,
+          faqSchemaMarkup: cleanedMarkup
+        }
+      };
+
       const res = await fetch("/api/content", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
       if (res.ok) {
         setMessage("FAQ Page content saved successfully!");
+        setData(payload); // Sync local state with cleaned data
         setTimeout(() => setMessage(""), 3000);
       } else {
         setMessage("Failed to save content.");
@@ -127,6 +155,18 @@ export default function FAQPageEditor() {
             <RichTextEditor 
               content={data.faqPage?.description || ""} 
               onChange={(v) => updatePage("description", v)} 
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold block">FAQ Schema Markup (JSON-LD)</label>
+            <span className="text-xs text-slate-400 block mb-1">Paste custom FAQ JSON-LD schema markup here. Surrounding &lt;script&gt; tags will be stripped automatically.</span>
+            <textarea
+              value={data.faqPage?.faqSchemaMarkup || ""}
+              onChange={(e) => updatePage("faqSchemaMarkup", e.target.value)}
+              rows={6}
+              className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 font-mono text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all shadow-inner"
+              placeholder='{ "@context": "https://schema.org", "@type": "FAQPage", ... }'
             />
           </div>
         </div>

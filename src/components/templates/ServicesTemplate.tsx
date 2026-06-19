@@ -93,7 +93,10 @@ export default function ServicesTemplate({ pageData, params }: { pageData?: any,
                     <ServiceCard key={index} service={service} index={index} />
                 ))}
             </div>
-            <PageInlineFaqs faqs={faq.items} />
+            <PageInlineFaqs 
+                faqs={(pageData?.content?.faqs && pageData.content.faqs.length > 0) ? pageData.content.faqs : faq.items} 
+                faqSchemaMarkup={pageData?.content?.faqSchemaMarkup || pageData?.faqSchemaMarkup} 
+            />
 
             <BlogSection
                 title={pageData?.content?.blogSection?.title || blogSection?.title}
