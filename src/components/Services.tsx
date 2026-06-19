@@ -506,19 +506,6 @@ const Services = () => {
                       className="absolute inset-0 bg-gradient-to-tr from-primary/30 via-transparent to-transparent"
                       style={{ opacity: overlayOpacity }}
                     />
-
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.5, duration: 0.6 }}
-                      className="absolute bottom-4 left-4 bg-card/95 backdrop-blur-sm px-5 py-2.5 rounded-full shadow-lg border border-border"
-                    >
-                      <span className="text-xs font-semibold text-primary flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
-                        {servicesData.image?.badge || "Veteran Owned & Operated"}
-                      </span>
-                    </motion.div>
                   </div>
                 </motion.div>
 

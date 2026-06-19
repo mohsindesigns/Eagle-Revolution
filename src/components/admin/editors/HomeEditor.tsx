@@ -343,6 +343,23 @@ export default function HomeEditor({ pageId, data, setData }: { pageId: string, 
                         <h3 className={UI.sectionHeader}>3. Selection</h3>
                         <ContentSelector type="services" label="Featured Services" selectedItems={data.services?.services} onSelect={(items) => updateSection("services", "services", items)} />
                      </div>
+                     <div className="space-y-6 pt-10 border-t border-[#f0f0f1]">
+                        <h3 className={UI.sectionHeader}>4. Section Image</h3>
+                        <ImageField
+                           label="Section Image"
+                           value={data.services?.image?.src || ""}
+                           onChange={(url) => {
+                              const currentImage = typeof data.services?.image === 'object' && data.services?.image !== null ? data.services.image : {};
+                              updateSection("services", "image", { ...currentImage, src: url });
+                           }}
+                           altValue={data.services?.image?.alt || ""}
+                           onAltChange={(alt) => {
+                              const currentImage = typeof data.services?.image === 'object' && data.services?.image !== null ? data.services.image : {};
+                              updateSection("services", "image", { ...currentImage, alt: alt });
+                           }}
+                           description="This image appears on the right side of the Services section on the homepage."
+                        />
+                     </div>
                   </div>
                )}
 
