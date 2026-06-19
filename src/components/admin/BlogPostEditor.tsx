@@ -147,6 +147,13 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
 
   return (
     <div className="bg-[#f0f0f1] min-h-screen font-sans pb-10">
+      {/* Breadcrumbs */}
+      <div className="flex items-center gap-1 text-[13px] text-[#2271b1] mb-3 px-1">
+        <Link href="/admin/blog" className="hover:underline">Blog Posts</Link>
+        <ChevronRight className="w-3.5 h-3.5 text-[#646970] shrink-0" />
+        <span className="text-[#646970] truncate">{post.title || (id ? "Edit Post" : "Add New Post")}</span>
+      </div>
+
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">

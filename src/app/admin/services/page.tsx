@@ -235,7 +235,7 @@ export default function ServicesAdminPage() {
     }
   }, [form.title]);
 
-  const saveToDb = async (newServices: any[]) => {
+  const saveToDb = async (newServices: any[], keepEditingIdx?: number, updatedForm?: any) => {
     setSaving(true);
     const updatedData = { ...data, services: { ...data.services, services: newServices } };
     try {
@@ -245,7 +245,14 @@ export default function ServicesAdminPage() {
         setServices(newServices);
         setToast({ type: "ok", msg: "Services updated." });
         setTimeout(() => setToast(null), 3000);
-        setIsEditing(null);
+        if (keepEditingIdx !== undefined) {
+          setIsEditing(keepEditingIdx);
+          if (updatedForm) {
+            setForm(updatedForm);
+          }
+        } else {
+          setIsEditing(null);
+        }
       }
     } catch {
       setToast({ type: "err", msg: "Failed to save." });
@@ -288,9 +295,15 @@ export default function ServicesAdminPage() {
 
     const newServices = [...services];
     const serviceData = { ...form, seo: seo, id: form.id || Date.now().toString(), number: form.number || (services.length + 1).toString().padStart(2, '0') };
-    if (isEditing !== null && isEditing < services.length) newServices[isEditing] = serviceData;
-    else newServices.push(serviceData);
-    saveToDb(newServices);
+    
+    let targetIdx = isEditing;
+    if (isEditing !== null && isEditing < services.length) {
+      newServices[isEditing] = serviceData;
+    } else {
+      targetIdx = services.length;
+      newServices.push(serviceData);
+    }
+    saveToDb(newServices, targetIdx !== null ? targetIdx : undefined, serviceData);
   };
 
   const handleEdit = (service: any) => {
@@ -427,7 +440,13 @@ export default function ServicesAdminPage() {
       )}
 
       {isEditing !== null ? (
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+        <div className="space-y-4">
+          <div className="flex items-center gap-1 text-[13px] text-[#2271b1] px-1">
+            <button onClick={() => setIsEditing(null)} className="hover:underline">Services</button>
+            <ChevronRight className="w-3.5 h-3.5 text-[#646970] shrink-0" />
+            <span className="text-[#646970] truncate">{form.title || "New Service"}</span>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
           {/* Left Form Content */}
           <div className="lg:col-span-3 space-y-6">
             <div className="bg-white border border-[#c3c4c7] shadow-sm rounded-sm p-6">
@@ -1348,6 +1367,7 @@ export default function ServicesAdminPage() {
               </div>
             </div>
           </div>
+        </div>
         </div>
       ) : (
         /* WP List View */

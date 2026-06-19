@@ -125,6 +125,13 @@ export default function DynamicPageEditor({ params }: { params: Promise<{ id: st
 
   return (
     <div className="bg-[#f0f0f1] font-sans pb-10 max-w-full overflow-hidden">
+      {/* Breadcrumbs */}
+      <div className="flex items-center gap-1 text-[13px] text-[#2271b1] mb-3 px-1">
+        <Link href="/admin/pages" className="hover:underline">Pages</Link>
+        <ChevronRight className="w-3.5 h-3.5 text-[#646970] shrink-0" />
+        <span className="text-[#646970] truncate">{page?.title || "Edit Page"}</span>
+      </div>
+
       {/* WP Header Area */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
