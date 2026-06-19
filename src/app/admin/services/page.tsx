@@ -119,6 +119,76 @@ function IconSelector({ value, onChange }: { value: string, onChange: (v: string
   );
 }
 
+const DEFAULT_FEATURED_CATEGORY = {
+  isFeaturedCategory: false,
+  featuredComparison: {
+    badge: "Premium Material Showcase",
+    titleLine1: "Composite & PVC:",
+    titleLine2: "Built Different",
+    description: "Two premium paths to your dream outdoor space. Discover why our deck installations are the gold standard.",
+    image: "",
+    imageBadge: "Award-Winning Craftsmanship",
+    imageTitle: "Transform Your Outdoor Living",
+    imageDescription: "Every deck we build is a masterpiece of engineering and design, backed by industry-leading warranties.",
+    comparisonTitle: "Compare & Choose",
+    comparisonSubtitle: "Find Your Perfect Material",
+    comparisonDescription: "Side-by-side comparison of our premium decking solutions",
+    card1: {
+      title: "Capped Composite",
+      subtitle: "Wood fiber + polymer blend",
+      icon: "TreePine",
+      features: [
+        "Natural wood look and feel",
+        "25+ year fade and stain warranty",
+        "Realistic wood grain patterns",
+        "Lower cost than premium PVC",
+        "Excellent for full sun exposure",
+        "Scratch and stain resistant capstock"
+      ],
+      footerLabel: "Starting at",
+      footerValue: "Competitive Pricing"
+    },
+    card2: {
+      title: "Cellular PVC",
+      subtitle: "100% pure polymer",
+      icon: "Droplets",
+      features: [
+        "Zero organic material - never rots",
+        "Lifetime rot and insect warranty",
+        "Lighter, cooler surface in direct sun",
+        "Ideal for pools and shaded areas",
+        "Superior moisture resistance",
+        "Never absorbs water or swells"
+      ],
+      footerLabel: "Premium Investment",
+      footerValue: "Worth Every Penny",
+      isRecommended: true
+    }
+  },
+  featuredGrid: {
+    cards: [
+      {
+        icon: "Zap",
+        title: "Cool-Touch Technology",
+        description: "Advanced heat-mitigating capstock keeps surfaces cooler than traditional composites",
+        colorTheme: "amber"
+      },
+      {
+        icon: "Palette",
+        title: "Premium Color Range",
+        description: "Multi-tonal streaking and authentic wood grain patterns that never fade",
+        colorTheme: "blue"
+      },
+      {
+        icon: "Shield",
+        title: "Lifetime Protection",
+        description: "Industry-leading warranties backed by our military-grade installation",
+        colorTheme: "green"
+      }
+    ]
+  }
+};
+
 export default function ServicesAdminPage() {
   const [data, setData] = useState<any>(null);
   const [services, setServices] = useState<any[]>([]);
@@ -147,7 +217,8 @@ export default function ServicesAdminPage() {
     processBadge: "",
     processDescription: "",
     overview: "", overviewImage: "", overviewStats: [],
-    cta: { text: "Start Your Project", link: "/contact" }, icon: "Layout", tag: "", status: "published", features: [], stats: [], benefits: [], process: [], faq: []
+    cta: { text: "Start Your Project", link: "/contact" }, icon: "Layout", tag: "", status: "published", features: [], stats: [], benefits: [], process: [], faq: [],
+    ...DEFAULT_FEATURED_CATEGORY
   });
 
   useEffect(() => {
@@ -204,6 +275,7 @@ export default function ServicesAdminPage() {
   const handleEdit = (service: any) => {
     const originalIdx = services.findIndex(orig => orig.id === service.id);
     setForm({
+      ...DEFAULT_FEATURED_CATEGORY,
       ...service,
       features: (service.features || []).map((f: any) => typeof f === 'string' ? { text: f, icon: "CheckCircle" } : f),
       stats: service.stats || [],
@@ -211,7 +283,23 @@ export default function ServicesAdminPage() {
       process: service.process || [],
       faq: service.faq || [],
       benefitsDescription: service.benefitsDescription || "",
-      processDescription: service.processDescription || ""
+      processDescription: service.processDescription || "",
+      featuredComparison: {
+        ...DEFAULT_FEATURED_CATEGORY.featuredComparison,
+        ...(service.featuredComparison || {}),
+        card1: {
+          ...DEFAULT_FEATURED_CATEGORY.featuredComparison.card1,
+          ...(service.featuredComparison?.card1 || {})
+        },
+        card2: {
+          ...DEFAULT_FEATURED_CATEGORY.featuredComparison.card2,
+          ...(service.featuredComparison?.card2 || {})
+        }
+      },
+      featuredGrid: {
+        ...DEFAULT_FEATURED_CATEGORY.featuredGrid,
+        ...(service.featuredGrid || {})
+      }
     });
     setSeo(service.seo || {});
     setIsEditing(originalIdx);
@@ -293,11 +381,12 @@ export default function ServicesAdminPage() {
                 benefitsTitlePrefix: "Key", benefitsTitleHighlight: "Benefits", benefitsTitleSuffix: "",
                 benefitsBadge: "The Eagle Edge",
                 benefitsDescription: "Experience the difference with our unwavering commitment to military-grade excellence",
-                processTitlePrefix: "Precision", processTitleHighlight: "In Every Detail", processTitleSuffix: "",
+                processTitlePrefix: "Precision", processTitleHighlight: "In Every Detail", processTitleSuffix: ".",
                 processBadge: "Methodology",
                 processDescription: "A battle-tested framework that ensures consistency, quality, and complete satisfaction—from initial consultation to final walkthrough.",
                 overview: "", overviewImage: "", overviewStats: [],
-                cta: { text: "Start Your Project", link: "/contact" }, icon: "Layout", tag: "", status: "published", features: [], stats: [], benefits: [], process: [], faq: []
+                cta: { text: "Start Your Project", link: "/contact" }, icon: "Layout", tag: "", status: "published", features: [], stats: [], benefits: [], process: [], faq: [],
+                ...DEFAULT_FEATURED_CATEGORY
               });
               setSeo({});
               setActiveTab("general");
@@ -329,20 +418,58 @@ export default function ServicesAdminPage() {
               />
 
               {/* WP-Style Tabs for Service Editor */}
-              <div className="flex border-b border-[#c3c4c7] mb-6">
-                {[
-                  { id: "general", label: "General" },
-                  { id: "content", label: "Page Details" },
-                  { id: "features", label: "Stats & Benefits" },
-                  { id: "steps", label: "Process" },
-                  { id: "faq", label: "FAQs" },
-                  { id: "blog", label: "Blog" },
-                  { id: "seo", label: "SEO" }
-                ].map(tab => (
-                  <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`px-4 py-2 text-[13px] border-b-2 transition-all ${activeTab === tab.id ? 'border-[#2271b1] text-[#1d2327] font-bold' : 'border-transparent text-[#2271b1] hover:text-[#135e96]'}`}>
-                    {tab.label}
-                  </button>
-                ))}
+              <div className="space-y-4 mb-6">
+                {/* Line 1: Core Tabs */}
+                <div className="flex flex-wrap border-b border-[#c3c4c7]">
+                  {[
+                    { id: "general", label: "General" },
+                    { id: "content", label: "Page Details" },
+                    { id: "features", label: "Stats & Benefits" },
+                    { id: "steps", label: "Process" },
+                    { id: "faq", label: "FAQs" },
+                    { id: "blog", label: "Blog" },
+                    { id: "seo", label: "SEO" }
+                  ].map(tab => (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`px-4 py-2 text-[13px] border-b-2 transition-all ${
+                        activeTab === tab.id
+                          ? 'border-[#2271b1] text-[#1d2327] font-bold'
+                          : 'border-transparent text-[#2271b1] hover:text-[#135e96]'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Line 2: Featured Sections Tabs */}
+                {form.isFeaturedCategory && (
+                  <div className="flex flex-wrap border-b border-[#c3c4c7] gap-x-2">
+                    {[
+                      { id: "featured-comparison", label: "Featured Comparison" },
+                      { id: "featured-grid", label: "Featured Grid" }
+                    ].map(tab => (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`px-4 py-1 pb-2 text-[13px] border-b-2 transition-all flex flex-col items-center justify-center ${
+                          activeTab === tab.id
+                            ? 'border-[#2271b1] text-[#1d2327] font-bold'
+                            : 'border-transparent text-[#2271b1] hover:text-[#135e96]'
+                        }`}
+                      >
+                        <span className="text-[9px] bg-amber-500 text-white font-extrabold px-1.5 py-0.5 rounded-[3px] mb-0.5 uppercase tracking-wider leading-none">
+                          Featured
+                        </span>
+                        <span>{tab.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="space-y-6 min-h-[400px]">
@@ -376,6 +503,514 @@ export default function ServicesAdminPage() {
                         onChange={(v) => setForm({ ...form, description: v })}
                         placeholder="Write a short description shown on service cards..."
                       />
+                    </div>
+                    <div className="space-y-1 p-3 bg-[#f6f7f7] border border-[#c3c4c7] rounded-sm mt-4">
+                      <label className="flex items-center gap-2 cursor-pointer text-[13px] font-bold">
+                        <input
+                          type="checkbox"
+                          checked={form.isFeaturedCategory || false}
+                          onChange={(e) => setForm({ ...form, isFeaturedCategory: e.target.checked })}
+                          className="rounded-[3px] border-[#8c8f94] w-4 h-4"
+                        />
+                        Featured Category Service
+                      </label>
+                      <p className="text-[11px] text-[#646970] mt-1">
+                        If checked, this service details page will feature two custom layout sections (Material Comparison and Features Grid).
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === "featured-comparison" && (
+                  <div className="space-y-6">
+                    <h3 className="text-[14px] font-bold border-b border-[#c3c4c7] pb-2 text-[#1d2327]">Comparison Header Content</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <label className="text-[13px] font-bold">Header Badge</label>
+                        <input
+                          type="text"
+                          value={form.featuredComparison?.badge || ""}
+                          onChange={(e) => setForm({
+                            ...form,
+                            featuredComparison: { ...form.featuredComparison, badge: e.target.value }
+                          })}
+                          className="w-full border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[13px] font-bold">Header Description</label>
+                        <input
+                          type="text"
+                          value={form.featuredComparison?.description || ""}
+                          onChange={(e) => setForm({
+                            ...form,
+                            featuredComparison: { ...form.featuredComparison, description: e.target.value }
+                          })}
+                          className="w-full border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]"
+                        />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <label className="text-[13px] font-bold">Title Line 1</label>
+                        <input
+                          type="text"
+                          value={form.featuredComparison?.titleLine1 || ""}
+                          onChange={(e) => setForm({
+                            ...form,
+                            featuredComparison: { ...form.featuredComparison, titleLine1: e.target.value }
+                          })}
+                          className="w-full border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[13px] font-bold">Title Line 2 (Highlighted Gradient)</label>
+                        <input
+                          type="text"
+                          value={form.featuredComparison?.titleLine2 || ""}
+                          onChange={(e) => setForm({
+                            ...form,
+                            featuredComparison: { ...form.featuredComparison, titleLine2: e.target.value }
+                          })}
+                          className="w-full border border-[#2271b1] px-3 py-1.5 text-[14px] rounded-[3px]"
+                        />
+                      </div>
+                    </div>
+
+                    <h3 className="text-[14px] font-bold border-b border-[#c3c4c7] pb-2 pt-4 text-[#1d2327]">Showcase Banner Image</h3>
+                    <div className="space-y-4">
+                      <ImageField
+                        label="Featured Image Showcase"
+                        value={form.featuredComparison?.image || ""}
+                        onChange={(url) => setForm({
+                          ...form,
+                          featuredComparison: { ...form.featuredComparison, image: url }
+                        })}
+                      />
+                      <div className="space-y-1">
+                        <label className="text-[13px] font-bold">Image Floating Badge</label>
+                        <input
+                          type="text"
+                          value={form.featuredComparison?.imageBadge || ""}
+                          onChange={(e) => setForm({
+                            ...form,
+                            featuredComparison: { ...form.featuredComparison, imageBadge: e.target.value }
+                          })}
+                          className="w-full border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                          <label className="text-[13px] font-bold">Image Heading Title</label>
+                          <input
+                            type="text"
+                            value={form.featuredComparison?.imageTitle || ""}
+                            onChange={(e) => setForm({
+                              ...form,
+                              featuredComparison: { ...form.featuredComparison, imageTitle: e.target.value }
+                            })}
+                            className="w-full border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-[13px] font-bold">Image Description</label>
+                          <input
+                            type="text"
+                            value={form.featuredComparison?.imageDescription || ""}
+                            onChange={(e) => setForm({
+                              ...form,
+                              featuredComparison: { ...form.featuredComparison, imageDescription: e.target.value }
+                            })}
+                            className="w-full border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <h3 className="text-[14px] font-bold border-b border-[#c3c4c7] pb-2 pt-4 text-[#1d2327]">Comparison Grid Title</h3>
+                    <div className="grid grid-cols-3 gap-2">
+                      <div className="space-y-1">
+                        <label className="text-[11px] text-[#646970]">Comparison Header Title</label>
+                        <input
+                          type="text"
+                          value={form.featuredComparison?.comparisonTitle || ""}
+                          onChange={(e) => setForm({
+                            ...form,
+                            featuredComparison: { ...form.featuredComparison, comparisonTitle: e.target.value }
+                          })}
+                          className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] text-[#646970]">Comparison Subtitle</label>
+                        <input
+                          type="text"
+                          value={form.featuredComparison?.comparisonSubtitle || ""}
+                          onChange={(e) => setForm({
+                            ...form,
+                            featuredComparison: { ...form.featuredComparison, comparisonSubtitle: e.target.value }
+                          })}
+                          className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] text-[#646970]">Comparison Description</label>
+                        <input
+                          type="text"
+                          value={form.featuredComparison?.comparisonDescription || ""}
+                          onChange={(e) => setForm({
+                            ...form,
+                            featuredComparison: { ...form.featuredComparison, comparisonDescription: e.target.value }
+                          })}
+                          className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 pt-4 border-t border-[#c3c4c7]">
+                      {/* Card 1 */}
+                      <div className="bg-[#f6f7f7] border border-[#c3c4c7] p-4 rounded-sm space-y-4">
+                        <h4 className="font-bold text-[13px] border-b border-[#c3c4c7] pb-1">Comparison Card 1</h4>
+                        <div className="space-y-1">
+                          <label className="text-[11px] text-[#646970]">Card Title</label>
+                          <input
+                            type="text"
+                            value={form.featuredComparison?.card1?.title || ""}
+                            onChange={(e) => setForm({
+                              ...form,
+                              featuredComparison: {
+                                ...form.featuredComparison,
+                                card1: { ...form.featuredComparison.card1, title: e.target.value }
+                              }
+                            })}
+                            className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-[11px] text-[#646970]">Card Subtitle</label>
+                          <input
+                            type="text"
+                            value={form.featuredComparison?.card1?.subtitle || ""}
+                            onChange={(e) => setForm({
+                              ...form,
+                              featuredComparison: {
+                                ...form.featuredComparison,
+                                card1: { ...form.featuredComparison.card1, subtitle: e.target.value }
+                              }
+                            })}
+                            className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-[11px] text-[#646970] block">Card Icon</label>
+                          <IconSelector
+                            value={form.featuredComparison?.card1?.icon || "TreePine"}
+                            onChange={(v) => setForm({
+                              ...form,
+                              featuredComparison: {
+                                ...form.featuredComparison,
+                                card1: { ...form.featuredComparison.card1, icon: v }
+                              }
+                            })}
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-[11px] text-[#646970] font-bold">Bullet Features</label>
+                          {(form.featuredComparison?.card1?.features || []).map((f: string, fIdx: number) => (
+                            <div key={fIdx} className="flex gap-1.5">
+                              <input
+                                type="text"
+                                value={f}
+                                onChange={(e) => {
+                                  const nf = [...form.featuredComparison.card1.features];
+                                  nf[fIdx] = e.target.value;
+                                  setForm({
+                                    ...form,
+                                    featuredComparison: {
+                                      ...form.featuredComparison,
+                                      card1: { ...form.featuredComparison.card1, features: nf }
+                                    }
+                                  });
+                                }}
+                                className="flex-1 border border-[#8c8f94] px-2 py-1 text-xs rounded-[3px]"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const nf = form.featuredComparison.card1.features.filter((_: any, idx: number) => idx !== fIdx);
+                                  setForm({
+                                    ...form,
+                                    featuredComparison: {
+                                      ...form.featuredComparison,
+                                      card1: { ...form.featuredComparison.card1, features: nf }
+                                    }
+                                  });
+                                }}
+                                className="text-[#d63638] text-xs"
+                              >✕</button>
+                            </div>
+                          ))}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const nf = [...(form.featuredComparison?.card1?.features || []), ""];
+                              setForm({
+                                ...form,
+                                    featuredComparison: {
+                                      ...form.featuredComparison,
+                                      card1: { ...form.featuredComparison.card1, features: nf }
+                                    }
+                              });
+                            }}
+                            className="text-[#2271b1] text-xs underline"
+                          >+ Add Feature</button>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="space-y-1">
+                            <label className="text-[11px] text-[#646970]">Footer Label</label>
+                            <input
+                              type="text"
+                              value={form.featuredComparison?.card1?.footerLabel || ""}
+                              onChange={(e) => setForm({
+                                ...form,
+                                featuredComparison: {
+                                  ...form.featuredComparison,
+                                  card1: { ...form.featuredComparison.card1, footerLabel: e.target.value }
+                                }
+                              })}
+                              className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[11px] text-[#646970]">Footer Value</label>
+                            <input
+                              type="text"
+                              value={form.featuredComparison?.card1?.footerValue || ""}
+                              onChange={(e) => setForm({
+                                ...form,
+                                featuredComparison: {
+                                  ...form.featuredComparison,
+                                  card1: { ...form.featuredComparison.card1, footerValue: e.target.value }
+                                }
+                              })}
+                              className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Card 2 */}
+                      <div className="bg-[#f6f7f7] border border-[#c3c4c7] p-4 rounded-sm space-y-4">
+                        <div className="flex justify-between items-center border-b border-[#c3c4c7] pb-1">
+                          <h4 className="font-bold text-[13px]">Comparison Card 2</h4>
+                          <label className="flex items-center gap-1 cursor-pointer text-xs font-bold">
+                            <input
+                              type="checkbox"
+                              checked={form.featuredComparison?.card2?.isRecommended || false}
+                              onChange={(e) => setForm({
+                                ...form,
+                                featuredComparison: {
+                                  ...form.featuredComparison,
+                                  card2: { ...form.featuredComparison.card2, isRecommended: e.target.checked }
+                                }
+                              })}
+                              className="w-3.5 h-3.5 shadow-none"
+                            />
+                            Recommended
+                          </label>
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-[11px] text-[#646970]">Card Title</label>
+                          <input
+                            type="text"
+                            value={form.featuredComparison?.card2?.title || ""}
+                            onChange={(e) => setForm({
+                              ...form,
+                              featuredComparison: {
+                                ...form.featuredComparison,
+                                card2: { ...form.featuredComparison.card2, title: e.target.value }
+                              }
+                            })}
+                            className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-[11px] text-[#646970]">Card Subtitle</label>
+                          <input
+                            type="text"
+                            value={form.featuredComparison?.card2?.subtitle || ""}
+                            onChange={(e) => setForm({
+                              ...form,
+                              featuredComparison: {
+                                ...form.featuredComparison,
+                                card2: { ...form.featuredComparison.card2, subtitle: e.target.value }
+                              }
+                            })}
+                            className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-[11px] text-[#646970] block">Card Icon</label>
+                          <IconSelector
+                            value={form.featuredComparison?.card2?.icon || "Droplets"}
+                            onChange={(v) => setForm({
+                              ...form,
+                              featuredComparison: {
+                                ...form.featuredComparison,
+                                card2: { ...form.featuredComparison.card2, icon: v }
+                              }
+                            })}
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-[11px] text-[#646970] font-bold">Bullet Features</label>
+                          {(form.featuredComparison?.card2?.features || []).map((f: string, fIdx: number) => (
+                            <div key={fIdx} className="flex gap-1.5">
+                              <input
+                                type="text"
+                                value={f}
+                                onChange={(e) => {
+                                  const nf = [...form.featuredComparison.card2.features];
+                                  nf[fIdx] = e.target.value;
+                                  setForm({
+                                    ...form,
+                                    featuredComparison: {
+                                      ...form.featuredComparison,
+                                      card2: { ...form.featuredComparison.card2, features: nf }
+                                    }
+                                  });
+                                }}
+                                className="flex-1 border border-[#8c8f94] px-2 py-1 text-xs rounded-[3px]"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const nf = form.featuredComparison.card2.features.filter((_: any, idx: number) => idx !== fIdx);
+                                  setForm({
+                                    ...form,
+                                    featuredComparison: {
+                                      ...form.featuredComparison,
+                                      card2: { ...form.featuredComparison.card2, features: nf }
+                                    }
+                                  });
+                                }}
+                                className="text-[#d63638] text-xs"
+                              >✕</button>
+                            </div>
+                          ))}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const nf = [...(form.featuredComparison?.card2?.features || []), ""];
+                              setForm({
+                                ...form,
+                                    featuredComparison: {
+                                      ...form.featuredComparison,
+                                      card2: { ...form.featuredComparison.card2, features: nf }
+                                    }
+                              });
+                            }}
+                            className="text-[#2271b1] text-xs underline"
+                          >+ Add Feature</button>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="space-y-1">
+                            <label className="text-[11px] text-[#646970]">Footer Label</label>
+                            <input
+                              type="text"
+                              value={form.featuredComparison?.card2?.footerLabel || ""}
+                              onChange={(e) => setForm({
+                                ...form,
+                                featuredComparison: {
+                                  ...form.featuredComparison,
+                                  card2: { ...form.featuredComparison.card2, footerLabel: e.target.value }
+                                }
+                              })}
+                              className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[11px] text-[#646970]">Footer Value</label>
+                            <input
+                              type="text"
+                              value={form.featuredComparison?.card2?.footerValue || ""}
+                              onChange={(e) => setForm({
+                                ...form,
+                                featuredComparison: {
+                                  ...form.featuredComparison,
+                                  card2: { ...form.featuredComparison.card2, footerValue: e.target.value }
+                                }
+                              })}
+                              className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === "featured-grid" && (
+                  <div className="space-y-8">
+                    <h3 className="text-[14px] font-bold border-b border-[#c3c4c7] pb-2 text-[#1d2327]">3-Card Featured Detail Grid</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {(form.featuredGrid?.cards || []).map((card: any, cIdx: number) => (
+                        <div key={cIdx} className="bg-[#f6f7f7] border border-[#c3c4c7] p-4 rounded-sm space-y-4">
+                          <h4 className="font-bold text-[13px] border-b border-[#c3c4c7] pb-1">Feature Card #{cIdx + 1}</h4>
+                          <div className="space-y-1">
+                            <label className="text-[11px] text-[#646970] block">Icon</label>
+                            <IconSelector
+                              value={card.icon || "Zap"}
+                              onChange={(v) => {
+                                const nc = [...form.featuredGrid.cards];
+                                nc[cIdx] = { ...nc[cIdx], icon: v };
+                                setForm({ ...form, featuredGrid: { ...form.featuredGrid, cards: nc } });
+                              }}
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[11px] text-[#646970]">Title</label>
+                            <input
+                              type="text"
+                              value={card.title || ""}
+                              onChange={(e) => {
+                                const nc = [...form.featuredGrid.cards];
+                                nc[cIdx] = { ...nc[cIdx], title: e.target.value };
+                                setForm({ ...form, featuredGrid: { ...form.featuredGrid, cards: nc } });
+                              }}
+                              className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[11px] text-[#646970]">Description</label>
+                            <textarea
+                              value={card.description || ""}
+                              onChange={(e) => {
+                                const nc = [...form.featuredGrid.cards];
+                                nc[cIdx] = { ...nc[cIdx], description: e.target.value };
+                                setForm({ ...form, featuredGrid: { ...form.featuredGrid, cards: nc } });
+                              }}
+                              className="w-full border border-[#8c8f94] px-2 py-1 text-xs rounded-[3px] h-20"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[11px] text-[#646970] block">Color Theme</label>
+                            <select
+                              value={card.colorTheme || "amber"}
+                              onChange={(e) => {
+                                const nc = [...form.featuredGrid.cards];
+                                nc[cIdx] = { ...nc[cIdx], colorTheme: e.target.value };
+                                setForm({ ...form, featuredGrid: { ...form.featuredGrid, cards: nc } });
+                              }}
+                              className="w-full border border-[#8c8f94] px-2 py-1 text-xs rounded-[3px] bg-white outline-none"
+                            >
+                              <option value="amber">Amber / Orange</option>
+                              <option value="blue">Blue / Purple</option>
+                              <option value="green">Green / Emerald</option>
+                            </select>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}

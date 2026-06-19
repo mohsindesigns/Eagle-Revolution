@@ -29,6 +29,8 @@ import { useContent } from "../../hooks/useContent";
 import RichTextRenderer from "../ui/RichTextRenderer";
 import PageInlineFaqs from "../PageInlineFaqs";
 import BlogSection from "../sections/BlogSection";
+import FeaturedComparison from '../FeaturedComparison';
+import FeaturedDetailGrid from '../FeaturedDetailGrid';
 
 import roofingImg from '@/assets/roof1.jpg.jpeg';
 import windowsImg from '@/assets/window5.jpeg';
@@ -474,7 +476,13 @@ export default function ServiceDetailTemplate({ pageData, params: syncParams }: 
         </div>
       </section>
 
-
+      {/* Featured Category Sections */}
+      {service.isFeaturedCategory && (
+        <>
+          <FeaturedComparison data={service.featuredComparison} />
+          <FeaturedDetailGrid data={service.featuredGrid} />
+        </>
+      )}
 
       {/* Benefits Section */}
       {benefits.length > 0 && (
