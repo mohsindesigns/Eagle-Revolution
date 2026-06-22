@@ -242,7 +242,7 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
                 />
               ) : (
                 <div className="p-6 bg-white min-h-[500px]">
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
                     <div>
                       <h3 className="text-lg font-medium text-slate-900">Manage FAQs</h3>
                       <p className="text-sm text-slate-500">Add questions and answers that will appear at the bottom of your post.</p>
@@ -256,6 +256,39 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
                     >
                       <Plus className="w-4 h-4" /> Add New FAQ
                     </button>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-6 mb-6 border-b border-slate-200">
+                    <div className="space-y-1.5">
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">FAQ Section Badge</label>
+                      <input
+                        type="text"
+                        value={post.faqBadge || ""}
+                        onChange={e => setPost({ ...post, faqBadge: e.target.value })}
+                        placeholder="e.g. Got Questions?"
+                        className="w-full border border-[#c3c4c7] px-3 py-1.5 text-sm rounded outline-none focus:border-[#2271b1] bg-white shadow-sm"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">FAQ Section Heading</label>
+                      <input
+                        type="text"
+                        value={post.faqTitle || ""}
+                        onChange={e => setPost({ ...post, faqTitle: e.target.value })}
+                        placeholder="e.g. Frequently Asked Questions"
+                        className="w-full border border-[#c3c4c7] px-3 py-1.5 text-sm rounded outline-none focus:border-[#2271b1] bg-white shadow-sm"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">FAQ Section Description</label>
+                      <input
+                        type="text"
+                        value={post.faqDescription || ""}
+                        onChange={e => setPost({ ...post, faqDescription: e.target.value })}
+                        placeholder="e.g. Answers to common questions..."
+                        className="w-full border border-[#c3c4c7] px-3 py-1.5 text-sm rounded outline-none focus:border-[#2271b1] bg-white shadow-sm"
+                      />
+                    </div>
                   </div>
 
                   <div className="space-y-4">

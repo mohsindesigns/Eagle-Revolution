@@ -43,7 +43,13 @@ export const TemplateWrapper = ({ templateName, pageData, params }: any) => {
     <ContentProvider initialData={pageData.content}>
       <Template pageData={pageData} params={params} />
       {hasInlineFaqs && (
-        <PageInlineFaqs faqs={pageData.content.faqs} faqSchemaMarkup={pageData.content.faqSchemaMarkup} />
+        <PageInlineFaqs 
+          faqs={pageData.content.faqs} 
+          faqSchemaMarkup={pageData.content.faqSchemaMarkup} 
+          badge={pageData.content.faqBadge}
+          title={pageData.content.faqTitle}
+          subtitle={pageData.content.faqDescription}
+        />
       )}
     </ContentProvider>
   );

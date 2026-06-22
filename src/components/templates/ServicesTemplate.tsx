@@ -96,6 +96,9 @@ export default function ServicesTemplate({ pageData, params }: { pageData?: any,
             <PageInlineFaqs 
                 faqs={(pageData?.content?.faqs && pageData.content.faqs.length > 0) ? pageData.content.faqs : faq.items} 
                 faqSchemaMarkup={pageData?.content?.faqSchemaMarkup || pageData?.faqSchemaMarkup} 
+                badge={pageData?.content?.faqBadge}
+                title={pageData?.content?.faqTitle}
+                subtitle={pageData?.content?.faqDescription}
             />
 
             <BlogSection

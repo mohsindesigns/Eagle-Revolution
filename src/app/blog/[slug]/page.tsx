@@ -360,7 +360,13 @@ export default async function BlogPostPage({ params }: Props) {
       {/* FAQ Section */}
       {((post.faq && post.faq.length > 0) || (post.faqSchemaMarkup && post.faqSchemaMarkup.trim())) && (
         <div className="mt-12">
-          <PageInlineFaqs faqs={post.faq} faqSchemaMarkup={post.faqSchemaMarkup} />
+          <PageInlineFaqs 
+            faqs={post.faq} 
+            faqSchemaMarkup={post.faqSchemaMarkup} 
+            badge={post.faqBadge}
+            title={post.faqTitle}
+            subtitle={post.faqDescription}
+          />
         </div>
       )}
     </article>

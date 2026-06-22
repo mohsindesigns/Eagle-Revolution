@@ -217,7 +217,7 @@ export default function ServicesAdminPage() {
     processBadge: "",
     processDescription: "",
     overview: "", overviewImage: "", overviewStats: [],
-    cta: { text: "Start Your Project", link: "/contact" }, icon: "Layout", tag: "", status: "published", features: [], stats: [], benefits: [], process: [], faq: [], faqSchemaMarkup: "",
+    cta: { text: "Start Your Project", link: "/contact" }, icon: "Layout", tag: "", status: "published", features: [], stats: [], benefits: [], process: [], faq: [], faqSchemaMarkup: "", faqBadge: "", faqTitle: "", faqDescription: "",
     ...DEFAULT_FEATURED_CATEGORY
   });
 
@@ -317,6 +317,9 @@ export default function ServicesAdminPage() {
       process: service.process || [],
       faq: service.faq || [],
       faqSchemaMarkup: service.faqSchemaMarkup || "",
+      faqBadge: service.faqBadge || "",
+      faqTitle: service.faqTitle || "",
+      faqDescription: service.faqDescription || "",
       benefitsDescription: service.benefitsDescription || "",
       processDescription: service.processDescription || "",
       featuredComparison: {
@@ -420,7 +423,7 @@ export default function ServicesAdminPage() {
                 processBadge: "Methodology",
                 processDescription: "A battle-tested framework that ensures consistency, quality, and complete satisfaction—from initial consultation to final walkthrough.",
                 overview: "", overviewImage: "", overviewStats: [],
-                cta: { text: "Start Your Project", link: "/contact" }, icon: "Layout", tag: "", status: "published", features: [], stats: [], benefits: [], process: [], faq: [],
+                cta: { text: "Start Your Project", link: "/contact" }, icon: "Layout", tag: "", status: "published", features: [], stats: [], benefits: [], process: [], faq: [], faqSchemaMarkup: "", faqBadge: "", faqTitle: "", faqDescription: "",
                 ...DEFAULT_FEATURED_CATEGORY
               });
               setSeo({});
@@ -1270,6 +1273,39 @@ export default function ServicesAdminPage() {
 
                 {activeTab === "faq" && (
                   <div className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-4 border-b border-[#c3c4c7]">
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">FAQ Section Badge</label>
+                        <input
+                          type="text"
+                          value={form.faqBadge || ""}
+                          onChange={(e) => setForm({ ...form, faqBadge: e.target.value })}
+                          placeholder="e.g. Got Questions?"
+                          className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-sm focus:border-[#2271b1] outline-none bg-white"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">FAQ Section Heading</label>
+                        <input
+                          type="text"
+                          value={form.faqTitle || ""}
+                          onChange={(e) => setForm({ ...form, faqTitle: e.target.value })}
+                          placeholder="e.g. Frequently Asked Questions"
+                          className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-sm focus:border-[#2271b1] outline-none bg-white"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">FAQ Section Description</label>
+                        <input
+                          type="text"
+                          value={form.faqDescription || ""}
+                          onChange={(e) => setForm({ ...form, faqDescription: e.target.value })}
+                          placeholder="e.g. Answers to common questions..."
+                          className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-sm focus:border-[#2271b1] outline-none bg-white"
+                        />
+                      </div>
+                    </div>
+
                     <button onClick={() => setForm({ ...form, faq: [...(form.faq || []), { question: "", answer: "" }] })} className="text-[#2271b1] text-xs underline font-bold">+ Add FAQ Item</button>
                     {form.faq?.map((item: any, i: number) => (
                       <div key={i} className="bg-white border border-[#c3c4c7] p-4 space-y-3 shadow-sm">

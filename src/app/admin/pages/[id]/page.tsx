@@ -242,6 +242,39 @@ export default function DynamicPageEditor({ params }: { params: Promise<{ id: st
                       setContent({ ...content, faqs: nf });
                     }} className="bg-[#f0f0f1] border border-[#c3c4c7] px-2 py-1 text-[12px] rounded-sm hover:bg-white text-[#2c3338] transition-colors">+ Add FAQ</button>
                   </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-4 border-b border-[#c3c4c7]">
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">FAQ Section Badge</label>
+                      <input
+                        type="text"
+                        value={content.faqBadge || ""}
+                        onChange={e => setContent({ ...content, faqBadge: e.target.value })}
+                        placeholder="e.g. Got Questions?"
+                        className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-sm focus:border-[#2271b1] outline-none bg-white"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">FAQ Section Heading</label>
+                      <input
+                        type="text"
+                        value={content.faqTitle || ""}
+                        onChange={e => setContent({ ...content, faqTitle: e.target.value })}
+                        placeholder="e.g. Frequently Asked Questions"
+                        className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-sm focus:border-[#2271b1] outline-none bg-white"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">FAQ Section Description</label>
+                      <input
+                        type="text"
+                        value={content.faqDescription || ""}
+                        onChange={e => setContent({ ...content, faqDescription: e.target.value })}
+                        placeholder="e.g. Answers to common questions..."
+                        className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-sm focus:border-[#2271b1] outline-none bg-white"
+                      />
+                    </div>
+                  </div>
                   {(!content.faqs || content.faqs.length === 0) ? (
                     <div className="text-[13px] text-[#646970] italic">No FAQs added for this page yet.</div>
                   ) : (

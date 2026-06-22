@@ -38,6 +38,9 @@ const PostSchema = new Schema({
     answer: String
   }],
   faqSchemaMarkup: { type: String, default: '' },
+  faqBadge: { type: String, default: '' },
+  faqTitle: { type: String, default: '' },
+  faqDescription: { type: String, default: '' },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   isTrashed: { type: Boolean, default: false },

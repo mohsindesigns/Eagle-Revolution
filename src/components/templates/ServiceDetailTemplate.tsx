@@ -603,7 +603,13 @@ export default function ServiceDetailTemplate({ pageData, params: syncParams }: 
       </section>
 
       {/* FAQ Section */}
-      <PageInlineFaqs faqs={faqs} faqSchemaMarkup={service.faqSchemaMarkup} />
+      <PageInlineFaqs 
+        faqs={faqs} 
+        faqSchemaMarkup={service.faqSchemaMarkup} 
+        badge={service.faqBadge}
+        title={service.faqTitle}
+        subtitle={service.faqDescription}
+      />
 
       {/* Why Choose Us CTA Card */}
       <div className="w-full max-w-7xl mx-auto px-4 py-4">

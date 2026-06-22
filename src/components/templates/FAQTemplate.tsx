@@ -11,15 +11,18 @@ export default function FAQTemplate({ pageData, params }: { pageData?: any, para
     const faq = pageFaqs ? { ...globalFaq, items: pageFaqs } : globalFaq;
     const { section, items = [] } = faq || {};
     const bulkSchema = pageData?.content?.faqSchemaMarkup || pageData?.faqSchemaMarkup;
+    const title = pageData?.content?.faqTitle || pageData?.faqTitle || section?.headline;
+    const subtitle = pageData?.content?.faqDescription || pageData?.faqDescription || section?.description;
+    const badge = pageData?.content?.faqBadge || pageData?.faqBadge || section?.badge;
 
     return (
         <main className="min-h-screen bg-background pt-16">
             <PageInlineFaqs 
                 faqs={items} 
                 faqSchemaMarkup={bulkSchema} 
-                title={section?.headline} 
-                subtitle={section?.description}
-                badge={section?.badge}
+                title={title} 
+                subtitle={subtitle}
+                badge={badge}
             />
         </main>
     );
