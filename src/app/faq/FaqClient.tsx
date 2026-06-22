@@ -73,6 +73,7 @@ export default function FAQPage() {
         faqs={faqs} 
         faqSchemaMarkup={faqPage?.faqSchemaMarkup} 
         hideHeader={true} 
+        showFilters={true}
       />
 
       {/* CTA Section */}

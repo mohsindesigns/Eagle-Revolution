@@ -112,15 +112,23 @@ export default function FAQAdminPage() {
       <div className="flex items-center gap-4 mb-2">
         <h1 className="text-[23px] font-normal text-[#1d2327] font-serif m-0">FAQs</h1>
         {isEditing === null && (
-          <button
-            onClick={() => {
-              setIsEditing(faqs.length);
-              setForm({ question: "", answer: "", category: categories[0] || "General", visibility: "global", targetPages: [] });
-            }}
-            className="bg-white border border-[#2271b1] text-[#2271b1] hover:bg-[#f6f7f7] hover:text-[#135e96] hover:border-[#135e96] px-2 py-1 text-[13px] rounded-[3px] transition-colors"
-          >
-            Add New
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => {
+                setIsEditing(faqs.length);
+                setForm({ question: "", answer: "", category: categories[0] || "General", visibility: "global", targetPages: [] });
+              }}
+              className="bg-white border border-[#2271b1] text-[#2271b1] hover:bg-[#f6f7f7] hover:text-[#135e96] hover:border-[#135e96] px-2 py-1 text-[13px] rounded-[3px] transition-colors"
+            >
+              Add New
+            </button>
+            <button
+              onClick={() => setShowCategoryManager(true)}
+              className="bg-white border border-[#2271b1] text-[#2271b1] hover:bg-[#f6f7f7] hover:text-[#135e96] hover:border-[#135e96] px-2 py-1 text-[13px] rounded-[3px] transition-colors"
+            >
+              Manage Categories
+            </button>
+          </div>
         )}
       </div>
 
@@ -231,6 +239,78 @@ export default function FAQAdminPage() {
            </table>
         </div>
       )}
+      {/* Category Manager Modal */}
+      <AnimatePresence>
+        {showCategoryManager && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowCategoryManager(false)} className="absolute inset-0 bg-[#00000066]" />
+            <motion.div
+              initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }}
+              className="relative w-full max-w-md bg-[#f1f1f1] border border-[#c3c4c7] shadow-lg rounded-[3px] overflow-hidden flex flex-col"
+            >
+              <div className="flex items-center justify-between px-4 py-3 bg-white border-b border-[#c3c4c7]">
+                <h2 className="text-[#1d2327] text-lg font-normal font-serif">Manage Categories</h2>
+                <button onClick={() => setShowCategoryManager(false)} className="text-[#787c82] hover:text-[#d63638]"><X className="w-5 h-5" /></button>
+              </div>
+              <div className="p-6 bg-[#f0f0f1] space-y-4">
+                {/* Add New Category */}
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={newCategory}
+                    onChange={(e) => setNewCategory(e.target.value)}
+                    placeholder="New category name"
+                    className="flex-1 border border-[#8c8f94] bg-white px-3 py-1.5 text-[13px] rounded-[3px] focus:border-[#2271b1] outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const trimmed = newCategory.trim();
+                      if (!trimmed) return;
+                      if (categories.includes(trimmed)) return alert("Category already exists.");
+                      const updated = [...categories, trimmed];
+                      saveToDb(faqs, updated);
+                      setNewCategory("");
+                    }}
+                    className="bg-[#2271b1] text-white text-[13px] px-4 py-1.5 rounded-[3px] border border-[#2271b1] hover:bg-[#135e96]"
+                  >
+                    Add
+                  </button>
+                </div>
+
+                {/* Categories List */}
+                <div className="bg-white border border-[#c3c4c7] rounded-[3px] max-h-60 overflow-y-auto divide-y divide-[#f0f0f1]">
+                  {categories.map((cat) => (
+                    <div key={cat} className="flex items-center justify-between px-3 py-2 text-[13px]">
+                      <span>{cat}</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (confirm(`Are you sure you want to delete the category "${cat}"? Questions in this category will need to be re-assigned.`)) {
+                            const updated = categories.filter((c) => c !== cat);
+                            saveToDb(faqs, updated);
+                          }
+                        }}
+                        className="text-[#d63638] hover:underline flex items-center gap-1"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" /> Delete
+                      </button>
+                    </div>
+                  ))}
+                  {categories.length === 0 && (
+                    <div className="p-3 text-[#8c8f94] text-center italic">No categories found.</div>
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center justify-end px-4 py-3 bg-[#f6f7f7] border-t border-[#c3c4c7]">
+                <button type="button" onClick={() => setShowCategoryManager(false)} className="bg-white border border-[#8c8f94] text-[#2c3338] text-[13px] px-4 py-1.5 rounded-[3px] hover:bg-[#f6f7f7]">
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

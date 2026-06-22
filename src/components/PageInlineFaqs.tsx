@@ -535,7 +535,8 @@ export default function PageInlineFaqs({
   hideHeader = false,
   title,
   subtitle,
-  badge
+  badge,
+  showFilters = false
 }: {
   faqs?: any[];
   faqSchemaMarkup?: string;
@@ -543,6 +544,7 @@ export default function PageInlineFaqs({
   title?: string;
   subtitle?: string;
   badge?: string;
+  showFilters?: boolean;
 }) {
   const { faq: globalFaq } = useContent();
   const sectionRef = useRef(null);
@@ -576,6 +578,7 @@ export default function PageInlineFaqs({
   };
 
   const filteredItems = items.filter((item: any) => {
+    if (!showFilters) return true;
     const itemCat =
       typeof item.category === "string" ? item.category : item.category?.id;
     const matchesCategory =
@@ -709,14 +712,16 @@ export default function PageInlineFaqs({
             )}
 
             {/* Filters + Search */}
-            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-10 md:mb-12 inline-faq-reveal">
-              <CategoryFilter
-                categories={rawCategories}
-                activeCategory={activeCategory}
-                onCategoryChange={handleCategoryChange}
-              />
-              <SearchBar onSearch={setSearchQuery} />
-            </div>
+            {showFilters && (
+              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-10 md:mb-12 inline-faq-reveal">
+                <CategoryFilter
+                  categories={rawCategories}
+                  activeCategory={activeCategory}
+                  onCategoryChange={handleCategoryChange}
+                />
+                <SearchBar onSearch={setSearchQuery} />
+              </div>
+            )}
 
             {/* FAQ Items */}
             <div className="space-y-3 md:space-y-4 mb-12 md:mb-16">
