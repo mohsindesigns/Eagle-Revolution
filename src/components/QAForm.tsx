@@ -1103,29 +1103,7 @@ ${formData.message}
                 </div>
               </form>
 
-              <div className="flex flex-col xs:flex-row items-center justify-center gap-3 sm:gap-6 mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-primary/10">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3, 4].map((i) => (
-                      <motion.div
-                        key={i}
-                        whileHover={{ y: -3, scale: 1.1 }}
-                        className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-primary/10 to-primary/20 border-2 border-card flex items-center justify-center text-primary text-[8px] sm:text-xs font-medium shadow-lg"
-                      >
-                        {String.fromCharCode(64 + i)}
-                      </motion.div>
-                    ))}
-                  </div>
-                  <span className="text-[10px] sm:text-xs text-muted-foreground">
-                    <span className="font-semibold text-foreground">500+</span> consultations
-                  </span>
-                </div>
-                <div className="hidden xs:block w-px h-4 sm:h-6 bg-border" />
-                <div className="text-[10px] sm:text-xs font-mono text-primary flex items-center gap-1 sm:gap-2">
-                  <span className="animate-pulse">●</span>
-                  <span>Veteran owned & operated</span>
-                </div>
-              </div>
+
             </div>
           </div>
         </motion.div>

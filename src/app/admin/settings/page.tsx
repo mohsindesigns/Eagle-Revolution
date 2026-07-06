@@ -417,12 +417,120 @@ export default function SettingsEditor() {
                                     }
                                  }}
                               />
-                              {service.title}
+                              {service?.title || "Unknown Service"}
                            </label>
                         );
                      })}
+                     <div className="w-full mt-2">
+                        <select 
+                           className="border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px] w-full max-w-xs"
+                           value=""
+                           onChange={(e) => {
+                              const selected = data.footer?.services?.selectedServices || [];
+                              if(e.target.value && !selected.includes(e.target.value)) {
+                                 updateData("footer", "services", { ...data.footer.services, selectedServices: [...selected, e.target.value] });
+                              }
+                           }}
+                        >
+                           <option value="">+ Add Service</option>
+                           {pages.filter(p => p.type === 'service' && !(data.footer?.services?.selectedServices || []).includes(p._id)).map(service => (
+                              <option key={service._id} value={service._id}>{service.title}</option>
+                           ))}
+                        </select>
+                     </div>
                   </div>
                </SettingsRow>
+                <SettingsRow label="Company Menu Title" description="The title for the company links section in the footer (defaults to 'Company').">
+                   <input
+                     type="text"
+                     value={data.footer?.services?.materials?.title || "Company"}
+                     onChange={(e) => {
+                       const materials = data.footer?.services?.materials || { title: "Company", items: [] };
+                       updateData("footer", "services", {
+                         ...data.footer.services,
+                         materials: { ...materials, title: e.target.value }
+                       });
+                     }}
+                     className="w-full max-w-md border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]"
+                   />
+                </SettingsRow>
+                <SettingsRow label="Company Links" description="Manage the links shown in the Company footer menu. Select from your pages or custom paths.">
+                   <div className="space-y-3">
+                      {(data.footer?.services?.materials?.items || []).map((link: any, i: number) => (
+                         <div key={i} className="flex gap-4 items-center bg-[#f6f7f7] p-3 border border-[#c3c4c7] rounded-sm">
+                            <div className="flex-1 space-y-1">
+                               <label className="text-[11px] font-bold">Link Label</label>
+                               <input
+                                 type="text"
+                                 value={link.label || ""}
+                                 onChange={(e) => {
+                                   const items = [...(data.footer.services.materials.items || [])];
+                                   items[i].label = e.target.value;
+                                   updateData("footer", "services", {
+                                     ...data.footer.services,
+                                     materials: { ...data.footer.services.materials, items }
+                                   });
+                                 }}
+                                 className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]"
+                               />
+                            </div>
+                            <div className="flex-1 space-y-1">
+                               <label className="text-[11px] font-bold">Destination Page</label>
+                               <select
+                                 value={link.href}
+                                 onChange={(e) => {
+                                   const items = [...(data.footer.services.materials.items || [])];
+                                   items[i].href = e.target.value;
+                                   updateData("footer", "services", {
+                                     ...data.footer.services,
+                                     materials: { ...data.footer.services.materials, items }
+                                   });
+                                 }}
+                                 className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]"
+                               >
+                                  <option value="/">Home</option>
+                                  <option value="/blog">Blog Index</option>
+                                  <optgroup label="Pages">
+                                     {pages.filter(p => p.type !== 'service').map((p: any) => (
+                                        <option key={p._id} value={p.slug.startsWith('/') ? p.slug : `/${p.slug}`}>{p.title}</option>
+                                     ))}
+                                  </optgroup>
+                                  <optgroup label="Services">
+                                     {pages.filter(p => p.type === 'service').map((p: any) => (
+                                        <option key={p._id} value={`/services/${p.slug}`}>{p.title}</option>
+                                     ))}
+                                  </optgroup>
+                               </select>
+                            </div>
+                            <button
+                              onClick={() => {
+                                const items = (data.footer.services.materials.items || []).filter((_: any, idx: number) => idx !== i);
+                                updateData("footer", "services", {
+                                  ...data.footer.services,
+                                  materials: { ...data.footer.services.materials, items }
+                                });
+                              }}
+                              className="text-[#d63638] text-[13px] mt-5 hover:underline"
+                            >
+                              Remove
+                            </button>
+                         </div>
+                      ))}
+                      <button
+                        onClick={() => {
+                          const materials = data.footer?.services?.materials || { title: "Company", items: [] };
+                          const items = materials.items || [];
+                          updateData("footer", "services", {
+                            ...data.footer.services,
+                            materials: { ...materials, items: [...items, { label: "New Link", href: "/" }] }
+                          });
+                        }}
+                        className="text-[#2271b1] text-[13px] hover:underline"
+                      >
+                        + Add Company Link
+                      </button>
+                   </div>
+                </SettingsRow>
                <SettingsRow label="Certifications">
                   <div className="space-y-4">
                      {(data.footer?.certifications || []).map((cert: any, i: number) => (

@@ -417,16 +417,16 @@ export default function PagesDashboard() {
                         onChange={(e) => setNewPage({ ...newPage, template: e.target.value })}
                         className="w-full border border-[#8c8f94] bg-white px-2 py-1.5 text-[14px] rounded-[3px] outline-none"
                       >
-                        <option value="home">Home Page</option>
-                        <option value="about">About Us</option>
-                        <option value="services">Services Index</option>
-                        <option value="team">Team / Staff</option>
-                        <option value="careers">Careers / Jobs</option>
-                        <option value="gallery">Gallery Showcase</option>
-                        <option value="reviews">Reviews</option>
-                        <option value="faq">Knowledge Base</option>
-                        <option value="contact">Contact Portal</option>
-                        <option value="service-area">Service Area Page</option>
+                        <option value="home">Home Template</option>
+                        <option value="about">About Template</option>
+                        <option value="services">Services Template</option>
+                        <option value="team">Team Template</option>
+                        <option value="careers">Careers Template</option>
+                        <option value="gallery">Gallery Template</option>
+                        <option value="reviews">Reviews Template</option>
+                        <option value="faq">FAQ Template</option>
+                        <option value="contact">Contact Template</option>
+                        <option value="service-area">Service Area Template</option>
                       </select>
                    </div>
                 </div>
@@ -486,16 +486,16 @@ export default function PagesDashboard() {
                         onChange={(e) => setEditingPage({ ...editingPage, template: e.target.value })}
                         className="w-full border border-[#8c8f94] bg-white px-2 py-1 text-[13px] rounded-[3px] outline-none"
                       >
-                        <option value="home">Home Page</option>
-                        <option value="about">About Us</option>
-                        <option value="services">Services Index</option>
-                        <option value="team">Team / Staff</option>
-                        <option value="careers">Careers / Jobs</option>
-                        <option value="gallery">Gallery Showcase</option>
-                        <option value="reviews">Reviews</option>
-                        <option value="faq">Knowledge Base</option>
-                        <option value="contact">Contact Portal</option>
-                        <option value="service-area">Service Area Page</option>
+                        <option value="home">Home Template</option>
+                        <option value="about">About Template</option>
+                        <option value="services">Services Template</option>
+                        <option value="team">Team Template</option>
+                        <option value="careers">Careers Template</option>
+                        <option value="gallery">Gallery Template</option>
+                        <option value="reviews">Reviews Template</option>
+                        <option value="faq">FAQ Template</option>
+                        <option value="contact">Contact Template</option>
+                        <option value="service-area">Service Area Template</option>
                       </select>
                     </div>
                     <div>

@@ -215,20 +215,21 @@ const MaterialsSection = () => {
   const materials = services.materials || { title: "Materials", items: [] };
 
   return (
-    <div className="space-y-3 mt-4">
+    <div className="space-y-3 mt-8 border-t border-border/40 pt-6">
       <h5 className="text-[10px] font-mono tracking-[0.2em] uppercase text-primary/60">
         {materials.title}
       </h5>
-      <div className="space-y-2">
-        {(materials.items || []).map((material: any) => (
-          <Link
-            key={material.label}
-            href={material.href}
-            className="inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-primary/80 transition-colors"
-          >
-            <span className="text-[8px] text-primary/40">●</span>
-            {material.label}
-          </Link>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs">
+        {(materials.items || []).map((material: any, idx: number) => (
+          <React.Fragment key={material.label}>
+            {idx > 0 && <span className="text-muted-foreground/30 font-light">•</span>}
+            <Link
+              href={material.href}
+              className="text-muted-foreground hover:text-primary transition-colors py-0.5"
+            >
+              {material.label}
+            </Link>
+          </React.Fragment>
         ))}
       </div>
     </div>
