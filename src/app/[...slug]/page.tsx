@@ -113,11 +113,16 @@ export default async function DynamicPage({ params }: PageProps) {
 
   // Detect FAQs ONLY if this is the FAQ template (as requested)
   if (page.template === 'faq') {
-    const allFaqs = globalData.faq?.items || [];
-    page.faqs = allFaqs.filter((item: any) =>
-      item.visibility === 'global' ||
-      (item.visibility === 'specific' && item.targetPages?.includes(slug))
-    );
+    const pageSpecificFaqs = page.content?.faqs || [];
+    if (Array.isArray(pageSpecificFaqs) && pageSpecificFaqs.length > 0) {
+      page.faqs = pageSpecificFaqs;
+    } else {
+      const allFaqs = globalData.faq?.items || [];
+      page.faqs = allFaqs.filter((item: any) =>
+        item.visibility === 'global' ||
+        (item.visibility === 'specific' && item.targetPages?.includes(slug))
+      );
+    }
   }
 
   // Determine page type for schema

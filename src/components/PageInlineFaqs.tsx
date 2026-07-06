@@ -208,8 +208,8 @@ const AccordionItem = ({
                       ? "hsl(var(--primary))"
                       : "hsl(var(--primary)/80)",
                   boxShadow: `0 0 8px ${i % 2 === 0
-                      ? "hsl(var(--primary))"
-                      : "hsl(var(--primary)/80)"
+                    ? "hsl(var(--primary))"
+                    : "hsl(var(--primary)/80)"
                     }`,
                 }}
                 initial={{ x: "50%", y: "50%", scale: 0, opacity: 0.6 }}
@@ -670,7 +670,7 @@ export default function PageInlineFaqs({
       {validFaqs.length > 0 && isClient && (
         <section
           ref={sectionRef}
-          className="relative bg-background py-20 md:py-24 lg:py-28 overflow-hidden"
+          className="relative bg-background py-4 md:py-8 lg:py-12 overflow-hidden"
         >
           <SubtleBackground />
           <FloatingParticles />

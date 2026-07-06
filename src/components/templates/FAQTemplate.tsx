@@ -16,14 +16,14 @@ export default function FAQTemplate({ pageData, params }: { pageData?: any, para
     const badge = pageData?.content?.faqBadge || pageData?.faqBadge || section?.badge;
 
     return (
-        <main className="min-h-screen bg-background pt-16">
+        <main>
             <PageInlineFaqs 
                 faqs={items} 
                 faqSchemaMarkup={bulkSchema} 
                 title={title} 
                 subtitle={subtitle}
                 badge={badge}
-                showFilters={true}
+                showFilters={false}
             />
         </main>
     );

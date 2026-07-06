@@ -55,6 +55,9 @@ export default function DynamicPageEditor({ params }: { params: Promise<{ id: st
         if (!pageContent.faqs) pageContent.faqs = [];
         setContent(pageContent);
         setSeo(data.seo || {});
+        if (data.template === 'faq') {
+          setActiveTab('faqs');
+        }
       } else {
         router.push('/admin/pages');
       }
@@ -183,13 +186,15 @@ export default function DynamicPageEditor({ params }: { params: Promise<{ id: st
           {/* Main Editor Tabs */}
           <div className="bg-white border border-[#c3c4c7] shadow-sm overflow-hidden">
             <div className="flex border-b border-[#f0f0f1] bg-[#f6f7f7]">
-              <button
-                onClick={() => setActiveTab('content')}
-                className={`px-3 py-2 text-[12px] font-semibold border-r border-[#c3c4c7] transition-all ${activeTab === 'content' ? "bg-white text-[#1d2327]" : "text-[#2271b1] hover:text-[#135e96]"
-                  }`}
-              >
-                Page Content
-              </button>
+              {page?.template !== 'faq' && (
+                <button
+                  onClick={() => setActiveTab('content')}
+                  className={`px-3 py-2 text-[12px] font-semibold border-r border-[#c3c4c7] transition-all ${activeTab === 'content' ? "bg-white text-[#1d2327]" : "text-[#2271b1] hover:text-[#135e96]"
+                    }`}
+                >
+                  Page Content
+                </button>
+              )}
               <button
                 onClick={() => setActiveTab('seo')}
                 className={`px-3 py-2 text-[12px] font-semibold border-r border-[#c3c4c7] transition-all ${activeTab === 'seo' ? "bg-white text-[#1d2327]" : "text-[#2271b1] hover:text-[#135e96]"
