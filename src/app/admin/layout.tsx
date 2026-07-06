@@ -74,22 +74,22 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="flex flex-col h-screen bg-[#f0f0f1] overflow-hidden select-none antialiased">
       {/* Top Bar */}
-      <header className="flex items-center justify-between px-2 h-8 bg-[#1d2327] text-[#c3c4c7] text-[13px] z-[60] flex-shrink-0">
+      <header className="flex items-center justify-between px-2 h-10 bg-[#1d2327] text-[#c3c4c7] text-[13px] z-[60] flex-shrink-0 shadow-[0_1px_0_rgba(255,255,255,0.05)]">
          <div className="flex items-center h-full">
             <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden hover:bg-[#2c3338] px-3 h-full"><Menu className="w-4 h-4" /></button>
-            <Link href="/admin" className="hover:bg-[#2c3338] px-3 h-full flex items-center gap-2">
-               <Shield className="w-4 h-4 text-[#72aee6]" />
+            <Link href="/admin" className="hover:bg-[#2c3338] px-4 h-full flex items-center gap-2">
+               <Shield className="w-4.5 h-4.5 text-[#72aee6]" />
                <span className="font-bold text-[#f0f0f1]">Eagle Revolution</span>
             </Link>
-            <Link href="/" target="_blank" className="hover:bg-[#2c3338] px-3 h-full flex items-center gap-1.5 hidden sm:flex">
-               <Globe className="w-3.5 h-3.5" />
-               <span className="font-medium text-[#c3c4c7]">Visit Site</span>
+            <Link href="/" target="_blank" className="hover:bg-[#2c3338] px-3.5 h-full flex items-center gap-1.5 hidden sm:flex">
+               <Globe className="w-3.5 h-3.5 text-[#8f959c]" />
+               <span className="font-medium text-[#c3c4c7] hover:text-white transition-colors">Visit Site</span>
             </Link>
          </div>
          <div className="flex items-center h-full">
-            <div className="hover:bg-[#2c3338] px-3 h-full flex items-center gap-2 cursor-pointer group">
-               <span className="text-[#c3c4c7] group-hover:text-[#72aee6]">Howdy, {user.username}</span>
-               <div className="w-5 h-5 bg-[#3c434a] rounded-sm flex items-center justify-center border border-[#50575e]">
+            <div className="hover:bg-[#2c3338] px-4 h-full flex items-center gap-2 cursor-pointer group">
+               <span className="text-[#c3c4c7] group-hover:text-[#72aee6] transition-colors">Howdy, {user.username}</span>
+               <div className="w-6 h-6 bg-[#3c434a] rounded-sm flex items-center justify-center border border-[#50575e]">
                   <User className="w-4 h-4 text-[#a7aaad]" />
                </div>
             </div>
@@ -123,7 +123,7 @@ function Sidebar({ user, navItems, onClose, isMobile }: { user: any, navItems: a
   return (
     <>
       <aside className={`
-        fixed lg:relative h-full left-0 w-40 bg-[#1d2327] text-[#f0f0f1] border-r border-[#3c434a] z-[100] transition-transform duration-300
+        fixed lg:relative h-full left-0 w-44 bg-[#1d2327] text-[#f0f0f1] border-r border-[#3c434a] z-[100] transition-transform duration-300
         ${isMobile ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
         overflow-visible
       `}>
@@ -137,17 +137,26 @@ function Sidebar({ user, navItems, onClose, isMobile }: { user: any, navItems: a
                   <Link
                     href={item.href}
                     onClick={onClose}
-                    className={`flex items-center gap-2.5 px-3 py-2 text-[13px] transition-colors ${
-                      active ? "bg-[#2271b1] text-white font-bold" : "hover:bg-[#2c3338] hover:text-[#72aee6] text-[#c3c4c7]"
+                    className={`flex items-center gap-2.5 py-2.5 text-[13px] transition-all ${
+                      active 
+                        ? "bg-[#1c2226] border-l-[3px] border-[#72aee6] text-white font-bold pl-[13px] pr-3" 
+                        : "border-l-[3px] border-transparent hover:bg-[#2c3338] hover:text-[#72aee6] text-[#c3c4c7] pl-[13px] pr-3"
                     }`}
                   >
-                    <Icon className={`w-4 h-4 ${active ? "text-white" : "text-[#a7aaad]"}`} />
+                    <Icon className={`w-4 h-4 shrink-0 transition-colors ${active ? "text-[#72aee6]" : "text-[#a7aaad] group-hover:text-[#72aee6]"}`} />
                     <span>{item.label}</span>
                   </Link>
                   {item.sub && (
-                    <div className="absolute left-full top-0 w-40 bg-[#2c3338] border border-[#3c434a] shadow-lg hidden group-hover:block z-[200]">
+                    <div className="absolute left-full top-0 w-44 bg-[#2c3338] border border-[#3c434a]/80 shadow-xl hidden group-hover:block z-[200]">
                        {item.sub.map((s: { label: string, href: string }) => (
-                         <Link key={s.label} href={s.href} onClick={onClose} className="block px-4 py-2 text-[12px] text-[#c3c4c7] hover:text-[#72aee6] border-b border-[#3c434a] last:border-0">{s.label}</Link>
+                         <Link 
+                           key={s.label} 
+                           href={s.href} 
+                           onClick={onClose} 
+                           className="block px-4 py-2.5 text-[12px] text-[#c3c4c7] hover:bg-[#1c2226] hover:text-[#72aee6] border-b border-[#3c434a]/30 last:border-0 transition-colors"
+                         >
+                           {s.label}
+                         </Link>
                        ))}
                     </div>
                   )}
