@@ -595,7 +595,7 @@ const Footer = () => {
                 href="https://mohsindesigns.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary/70 hover:text-primary transition-colors font-medium"
+                className="hover:text-primary transition-colors font-medium"
               >
                 Mohsin Designs
               </a>
