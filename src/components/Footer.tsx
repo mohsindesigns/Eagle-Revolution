@@ -224,7 +224,7 @@ const MaterialsSection = () => {
           <Fragment key={material.label}>
             {idx > 0 && <span className="text-muted-foreground/30 font-light">•</span>}
             <Link
-              href={material.href}
+              href={material.href || '#'}
               className="text-muted-foreground hover:text-primary transition-colors py-0.5"
             >
               {material.label}
