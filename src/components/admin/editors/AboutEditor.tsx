@@ -227,10 +227,10 @@ export default function AboutEditor({ pageId, data, setData }: { pageId: string,
                               altValue={data.story?.portrait?.alt || ""}
                               onAltChange={(alt) => updateSection("story", "portrait", { ...(data.story?.portrait || {}), alt: alt })}
                            />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                           <div className="space-y-1.5"><label className={UI.label}>Left Badge</label><input type="text" value={data.story?.portrait?.badgeLeft || ""} onChange={(e) => updateSection("story", "portrait", { ...(data.story?.portrait || {}), badgeLeft: e.target.value })} className={UI.input} /></div>
-                           <div className="space-y-1.5"><label className={UI.label}>Right Badge</label><input type="text" value={data.story?.portrait?.badgeRight || ""} onChange={(e) => updateSection("story", "portrait", { ...(data.story?.portrait || {}), badgeRight: e.target.value })} className={UI.input} /></div>
+                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              <div className="space-y-1.5"><label className={UI.label}>Left Badge</label><input type="text" value={data.story?.portrait?.badgeLeft || ""} onChange={(e) => updateSection("story", "portrait", { ...(data.story?.portrait || {}), badgeLeft: e.target.value })} className={UI.input} /></div>
+                              <div className="space-y-1.5"><label className={UI.label}>Right Badge</label><input type="text" value={data.story?.portrait?.badgeRight || ""} onChange={(e) => updateSection("story", "portrait", { ...(data.story?.portrait || {}), badgeRight: e.target.value })} className={UI.input} /></div>
+                           </div>
                         </div>
                      </div>
                      <div className="space-y-6">
@@ -294,7 +294,7 @@ export default function AboutEditor({ pageId, data, setData }: { pageId: string,
                                     content={item.description || ""}
                                     onChange={(html) => { const newI = [...data.values.items]; newI[i].description = html; updateSection("values", "items", newI); }}
                                  />
-                                 <div className="grid grid-cols-2 gap-4">
+                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="space-y-1.5"><label className={UI.label}>Stat Value</label><input type="text" value={item.stat || ""} onChange={(e) => { const newI = [...data.values.items]; newI[i].stat = e.target.value; updateSection("values", "items", newI); }} className={UI.input} /></div>
                                     <div className="space-y-1.5"><label className={UI.label}>Stat Label</label><input type="text" value={item.statLabel || ""} onChange={(e) => { const newI = [...data.values.items]; newI[i].statLabel = e.target.value; updateSection("values", "items", newI); }} className={UI.input} /></div>
                                  </div>

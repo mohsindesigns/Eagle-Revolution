@@ -234,87 +234,97 @@ export default function DynamicPageEditor({ params }: { params: Promise<{ id: st
                   pageContent={content}
                 />
               ) : (
-                <div className="p-4 sm:p-5 space-y-4">
-                  <div className="flex items-center justify-between mb-2">
+                <div className="p-5 sm:p-6 space-y-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#f0f0f1] pb-4">
                     <div>
-                      <h3 className="text-sm font-bold text-[#1d2327]">Page-Specific FAQs</h3>
-                      <p className="text-[12px] text-[#646970] mt-1">These FAQs will appear at the bottom of this specific page.</p>
+                      <h3 className="text-base font-bold text-[#1d2327]">Page-Specific FAQs</h3>
+                      <p className="text-[12px] text-[#646970] mt-0.5">These FAQs will appear at the bottom of this specific page.</p>
                     </div>
                     <button onClick={() => {
                       const currentFaqs = Array.isArray(content.faqs) ? content.faqs : [];
                       const nf = [...currentFaqs];
                       nf.push({ question: "", answer: "" });
                       setContent({ ...content, faqs: nf });
-                    }} className="bg-[#f0f0f1] border border-[#c3c4c7] px-2 py-1 text-[12px] rounded-sm hover:bg-white text-[#2c3338] transition-colors">+ Add FAQ</button>
+                    }} className="bg-white border border-[#2271b1] text-[#2271b1] px-3 py-1.5 text-[12px] font-semibold rounded-[3px] hover:bg-[#f0f6fb] transition-colors self-start">+ Add FAQ</button>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-4 border-b border-[#c3c4c7]">
-                    <div className="space-y-1">
-                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">FAQ Section Badge</label>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                    <div className="space-y-1.5">
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">FAQ Section Badge</label>
                       <input
                         type="text"
                         value={content.faqBadge || ""}
                         onChange={e => setContent({ ...content, faqBadge: e.target.value })}
                         placeholder="e.g. Got Questions?"
-                        className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-sm focus:border-[#2271b1] outline-none bg-white"
+                        className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none bg-white"
                       />
                     </div>
-                    <div className="space-y-1">
-                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">FAQ Section Heading</label>
+                    <div className="space-y-1.5">
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">FAQ Section Heading</label>
                       <input
                         type="text"
                         value={content.faqTitle || ""}
                         onChange={e => setContent({ ...content, faqTitle: e.target.value })}
                         placeholder="e.g. Frequently Asked Questions"
-                        className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-sm focus:border-[#2271b1] outline-none bg-white"
+                        className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none bg-white"
                       />
                     </div>
-                    <div className="space-y-1">
-                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">FAQ Section Description</label>
+                    <div className="space-y-1.5">
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">FAQ Section Description</label>
                       <input
                         type="text"
                         value={content.faqDescription || ""}
                         onChange={e => setContent({ ...content, faqDescription: e.target.value })}
                         placeholder="e.g. Answers to common questions..."
-                        className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-sm focus:border-[#2271b1] outline-none bg-white"
+                        className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none bg-white"
                       />
                     </div>
                   </div>
-                  {(!content.faqs || content.faqs.length === 0) ? (
-                    <div className="text-[13px] text-[#646970] italic">No FAQs added for this page yet.</div>
-                  ) : (
-                    <div className="space-y-4">
-                       {content.faqs.map((faq: any, idx: number) => (
-                        <div key={idx} className="bg-white border border-[#c3c4c7] p-4 rounded-sm space-y-3">
-                          <div className="flex justify-between items-start gap-4">
-                            <div className="flex-1 space-y-3">
-                              <input type="text" value={faq.question} onChange={e => {
-                                const nf = [...content.faqs];
-                                nf[idx].question = e.target.value;
-                                setContent({ ...content, faqs: nf });
-                              }} className="w-full border border-[#8c8f94] px-2 py-1.5 text-[14px] font-bold text-[#1d2327] rounded-sm focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none" placeholder="Question" />
-                              <textarea value={faq.answer} onChange={e => {
-                                const nf = [...content.faqs];
-                                nf[idx].answer = e.target.value;
-                                setContent({ ...content, faqs: nf });
-                              }} className="w-full border border-[#8c8f94] px-2 py-1.5 text-[13px] rounded-sm focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none" rows={3} placeholder="Answer" />
-                            </div>
-                            <button onClick={() => {
-                              setContent({ ...content, faqs: content.faqs.filter((_: any, i: number) => i !== idx) });
-                            }} className="text-[#d63638] hover:underline text-[12px] pt-1"><Trash2 className="w-4 h-4" /></button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
 
-                  <div className="pt-4 border-t border-[#c3c4c7] space-y-1">
+                  <div className="space-y-4 pt-2">
+                    <h4 className="text-[12px] font-bold uppercase tracking-wider text-slate-500">Question & Answer List</h4>
+                    {(!content.faqs || content.faqs.length === 0) ? (
+                      <div className="text-[13px] text-[#646970] italic bg-[#f6f7f7] p-6 text-center border border-dashed border-[#c3c4c7] rounded-[3px]">No FAQs added for this page yet. Click "+ Add FAQ" above to start.</div>
+                    ) : (
+                      <div className="space-y-5">
+                         {content.faqs.map((faq: any, idx: number) => (
+                          <div key={idx} className="bg-white border border-[#c3c4c7] p-5 rounded-[4px] shadow-sm hover:shadow-md transition-all space-y-4 relative">
+                            <div className="flex justify-between items-start gap-4">
+                              <div className="flex-1 space-y-4">
+                                <div className="space-y-1">
+                                  <span className="text-[10px] font-bold text-slate-400 uppercase">Question {idx + 1}</span>
+                                  <input type="text" value={faq.question} onChange={e => {
+                                    const nf = [...content.faqs];
+                                    nf[idx].question = e.target.value;
+                                    setContent({ ...content, faqs: nf });
+                                  }} className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] font-bold text-[#1d2327] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none" placeholder="Question" />
+                                </div>
+                                <div className="space-y-1">
+                                  <span className="text-[10px] font-bold text-slate-400 uppercase">Answer {idx + 1}</span>
+                                  <textarea value={faq.answer} onChange={e => {
+                                    const nf = [...content.faqs];
+                                    nf[idx].answer = e.target.value;
+                                    setContent({ ...content, faqs: nf });
+                                  }} className="w-full border border-[#c3c4c7] px-3 py-2 text-[13px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none resize-none leading-relaxed" rows={3} placeholder="Answer" />
+                                </div>
+                              </div>
+                              <button onClick={() => {
+                                setContent({ ...content, faqs: content.faqs.filter((_: any, i: number) => i !== idx) });
+                              }} className="text-[#d63638] hover:bg-red-50 p-1.5 rounded-[3px] transition-colors self-start mt-5" title="Delete FAQ Item"><Trash2 className="w-4 h-4" /></button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="pt-5 border-t border-[#c3c4c7] space-y-2">
                     <label className="text-[13px] font-bold text-[#1d2327]">FAQ Schema Markup (Bulk JSON-LD)</label>
-                    <p className="text-[11px] text-[#646970]">Paste a single JSON-LD schema block covering all FAQs for this page.</p>
+                    <p className="text-[12px] text-[#646970] mt-0.5">Paste a single JSON-LD schema block covering all FAQs for this page.</p>
                     <textarea
                       value={content.faqSchemaMarkup || ""}
                       onChange={e => setContent({ ...content, faqSchemaMarkup: e.target.value })}
-                      className="w-full border border-[#8c8f94] px-2 py-1.5 text-[13px] font-mono rounded-sm focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none"
+                      className="w-full border border-[#c3c4c7] px-3 py-2 text-[13px] font-mono rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none"
                       rows={8}
                       placeholder='e.g. {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [...]}'
                     />

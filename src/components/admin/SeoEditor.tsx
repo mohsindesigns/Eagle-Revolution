@@ -118,79 +118,80 @@ export default function SeoEditor({ data, setData, pageSlug, pageTitle, pageCont
         <div className="flex-1 p-4 sm:p-5 space-y-6 min-w-0">
           <AnimatePresence mode="wait">
             {activeTab === 'general' && (
-              <motion.div key="general" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <label className="text-[11px] font-bold text-[#1d2327] uppercase">Focus Keyword</label>
-                    <input type="text" value={data.focusKeyword || ""} onChange={(e) => updateField('focusKeyword', e.target.value)} className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]" />
+              <motion.div key="general" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="space-y-1.5">
+                    <label className="text-[12px] font-bold text-[#1d2327] uppercase tracking-wide">Focus Keyword</label>
+                    <input type="text" value={data.focusKeyword || ""} onChange={(e) => updateField('focusKeyword', e.target.value)} className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none" placeholder="e.g. roofing st louis" />
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-[11px] font-bold text-[#1d2327] uppercase">Secondary Keywords</label>
-                    <input type="text" value={data.secondaryKeywords || ""} onChange={(e) => updateField('secondaryKeywords', e.target.value)} className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]" placeholder="comma separated" />
+                  <div className="space-y-1.5">
+                    <label className="text-[12px] font-bold text-[#1d2327] uppercase tracking-wide">Secondary Keywords</label>
+                    <input type="text" value={data.secondaryKeywords || ""} onChange={(e) => updateField('secondaryKeywords', e.target.value)} className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none" placeholder="comma separated" />
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   <div className="flex justify-between items-center">
-                    <label className="text-[11px] font-bold text-[#1d2327] uppercase">SEO Title</label>
-                    <span className="text-[10px] text-[#646970]">{data.metaTitle?.length || 0} / 60</span>
+                    <label className="text-[12px] font-bold text-[#1d2327] uppercase tracking-wide">SEO Title</label>
+                    <span className="text-[10px] text-[#646970] font-mono">{data.metaTitle?.length || 0} / 60 chars</span>
                   </div>
-                  <input type="text" placeholder={pageTitle} value={data.metaTitle || ""} onChange={(e) => updateField('metaTitle', e.target.value)} className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]" />
+                  <input type="text" placeholder={pageTitle} value={data.metaTitle || ""} onChange={(e) => updateField('metaTitle', e.target.value)} className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none" />
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   <div className="flex justify-between items-center">
-                    <label className="text-[11px] font-bold text-[#1d2327] uppercase">Meta Description</label>
-                    <span className="text-[10px] text-[#646970]">{data.metaDescription?.length || 0} / 160</span>
+                    <label className="text-[12px] font-bold text-[#1d2327] uppercase tracking-wide">Meta Description</label>
+                    <span className="text-[10px] text-[#646970] font-mono">{data.metaDescription?.length || 0} / 160 chars</span>
                   </div>
-                  <textarea rows={3} value={data.metaDescription || ""} onChange={(e) => updateField('metaDescription', e.target.value)} className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px] resize-none" />
+                  <textarea rows={4} value={data.metaDescription || ""} onChange={(e) => updateField('metaDescription', e.target.value)} className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none resize-none leading-relaxed" placeholder="Write a summary description for search results..." />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="space-y-1.5">
                     <div className="flex justify-between items-center">
-                      <label className="text-[11px] font-bold text-[#1d2327] uppercase">Canonical URL</label>
+                      <label className="text-[12px] font-bold text-[#1d2327] uppercase tracking-wide">Canonical URL</label>
                       {!data.canonicalUrl && (
                         <button
                           onClick={() => updateField('canonicalUrl', `${BASE_URL}/${pageSlug === 'home' ? '' : pageSlug}`)}
-                          className="text-[10px] text-[#2271b1] hover:underline"
+                          className="text-[11px] text-[#2271b1] hover:underline"
                         >
                           Suggest Default
                         </button>
                       )}
                     </div>
-                    <input type="text" value={data.canonicalUrl || ""} onChange={(e) => updateField('canonicalUrl', e.target.value)} className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]" placeholder="https://..." />
+                    <input type="text" value={data.canonicalUrl || ""} onChange={(e) => updateField('canonicalUrl', e.target.value)} className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none" placeholder="https://..." />
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-[11px] font-bold text-[#1d2327] uppercase">Breadcrumb Title</label>
-                    <input type="text" value={data.breadcrumbTitle || ""} onChange={(e) => updateField('breadcrumbTitle', e.target.value)} className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]" />
+                  <div className="space-y-1.5">
+                    <label className="text-[12px] font-bold text-[#1d2327] uppercase tracking-wide">Breadcrumb Title</label>
+                    <input type="text" value={data.breadcrumbTitle || ""} onChange={(e) => updateField('breadcrumbTitle', e.target.value)} className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none" />
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 pt-2">
-                  <div className="flex-1">
+                <div className="space-y-5 pt-2 border-t border-[#f0f0f1]">
+                  <div>
                     <ImageField
                       label="Featured Image (Global/Schema)"
                       value={data.featuredImage || ""}
                       onChange={(url) => updateField('featuredImage', url)}
                       altValue={data.featuredImageAlt || ""}
                       onAltChange={(alt) => updateField('featuredImageAlt', alt)}
-                      description="Main image used for Schema.org and as a fallback for OG/Twitter."
+                      description="Main image used for Schema.org and as a fallback for OG/Twitter social previews."
                     />
                   </div>
-                  <div className="flex gap-4">
-                    <div className="w-32 space-y-1">
-                      <label className="text-[11px] font-bold text-[#1d2327] uppercase">Robots Index</label>
-                      <select value={data.metaRobotsIndex || 'index'} onChange={(e) => updateField('metaRobotsIndex', e.target.value)} className="w-full border border-[#8c8f94] bg-white px-2 py-1 text-[12px] rounded-[3px]">
-                        <option value="index">Index</option>
-                        <option value="noindex">NoIndex</option>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="space-y-1.5">
+                      <label className="text-[12px] font-bold text-[#1d2327] uppercase tracking-wide">Robots Index</label>
+                      <select value={data.metaRobotsIndex || 'index'} onChange={(e) => updateField('metaRobotsIndex', e.target.value)} className="w-full border border-[#c3c4c7] bg-white px-3 py-2 text-[13px] rounded-[3px] focus:border-[#2271b1] outline-none">
+                        <option value="index">Index (Allow search engines to show page)</option>
+                        <option value="noindex">NoIndex (Hide page from search results)</option>
                       </select>
                     </div>
-                    <div className="w-32 space-y-1">
-                      <label className="text-[11px] font-bold text-[#1d2327] uppercase">Robots Follow</label>
-                      <select value={data.metaRobotsFollow || 'follow'} onChange={(e) => updateField('metaRobotsFollow', e.target.value)} className="w-full border border-[#8c8f94] bg-white px-2 py-1 text-[12px] rounded-[3px]">
-                        <option value="follow">Follow</option>
-                        <option value="nofollow">NoFollow</option>
+                    <div className="space-y-1.5">
+                      <label className="text-[12px] font-bold text-[#1d2327] uppercase tracking-wide">Robots Follow</label>
+                      <select value={data.metaRobotsFollow || 'follow'} onChange={(e) => updateField('metaRobotsFollow', e.target.value)} className="w-full border border-[#c3c4c7] bg-white px-3 py-2 text-[13px] rounded-[3px] focus:border-[#2271b1] outline-none">
+                        <option value="follow">Follow (Instruct search engines to follow links)</option>
+                        <option value="nofollow">NoFollow (Do not crawl links on this page)</option>
                       </select>
                     </div>
                   </div>
@@ -201,24 +202,30 @@ export default function SeoEditor({ data, setData, pageSlug, pageTitle, pageCont
             {activeTab === 'social' && (
               <motion.div key="social" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
                 <div className="space-y-4">
-                  <h3 className="text-[11px] font-bold text-[#1d2327] uppercase border-b border-[#f0f0f1] pb-1">Facebook / Open Graph</h3>
-                  <div className="space-y-3">
-                    <input type="text" placeholder="OG Title" value={data.ogTitle || ""} onChange={(e) => updateField('ogTitle', e.target.value)} className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]" />
-                    <textarea placeholder="OG Description" rows={2} value={data.ogDescription || ""} onChange={(e) => updateField('ogDescription', e.target.value)} className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px] resize-none" />
+                  <h3 className="text-[12px] font-bold text-[#1d2327] uppercase tracking-wide border-b border-[#f0f0f1] pb-1.5">Facebook / Open Graph</h3>
+                  <div className="space-y-4">
+                    <input type="text" placeholder="OG Title (defaults to SEO Title if empty)" value={data.ogTitle || ""} onChange={(e) => updateField('ogTitle', e.target.value)} className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none" />
+                    <textarea placeholder="OG Description (defaults to Meta Description if empty)" rows={3} value={data.ogDescription || ""} onChange={(e) => updateField('ogDescription', e.target.value)} className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none resize-none leading-relaxed" />
                     <ImageField label="OG Image" value={data.ogImage || ""} onChange={(url) => updateField('ogImage', url)} />
                   </div>
                 </div>
-                <div className="space-y-4">
-                  <h3 className="text-[11px] font-bold text-[#1d2327] uppercase border-b border-[#f0f0f1] pb-1">Twitter / X</h3>
-                  <div className="space-y-3">
-                    <div className="grid grid-cols-2 gap-4">
-                      <input type="text" placeholder="Twitter Title" value={data.twitterTitle || ""} onChange={(e) => updateField('twitterTitle', e.target.value)} className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px]" />
-                      <select value={data.twitterCard || 'summary_large_image'} onChange={(e) => updateField('twitterCard', e.target.value)} className="w-full border border-[#8c8f94] bg-white px-2 py-1 text-[12px] rounded-[3px]">
-                        <option value="summary">Summary</option>
-                        <option value="summary_large_image">Large Image</option>
-                      </select>
+                <div className="space-y-4 pt-4 border-t border-[#f0f0f1]">
+                  <h3 className="text-[12px] font-bold text-[#1d2327] uppercase tracking-wide border-b border-[#f0f0f1] pb-1.5">Twitter / X</h3>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-[#1d2327] uppercase">Twitter Title</label>
+                        <input type="text" placeholder="Twitter Title" value={data.twitterTitle || ""} onChange={(e) => updateField('twitterTitle', e.target.value)} className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-[#1d2327] uppercase">Card Style</label>
+                        <select value={data.twitterCard || 'summary_large_image'} onChange={(e) => updateField('twitterCard', e.target.value)} className="w-full border border-[#c3c4c7] bg-white px-3 py-2 text-[13px] rounded-[3px] focus:border-[#2271b1] outline-none">
+                          <option value="summary">Summary (Small Image Preview)</option>
+                          <option value="summary_large_image">Summary with Large Image</option>
+                        </select>
+                      </div>
                     </div>
-                    <textarea placeholder="Twitter Description" rows={2} value={data.twitterDescription || ""} onChange={(e) => updateField('twitterDescription', e.target.value)} className="w-full border border-[#8c8f94] px-2 py-1 text-[13px] rounded-[3px] resize-none" />
+                    <textarea placeholder="Twitter Description" rows={3} value={data.twitterDescription || ""} onChange={(e) => updateField('twitterDescription', e.target.value)} className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none resize-none leading-relaxed" />
                     <ImageField label="Twitter Image" value={data.twitterImage || ""} onChange={(url) => updateField('twitterImage', url)} />
                   </div>
                 </div>

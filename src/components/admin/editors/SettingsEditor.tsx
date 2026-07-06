@@ -107,7 +107,7 @@ export default function SettingsEditor({ pageId, data, setData }: { pageId: stri
             
             {/* BRANDING TAB */}
             {activeTab === "branding" && (
-              <div className="max-w-4xl grid grid-cols-2 gap-10">
+              <div className="max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                  <div className="space-y-6">
                     <div className={UI.card + " space-y-5"}>
                        <label className={UI.sectionHeader}>Brand Identity</label>
@@ -155,7 +155,7 @@ export default function SettingsEditor({ pageId, data, setData }: { pageId: stri
                  <div className="max-w-3xl space-y-6">
                     <div className={UI.card + " space-y-5"}>
                        <label className={UI.sectionHeader}>Header Action</label>
-                       <div className="grid grid-cols-2 gap-4">
+                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div className="space-y-1.5">
                              <label className={UI.label}>Navbar CTA Text</label>
                              <input type="text" value={data.navbar?.ctaText || ""} onChange={(e) => updateNested(["navbar", "ctaText"], e.target.value)} className={UI.input} />
@@ -183,7 +183,7 @@ export default function SettingsEditor({ pageId, data, setData }: { pageId: stri
                     <div className="grid grid-cols-1 gap-4 max-w-4xl">
                        {(data.navbar?.companyLinks || []).map((link: any, i: number) => (
                          <div key={i} className={UI.card + " space-y-4 relative"}>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                <div className="space-y-1.5">
                                   <label className={UI.label}>Link Label</label>
                                   <input type="text" value={link.label || ""} onChange={(e) => {
@@ -260,7 +260,7 @@ export default function SettingsEditor({ pageId, data, setData }: { pageId: stri
 
             {/* FOOTER TAB */}
             {activeTab === "footer" && (
-              <div className="grid grid-cols-2 gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                  <div className="space-y-6">
                     <div className="space-y-4">
                        <label className={UI.label}>Footer Identity</label>
@@ -339,7 +339,7 @@ export default function SettingsEditor({ pageId, data, setData }: { pageId: stri
 
                     <div className="space-y-4">
                        <label className={UI.label}>Newsletter Config</label>
-                       <div className={UI.card + " grid grid-cols-2 gap-4"}>
+                       <div className={UI.card + " grid grid-cols-1 sm:grid-cols-2 gap-4"}>
                           <div className="space-y-1.5">
                              <label className={UI.label}>Placeholder</label>
                              <input type="text" value={data.footer?.newsletter?.placeholder || ""} onChange={(e) => updateNested(["footer", "newsletter", "placeholder"], e.target.value)} className={UI.input} />
@@ -356,7 +356,7 @@ export default function SettingsEditor({ pageId, data, setData }: { pageId: stri
 
             {/* VITALS TAB */}
             {activeTab === "vitals" && (
-              <div className="grid grid-cols-2 gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                  <div className="space-y-6">
                     <label className={UI.label}>Opening Hours</label>
                     <div className={UI.card + " space-y-3"}>

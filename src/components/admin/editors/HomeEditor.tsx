@@ -467,7 +467,7 @@ export default function HomeEditor({ pageId, data, setData }: { pageId: string, 
 
                      <div className="space-y-8 pt-10 border-t border-[#f0f0f1]">
                         <h3 className={UI.sectionHeader}>2. Leader Details</h3>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                            <div className="space-y-1.5">
                               <label className={UI.label}>Name</label>
                               <input type="text" value={data.leadership?.ceo?.name || ""} onChange={(e) => updateSection("leadership", "ceo", { ...(data.leadership?.ceo || {}), name: e.target.value })} className={UI.input} />
@@ -486,7 +486,7 @@ export default function HomeEditor({ pageId, data, setData }: { pageId: string, 
                               altValue={data.leadership?.ceo?.image?.alt || ""}
                               onAltChange={(alt) => updateSection("leadership", "ceo", { ...(data.leadership?.ceo || {}), image: { ...(data.leadership?.ceo?.image || {}), alt: alt } })}
                            />
-                           <div className="grid grid-cols-2 gap-4">
+                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                               <div className="space-y-1.5">
                                  <label className={UI.label}>Top Badge</label>
                                  <input type="text" value={data.leadership?.ceo?.badges?.top || ""} onChange={(e) => updateSection("leadership", "ceo", { ...(data.leadership?.ceo || {}), badges: { ...(data.leadership?.ceo?.badges || {}), top: e.target.value } })} className={UI.input} />

@@ -139,7 +139,7 @@ export default function ContactEditor({ pageId, data, setData }: { pageId: strin
                           updateContact("formFields", null, newF);
                         }} className="absolute top-6 right-6 text-slate-400 hover:text-[#d63638] transition-colors"><Trash2 className="w-4 h-4" /></button>
                         
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                            <div className="space-y-4">
                               <div className="space-y-1.5">
                                  <label className={UI.label}>Field Label</label>
@@ -191,7 +191,7 @@ export default function ContactEditor({ pageId, data, setData }: { pageId: strin
 
             {/* INFO SECTION */}
             {activeTab === "info" && (
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                  <div className="space-y-6">
                     <label className={UI.label}>Direct Contact Channels</label>
                     <div className={UI.card + " space-y-4"}>
