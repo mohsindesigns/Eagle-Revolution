@@ -29,6 +29,12 @@ export async function uploadFile(file: File, buffer: Buffer): Promise<{ url: str
       const formData = new FormData();
       formData.append('file', new Blob([buffer], { type: file.type }));
       
+      // Use original filename (without extension) as the public_id in Cloudinary
+      const cleanFileName = file.name
+        .substring(0, file.name.lastIndexOf('.'))
+        .replace(/[^a-zA-Z0-9_-]/g, '_');
+      formData.append('public_id', cleanFileName);
+      
       let endpoint = `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`;
       
       if (uploadPreset) {
