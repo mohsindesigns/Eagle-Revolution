@@ -182,14 +182,14 @@ export default function SeoEditor({ data, setData, pageSlug, pageTitle, pageCont
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
                       <label className="text-[12px] font-bold text-[#1d2327] uppercase tracking-wide">Robots Index</label>
-                      <select value={data.metaRobotsIndex || 'index'} onChange={(e) => updateField('metaRobotsIndex', e.target.value)} className="w-full border border-[#c3c4c7] bg-white px-3 py-2 text-[13px] rounded-[3px] focus:border-[#2271b1] outline-none">
+                      <select value={data.metaRobotsIndex || 'index'} onChange={(e) => updateField('metaRobotsIndex', e.target.value)} className="w-full border border-[#c3c4c7] bg-white px-3 py-2 text-[13px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none">
                         <option value="index">Index (Allow search engines to show page)</option>
                         <option value="noindex">NoIndex (Hide page from search results)</option>
                       </select>
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-[12px] font-bold text-[#1d2327] uppercase tracking-wide">Robots Follow</label>
-                      <select value={data.metaRobotsFollow || 'follow'} onChange={(e) => updateField('metaRobotsFollow', e.target.value)} className="w-full border border-[#c3c4c7] bg-white px-3 py-2 text-[13px] rounded-[3px] focus:border-[#2271b1] outline-none">
+                      <select value={data.metaRobotsFollow || 'follow'} onChange={(e) => updateField('metaRobotsFollow', e.target.value)} className="w-full border border-[#c3c4c7] bg-white px-3 py-2 text-[13px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none">
                         <option value="follow">Follow (Instruct search engines to follow links)</option>
                         <option value="nofollow">NoFollow (Do not crawl links on this page)</option>
                       </select>
@@ -219,7 +219,7 @@ export default function SeoEditor({ data, setData, pageSlug, pageTitle, pageCont
                       </div>
                       <div className="space-y-1">
                         <label className="text-[11px] font-bold text-[#1d2327] uppercase">Card Style</label>
-                        <select value={data.twitterCard || 'summary_large_image'} onChange={(e) => updateField('twitterCard', e.target.value)} className="w-full border border-[#c3c4c7] bg-white px-3 py-2 text-[13px] rounded-[3px] focus:border-[#2271b1] outline-none">
+                        <select value={data.twitterCard || 'summary_large_image'} onChange={(e) => updateField('twitterCard', e.target.value)} className="w-full border border-[#c3c4c7] bg-white px-3 py-2 text-[13px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none">
                           <option value="summary">Summary (Small Image Preview)</option>
                           <option value="summary_large_image">Summary with Large Image</option>
                         </select>

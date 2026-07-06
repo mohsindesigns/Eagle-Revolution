@@ -251,41 +251,41 @@ export default function MediaDashboard() {
                     <div className="space-y-4 text-[13px]">
                        <div className="space-y-1">
                           <label className="font-semibold block">Alt Text</label>
-                          <textarea
-                            value={editingItem.alt || ""}
-                            onChange={(e) => setEditingItem({ ...editingItem, alt: e.target.value })}
-                            className="w-full border border-[#8c8f94] bg-white px-2 py-1 rounded-[3px] focus:border-[#2271b1] outline-none"
-                            rows={2}
-                          />
+                           <textarea
+                             value={editingItem.alt || ""}
+                             onChange={(e) => setEditingItem({ ...editingItem, alt: e.target.value })}
+                             className="w-full border border-[#c3c4c7] bg-white px-3 py-2 text-sm rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none shadow-sm transition-all"
+                             rows={2}
+                           />
                           <p className="text-[11px] text-[#646970]">Describe the purpose of the image. Leave empty if decorative.</p>
                        </div>
 
                        <div className="space-y-1">
                           <label className="font-semibold block">Title</label>
-                          <input
-                            type="text"
-                            value={editingItem.title || ""}
-                            onChange={(e) => setEditingItem({ ...editingItem, title: e.target.value })}
-                            className="w-full border border-[#8c8f94] bg-white px-2 py-1 rounded-[3px] focus:border-[#2271b1] outline-none"
-                          />
+                           <input
+                             type="text"
+                             value={editingItem.title || ""}
+                             onChange={(e) => setEditingItem({ ...editingItem, title: e.target.value })}
+                             className="w-full border border-[#c3c4c7] bg-white px-3 py-2 text-sm rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none shadow-sm transition-all"
+                           />
                        </div>
 
                        <div className="space-y-1">
                           <label className="font-semibold block">Caption</label>
-                          <textarea
-                            className="w-full border border-[#8c8f94] bg-white px-2 py-1 rounded-[3px] focus:border-[#2271b1] outline-none"
-                            rows={2}
-                          />
+                           <textarea
+                             className="w-full border border-[#c3c4c7] bg-white px-3 py-2 text-sm rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none shadow-sm transition-all"
+                             rows={2}
+                           />
                        </div>
 
                        <div className="space-y-1">
                           <label className="font-semibold block">Description</label>
-                          <textarea
-                            value={editingItem.description || ""}
-                            onChange={(e) => setEditingItem({ ...editingItem, description: e.target.value })}
-                            className="w-full border border-[#8c8f94] bg-white px-2 py-1 rounded-[3px] focus:border-[#2271b1] outline-none"
-                            rows={3}
-                          />
+                           <textarea
+                             value={editingItem.description || ""}
+                             onChange={(e) => setEditingItem({ ...editingItem, description: e.target.value })}
+                             className="w-full border border-[#c3c4c7] bg-white px-3 py-2 text-sm rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none shadow-sm transition-all"
+                             rows={3}
+                           />
                        </div>
 
                        <div className="space-y-1 pt-4 border-t border-[#c3c4c7]">

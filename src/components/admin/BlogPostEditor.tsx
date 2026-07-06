@@ -187,7 +187,7 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
               onChange={(e) => setPost({ ...post, title: e.target.value })}
               onBlur={generateSlug}
               placeholder="Enter title here"
-              className="w-full border border-[#c3c4c7] px-3 py-2 text-[18px] font-medium text-[#1d2327] focus:border-[#2271b1] focus:ring-0 outline-none"
+              className="w-full border border-[#c3c4c7] px-3.5 py-2.5 text-[18px] font-medium text-[#1d2327] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none shadow-sm transition-all"
             />
           </div>
 
@@ -258,7 +258,7 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-6 mb-6 border-b border-slate-200">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pb-6 mb-6 border-b border-slate-200">
                     <div className="space-y-1.5">
                       <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">FAQ Section Badge</label>
                       <input
@@ -424,7 +424,7 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
                 value={post.location || ""}
                 onChange={(e) => setPost({ ...post, location: e.target.value })}
                 placeholder="e.g. New York, USA"
-                className="w-full border border-[#c3c4c7] px-2 py-1 text-[12px] outline-none focus:border-[#2271b1]"
+                className="w-full border border-[#c3c4c7] px-3 py-2 text-[13px] rounded-[3px] outline-none focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] bg-white transition-all"
               />
             </div>
           </div>
@@ -438,11 +438,11 @@ export default function BlogPostEditor({ id, initialData }: BlogPostEditorProps)
               <textarea
                 value={post.excerpt}
                 onChange={(e) => setPost({ ...post, excerpt: e.target.value })}
-                rows={3}
+                rows={4}
                 placeholder="Write a brief summary..."
-                className="w-full border border-[#c3c4c7] p-2 text-[12px] outline-none focus:border-[#2271b1] resize-none"
+                className="w-full border border-[#c3c4c7] px-3 py-2 text-[13px] outline-none focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] rounded-[3px] resize-none leading-relaxed bg-white transition-all"
               />
-              <p className="text-[10px] text-[#646970] mt-1">Excerpts are optional hand-crafted summaries of your content.</p>
+              <p className="text-[10px] text-[#646970] mt-1.5 leading-normal">Excerpts are optional hand-crafted summaries of your content.</p>
             </div>
           </div>
 

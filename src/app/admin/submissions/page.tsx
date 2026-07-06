@@ -159,7 +159,7 @@ export default function SubmissionsPage() {
                    <button onClick={() => setSelectedSubmission(null)} className="text-[#787c82] hover:text-[#d63638]"><X className="w-5 h-5" /></button>
                 </div>
                 <div className="p-6 space-y-6 bg-[#f0f0f1] overflow-y-auto max-h-[70vh]">
-                   <div className="grid grid-cols-2 gap-6">
+                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-1">
                          <label className="text-[11px] font-bold text-[#646970] uppercase">Name</label>
                          <p className="text-[14px] text-[#1d2327] font-medium">{selectedSubmission.name}</p>
