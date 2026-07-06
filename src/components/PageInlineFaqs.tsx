@@ -22,18 +22,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const SubtleBackground = () => (
   <div className="absolute inset-0 pointer-events-none">
-    <div
-      className="absolute inset-0 opacity-[0.05]"
-      style={{
-        backgroundImage: `
-          linear-gradient(to right, hsl(var(--primary)) 1px, transparent 1px),
-          linear-gradient(to bottom, hsl(var(--primary)) 1px, transparent 1px)
-        `,
-        backgroundSize: "80px 80px",
-      }}
-    />
-    <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-primary/5 to-transparent" />
-    <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-primary/5 to-transparent" />
+    {/* Soft blur bubble for a premium subtle layout detail without harsh color breaks */}
     <motion.div
       animate={{
         x: [0, 20, 0, -20, 0],
