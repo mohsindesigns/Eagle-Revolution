@@ -663,7 +663,41 @@ export default function ServiceAreaEditor({ pageId, data, setData }: { pageId: s
                             rows={2}
                           />
                         </div>
+
+                        {/* Button Fields */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-[#f0f0f1] pt-3">
+                          <div className="space-y-1.5">
+                            <label className="text-[11px] font-bold text-slate-600">Button Label <span className="text-slate-400 font-normal">(optional)</span></label>
+                            <input
+                              type="text"
+                              placeholder="e.g. Learn More"
+                              value={item.buttonLabel || ""}
+                              onChange={(e) => {
+                                const newItems = [...data.materials.items];
+                                newItems[mIdx].buttonLabel = e.target.value;
+                                updateField("materials", "items", newItems);
+                              }}
+                              className={UI.input}
+                            />
+                          </div>
+                          <div className="space-y-1.5">
+                            <label className="text-[11px] font-bold text-slate-600">Button Link <span className="text-slate-400 font-normal">(optional)</span></label>
+                            <input
+                              type="text"
+                              placeholder="e.g. /services/residential-roofing"
+                              value={item.buttonHref || ""}
+                              onChange={(e) => {
+                                const newItems = [...data.materials.items];
+                                newItems[mIdx].buttonHref = e.target.value;
+                                updateField("materials", "items", newItems);
+                              }}
+                              className={UI.input}
+                            />
+                          </div>
+                          <p className="col-span-2 text-[10px] text-slate-400 italic">Button only appears on the page if both Label and Link are filled in.</p>
+                        </div>
                       </div>
+
                     ))}
                   </div>
                 </div>

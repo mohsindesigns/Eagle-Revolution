@@ -465,6 +465,17 @@ export default function ServiceAreaTemplate({ pageData }: { pageData?: any }) {
                   <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-semibold flex-grow">
                     {item.description}
                   </p>
+                  {item.buttonLabel && item.buttonHref && (
+                    <div className="mt-6 pt-4 border-t border-slate-100">
+                      <Link
+                        href={item.buttonHref}
+                        className="inline-flex items-center gap-2 text-primary font-black text-xs uppercase tracking-wider hover:gap-3 transition-all duration-200"
+                      >
+                        {item.buttonLabel}
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  )}
                 </div>
               );
             })}

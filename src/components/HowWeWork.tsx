@@ -345,8 +345,8 @@ const FeatureCard = ({ feature, index }: { feature: any; index: number }) => {
                         />
                     </div>
 
-                    <RichTextRenderer 
-                        content={feature?.description || ""} 
+                    <RichTextRenderer
+                        content={feature?.description || ""}
                         className="text-sm md:text-base text-muted-foreground leading-relaxed flex-1"
                     />
 
@@ -576,8 +576,8 @@ const AwardCTABanner = () => {
                             dangerouslySetInnerHTML={{ __html: cta?.title || "" }}
                         />
 
-                        <RichTextRenderer 
-                            content={cta?.description || ""} 
+                        <RichTextRenderer
+                            content={cta?.description || ""}
                             className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-lg"
                         />
 
@@ -591,38 +591,38 @@ const AwardCTABanner = () => {
                         </div>
                     </div>
 
-                 <div className="flex flex-col sm:flex-row gap-4">
-    {(cta?.buttons || []).map((button: any, idx: number) => {
-        const links = ["/gallery", "/contact"];
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        {(cta?.buttons || []).map((button: any, idx: number) => {
+                            const links = ["/contact", "/gallery"];
 
-        return (
-            <Link key={idx} href={links[idx] || "#"}>
-                <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="relative px-8 py-4 bg-white text-primary border-2 border-primary font-bold rounded-full shadow-sm hover:bg-primary hover:text-white hover:shadow-md transition-all duration-300 overflow-hidden flex items-center justify-center gap-2 cursor-pointer"
-                >
-                    <span className="relative z-10 flex items-center gap-2 text-sm md:text-base">
-                        {button.text}
-                        <motion.svg
-                            className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 5l7 7-7 7"
-                            />
-                        </motion.svg>
-                    </span>
-                </motion.div>
-            </Link>
-        );
-    })}
-</div>
+                            return (
+                                <Link key={idx} href={links[idx] || "#"}>
+                                    <motion.div
+                                        whileHover={{ scale: 1.03 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        className="relative px-8 py-4 bg-white text-primary border-2 border-primary font-bold rounded-full shadow-sm hover:bg-primary hover:text-white hover:shadow-md transition-all duration-300 overflow-hidden flex items-center justify-center gap-2 cursor-pointer"
+                                    >
+                                        <span className="relative z-10 flex items-center gap-2 text-sm md:text-base">
+                                            {button.text}
+                                            <motion.svg
+                                                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2}
+                                                    d="M9 5l7 7-7 7"
+                                                />
+                                            </motion.svg>
+                                        </span>
+                                    </motion.div>
+                                </Link>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         </motion.div>
@@ -697,26 +697,26 @@ const WhyChooseUs = () => {
                             className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight"
                         >
                             {(section?.headlinePrefix || section?.headlineHighlight || section?.headlineSuffix) ? (
-                              <>
-                                {section?.headlinePrefix && (
-                                  <span>{section.headlinePrefix} </span>
-                                )}
-                                {section?.headlineHighlight && (
-                                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80">
-                                    {section.headlineHighlight}
-                                  </span>
-                                )}
-                                {section?.headlineSuffix && (
-                                  <span> {section.headlineSuffix}</span>
-                                )}
-                              </>
+                                <>
+                                    {section?.headlinePrefix && (
+                                        <span>{section.headlinePrefix} </span>
+                                    )}
+                                    {section?.headlineHighlight && (
+                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80">
+                                            {section.headlineHighlight}
+                                        </span>
+                                    )}
+                                    {section?.headlineSuffix && (
+                                        <span> {section.headlineSuffix}</span>
+                                    )}
+                                </>
                             ) : (
-                              <span dangerouslySetInnerHTML={{ __html: section?.headline || "" }} />
+                                <span dangerouslySetInnerHTML={{ __html: section?.headline || "" }} />
                             )}
                         </h2>
 
-                        <RichTextRenderer 
-                            content={section?.description || ""} 
+                        <RichTextRenderer
+                            content={section?.description || ""}
                             className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto"
                             stripParagraphs={true}
                         />

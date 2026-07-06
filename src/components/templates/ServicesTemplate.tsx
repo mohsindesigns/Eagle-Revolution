@@ -24,7 +24,7 @@ const ServiceCard = ({ service, index }: any) => {
                         <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5 group-hover:bg-primary transition-colors duration-300">
                             <Icon className="w-6 h-6 text-primary group-hover:text-white transition-colors duration-300" />
                         </div>
-                        <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
+                        <h2 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">{service.title}</h2>
                         <p className="text-muted-foreground text-sm leading-relaxed mb-5">{service.tagline || service.description}</p>
                         <div className="flex flex-wrap gap-2 mb-5">
                             {(service.features || []).slice(0, 3).map((f: any, i: number) => (

@@ -247,29 +247,37 @@ const ContactInfo = () => {
           {contact.title}
         </h4>
         <div className="space-y-4">
-          <a href={`mailto:${contact.email}`} className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors group">
-            <span className="text-muted-foreground/60 group-hover:text-primary">
+          <div className="flex items-start gap-3 text-sm text-muted-foreground group">
+            <span className="text-muted-foreground/60 group-hover:text-primary mt-0.5 flex-shrink-0">
               <Icon name="Mail" className="w-5 h-5" />
             </span>
-            {contact.email}
-          </a>
-          <a href={`tel:${contact.phone}`} className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors group">
-            <span className="text-muted-foreground/60 group-hover:text-primary">
+            <div className="[&_a]:text-muted-foreground [&_a]:hover:text-primary [&_a]:transition-colors [&_p]:m-0">
+              <RichTextRenderer content={contact.email} />
+            </div>
+          </div>
+          <div className="flex items-start gap-3 text-sm text-muted-foreground group">
+            <span className="text-muted-foreground/60 group-hover:text-primary mt-0.5 flex-shrink-0">
               <Icon name="Phone" className="w-5 h-5" />
             </span>
-            {contact.phone}
-          </a>
-          <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            <span className="text-muted-foreground/60">
+            <div className="[&_a]:text-muted-foreground [&_a]:hover:text-primary [&_a]:transition-colors [&_p]:m-0">
+              <RichTextRenderer content={contact.phone} />
+            </div>
+          </div>
+          <div className="flex items-start gap-3 text-sm text-muted-foreground">
+            <span className="text-muted-foreground/60 mt-0.5 flex-shrink-0">
               <Icon name="MapPin" className="w-5 h-5" />
             </span>
-            <span>{contact.address}</span>
+            <div className="[&_p]:m-0">
+              <RichTextRenderer content={contact.address} />
+            </div>
           </div>
-          <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            <span className="text-muted-foreground/60">
+          <div className="flex items-start gap-3 text-sm text-muted-foreground">
+            <span className="text-muted-foreground/60 mt-0.5 flex-shrink-0">
               <Icon name="Infinity" className="w-5 h-5" />
             </span>
-            <span>{contact.emergency}</span>
+            <div className="[&_p]:m-0">
+              <RichTextRenderer content={contact.emergency} />
+            </div>
           </div>
         </div>
       </div>
@@ -576,10 +584,22 @@ const Footer = () => {
         <LegacyMarquee />
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 py-6 text-[10px] text-muted-foreground">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap">
             <span>{bottom.copyright}</span>
             <span className="w-1 h-1 rounded-full bg-border" />
             <span>{bottom.rights}</span>
+            <span className="w-1 h-1 rounded-full bg-border" />
+            <span>
+              Designed by{" "}
+              <a
+                href="https://mohsindesigns.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary/70 hover:text-primary transition-colors font-medium"
+              >
+                Mohsin Designs
+              </a>
+            </span>
           </div>
           <div className="flex items-center gap-6 flex-wrap justify-center">
             {bottom.links.map((link: any) => (

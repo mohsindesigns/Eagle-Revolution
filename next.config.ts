@@ -15,7 +15,24 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'eaglerevolution.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
+  },
+  async rewrites() {
+    return [
+      {
+        // Proxy /cdn-images/:path* → Cloudinary
+        // This allows serving images from eaglerevolution.com/cdn-images/...
+        // instead of exposing res.cloudinary.com/dytytwyp6/image/upload/...
+        source: '/cdn-images/:path*',
+        destination: 'https://res.cloudinary.com/dytytwyp6/image/upload/:path*',
+      },
+    ];
   },
 };
 

@@ -466,20 +466,36 @@ export default function SettingsEditor() {
           {activeTab === "contact" && (
             <motion.div key="contact" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                <h2 className="text-xl font-normal text-[#1d2327] mb-6 font-serif">Global Contact Information</h2>
-               <SettingsRow label="Primary Email">
-                  <input type="email" value={data.footer?.contact?.email || ""} onChange={(e) => updateData("footer", "contact", { ...data.footer.contact, email: e.target.value })} className="w-full max-w-md border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]" />
+               <p className="text-[12px] text-[#646970] italic mb-6">HTML is supported in all fields below (e.g. &lt;br&gt;, &lt;strong&gt;, &lt;a href=&quot;...&quot;&gt;, &lt;span&gt;). Content is safely sanitized.</p>
+               <SettingsRow label="Primary Email" description="Supports HTML. E.g. &lt;a href='mailto:...'&gt;email&lt;/a&gt;">
+                  <RichTextEditor
+                    content={data.footer?.contact?.email || ""}
+                    onChange={(v) => updateData("footer", "contact", { ...data.footer.contact, email: v })}
+                  />
                </SettingsRow>
-               <SettingsRow label="Primary Phone">
-                  <input type="text" value={data.footer?.contact?.phone || ""} onChange={(e) => updateData("footer", "contact", { ...data.footer.contact, phone: e.target.value })} className="w-full max-w-md border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]" />
+               <SettingsRow label="Primary Phone" description="Supports HTML. E.g. &lt;a href='tel:...'&gt;number&lt;/a&gt;">
+                  <RichTextEditor
+                    content={data.footer?.contact?.phone || ""}
+                    onChange={(v) => updateData("footer", "contact", { ...data.footer.contact, phone: v })}
+                  />
                </SettingsRow>
-               <SettingsRow label="Office Address">
-                  <textarea rows={2} value={data.footer?.contact?.address || ""} onChange={(e) => updateData("footer", "contact", { ...data.footer.contact, address: e.target.value })} className="w-full max-w-md border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]" />
+               <SettingsRow label="Office Address" description="Supports HTML. E.g. use &lt;br&gt; for line breaks.">
+                  <RichTextEditor
+                    content={data.footer?.contact?.address || ""}
+                    onChange={(v) => updateData("footer", "contact", { ...data.footer.contact, address: v })}
+                  />
                </SettingsRow>
-               <SettingsRow label="24/7 Emergency Text">
-                  <input type="text" value={data.footer?.contact?.emergency || ""} onChange={(e) => updateData("footer", "contact", { ...data.footer.contact, emergency: e.target.value })} className="w-full max-w-md border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]" />
+               <SettingsRow label="24/7 Emergency Text" description="Supports HTML.">
+                  <RichTextEditor
+                    content={data.footer?.contact?.emergency || ""}
+                    onChange={(v) => updateData("footer", "contact", { ...data.footer.contact, emergency: v })}
+                  />
                </SettingsRow>
-               <SettingsRow label="Service Areas">
-                  <textarea rows={3} value={data.footer?.contact?.areas || ""} onChange={(e) => updateData("footer", "contact", { ...data.footer.contact, areas: e.target.value })} className="w-full max-w-md border border-[#8c8f94] px-3 py-1.5 text-[14px] rounded-[3px]" />
+               <SettingsRow label="Service Areas" description="Supports HTML.">
+                  <RichTextEditor
+                    content={data.footer?.contact?.areas || ""}
+                    onChange={(v) => updateData("footer", "contact", { ...data.footer.contact, areas: v })}
+                  />
                </SettingsRow>
                <SettingsRow label="Office Hours">
                   <div className="grid grid-cols-3 gap-2">
