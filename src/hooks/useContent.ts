@@ -1,7 +1,29 @@
 import { useContentContext } from "../context/ContentContext";
 
+function proxyAllUrls(obj: any): any {
+  if (!obj) return obj;
+  if (typeof obj === 'string') {
+    if (obj.includes("https://res.cloudinary.com/dytytwyp6/image/upload/")) {
+      return obj.replace(/https:\/\/res\.cloudinary\.com\/dytytwyp6\/image\/upload\//g, "/cdn-images/");
+    }
+    return obj;
+  }
+  if (Array.isArray(obj)) {
+    return obj.map(item => proxyAllUrls(item));
+  }
+  if (typeof obj === 'object') {
+    const res: any = {};
+    for (const key in obj) {
+      res[key] = proxyAllUrls(obj[key]);
+    }
+    return res;
+  }
+  return obj;
+}
+
 export const useContent = () => {
-    const completeData = useContentContext();
+    const rawData = useContentContext();
+    const completeData = proxyAllUrls(rawData);
 
     // Deep fallback helper to prevent undefined.property crashes
     const getSafe = (data: any, key: string, fallback: any = {}) => {

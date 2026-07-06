@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, Fragment } from "react";
 import {
   motion,
   useScroll,
@@ -221,7 +221,7 @@ const MaterialsSection = () => {
       </h5>
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs">
         {(materials.items || []).map((material: any, idx: number) => (
-          <React.Fragment key={material.label}>
+          <Fragment key={material.label}>
             {idx > 0 && <span className="text-muted-foreground/30 font-light">•</span>}
             <Link
               href={material.href}
@@ -229,7 +229,7 @@ const MaterialsSection = () => {
             >
               {material.label}
             </Link>
-          </React.Fragment>
+          </Fragment>
         ))}
       </div>
     </div>
