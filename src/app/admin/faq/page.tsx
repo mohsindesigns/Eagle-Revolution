@@ -10,6 +10,12 @@ const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor")
   loading: () => <div className="h-64 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
 });
 
+function stripHtml(html: string) {
+  if (!html) return "";
+  return html.replace(/<[^>]*>/g, "");
+}
+
+
 export default function FAQAdminPage() {
   const [data, setData] = useState<any>(null);
   const [faqs, setFaqs] = useState<any[]>([]);
@@ -142,20 +148,23 @@ export default function FAQAdminPage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
            <div className="lg:col-span-3 space-y-6">
               <div className="bg-white border border-[#c3c4c7] shadow-sm rounded-sm p-6">
-                 <input
-                   type="text"
-                   value={form.question}
-                   onChange={(e) => setForm({ ...form, question: e.target.value })}
-                   className="w-full border border-[#8c8f94] px-3 py-2 text-[18px] font-medium rounded-[3px] focus:border-[#2271b1] outline-none mb-4"
-                   placeholder="Enter question here"
-                 />
-                 <div className="space-y-1">
-                    <label className="text-[13px] font-bold">Answer</label>
-                    <RichTextEditor 
-                      content={form.answer} 
-                      onChange={(val) => setForm({ ...form, answer: val })} 
-                    />
-                 </div>
+                  <div className="space-y-4">
+                     <div className="space-y-1">
+                        <label className="text-[13px] font-bold">Question</label>
+                        <RichTextEditor 
+                          content={form.question} 
+                          onChange={(val) => setForm({ ...form, question: val })} 
+                          placeholder="Enter question here"
+                        />
+                     </div>
+                     <div className="space-y-1">
+                        <label className="text-[13px] font-bold">Answer</label>
+                        <RichTextEditor 
+                          content={form.answer} 
+                          onChange={(val) => setForm({ ...form, answer: val })} 
+                        />
+                     </div>
+                  </div>
               </div>
            </div>
 
@@ -224,7 +233,7 @@ export default function FAQAdminPage() {
                     <tr key={idx} className={`border-b border-[#f0f0f1] group ${idx % 2 === 0 ? "bg-[#f9f9f9]" : "bg-white"} hover:bg-[#f0f0f1]`}>
                        <td className="py-4 px-3 align-top"><input type="checkbox" className="w-4 h-4 border-[#8c8f94] rounded-[3px]" /></td>
                        <td className="py-4 px-3 align-top">
-                          <strong className="text-[#2271b1] block text-[14px]">{faq.question}</strong>
+                          <strong className="text-[#2271b1] block text-[14px]">{stripHtml(faq.question)}</strong>
                           <div className="flex items-center gap-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
                              <button onClick={() => handleEdit(idx)} className="text-[#2271b1] hover:underline text-[12px]">Edit</button>
                              <span className="text-[#a7aaad]">|</span>

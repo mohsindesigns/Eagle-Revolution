@@ -235,13 +235,13 @@ const AccordionItem = ({ item, index, isOpen, onToggle }: { item: any; index: nu
         >
           <div className="flex items-center justify-between gap-6">
             <h3 className={`
-              text-base md:text-lg lg:text-xl font-light transition-all duration-300
+              text-base md:text-lg lg:text-xl font-light transition-all duration-300 w-full
               ${isOpen
                 ? 'text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80 font-medium'
                 : 'text-card-foreground group-hover:text-card-foreground/90'
               }
             `}>
-              {item.question}
+              <RichTextRenderer content={item.question} className="inline-block rich-text-question text-left" stripParagraphs={true} />
             </h3>
 
             <div className="relative flex-shrink-0">

@@ -21,6 +21,11 @@ const QuillEditor = dynamic(() => import("@/components/admin/QuillEditor"), {
   loading: () => <div className="h-48 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Editor...</div>
 });
 
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), {
+  ssr: false,
+  loading: () => <div className="h-20 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
+
 const ICON_LIST = Array.from(new Set([
   "Home", "Layout", "Building2", "Building", "Droplets", "Shield", "ShieldCheck",
   "Award", "Clock", "BadgeCheck", "TrendingUp", "Star", "Zap", "Sparkles",
@@ -893,22 +898,18 @@ export default function ServicesPageEditor() {
                       <div className="space-y-4">
                         <div className="space-y-2">
                           <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Question</label>
-                          <input
-                            type="text"
-                            value={faqItem.question || ""}
-                            onChange={(e) => updateFaqItem(index, "question", e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 font-bold focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                          <RichTextEditor
+                            content={faqItem.question || ""}
+                            onChange={(val) => updateFaqItem(index, "question", val)}
                             placeholder="e.g. What types of roofing services do you offer?"
                           />
                         </div>
 
                         <div className="space-y-2">
                           <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Answer</label>
-                          <textarea
-                            rows={3}
-                            value={faqItem.answer || ""}
-                            onChange={(e) => updateFaqItem(index, "answer", e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-2xl px-6 py-4 text-slate-900 font-medium focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"
+                          <RichTextEditor
+                            content={faqItem.answer || ""}
+                            onChange={(val) => updateFaqItem(index, "answer", val)}
                             placeholder="e.g. We provide comprehensive roofing services, including residential roofing, TPO commercial roofing, roof inspections, and repairs."
                           />
                         </div>

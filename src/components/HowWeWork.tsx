@@ -593,7 +593,7 @@ const AwardCTABanner = () => {
 
                     <div className="flex flex-col sm:flex-row gap-4">
                         {(cta?.buttons || []).map((button: any, idx: number) => {
-                            const links = ["/contact", "/gallery"];
+                            const links = ["/contact-us", "/gallery"];
 
                             return (
                                 <Link key={idx} href={links[idx] || "#"}>

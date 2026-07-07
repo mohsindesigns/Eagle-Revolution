@@ -14,6 +14,11 @@ import { TemplateEditors } from "@/components/admin/editors";
 import SeoEditor from "@/components/admin/SeoEditor";
 import MediaSelector from "@/components/admin/MediaSelector";
 import { BASE_URL } from "@/lib/constants";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), {
+  ssr: false,
+  loading: () => <div className="h-20 bg-[#f6f7f7] animate-pulse border border-[#c3c4c7] rounded-sm flex items-center justify-center text-[#8c8f94] text-xs">Loading Rich Text Editor...</div>
+});
 
 const EDITOR_TEMPLATES = [
   { id: 'home', label: 'Home Page', icon: LayoutTemplate },
@@ -291,21 +296,31 @@ export default function DynamicPageEditor({ params }: { params: Promise<{ id: st
                           <div key={idx} className="bg-white border border-[#c3c4c7] p-5 rounded-[4px] shadow-sm hover:shadow-md transition-all space-y-4 relative">
                             <div className="flex justify-between items-start gap-4">
                               <div className="flex-1 space-y-4">
-                                <div className="space-y-1">
-                                  <span className="text-[10px] font-bold text-slate-400 uppercase">Question {idx + 1}</span>
-                                  <input type="text" value={faq.question} onChange={e => {
-                                    const nf = [...content.faqs];
-                                    nf[idx].question = e.target.value;
-                                    setContent({ ...content, faqs: nf });
-                                  }} className="w-full border border-[#c3c4c7] px-3 py-2 text-[14px] font-bold text-[#1d2327] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none" placeholder="Question" />
-                                </div>
-                                <div className="space-y-1">
-                                  <span className="text-[10px] font-bold text-slate-400 uppercase">Answer {idx + 1}</span>
-                                  <textarea value={faq.answer} onChange={e => {
-                                    const nf = [...content.faqs];
-                                    nf[idx].answer = e.target.value;
-                                    setContent({ ...content, faqs: nf });
-                                  }} className="w-full border border-[#c3c4c7] px-3 py-2 text-[13px] rounded-[3px] focus:border-[#2271b1] focus:ring-1 focus:ring-[#2271b1] outline-none resize-none leading-relaxed" rows={3} placeholder="Answer" />
+                                <div className="space-y-4">
+                                  <div className="space-y-1">
+                                    <span className="text-[10px] font-bold text-slate-400 uppercase">Question {idx + 1}</span>
+                                    <RichTextEditor
+                                      content={faq.question || ""}
+                                      onChange={(val) => {
+                                        const nf = [...content.faqs];
+                                        nf[idx].question = val;
+                                        setContent({ ...content, faqs: nf });
+                                      }}
+                                      placeholder="Question"
+                                    />
+                                  </div>
+                                  <div className="space-y-1">
+                                    <span className="text-[10px] font-bold text-slate-400 uppercase">Answer {idx + 1}</span>
+                                    <RichTextEditor
+                                      content={faq.answer || ""}
+                                      onChange={(val) => {
+                                        const nf = [...content.faqs];
+                                        nf[idx].answer = val;
+                                        setContent({ ...content, faqs: nf });
+                                      }}
+                                      placeholder="Answer"
+                                    />
+                                  </div>
                                 </div>
                               </div>
                               <button onClick={() => {
