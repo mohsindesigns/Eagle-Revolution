@@ -252,7 +252,7 @@ const ContactInfo = () => {
             <span className="text-muted-foreground/60 group-hover:text-primary mt-0.5 flex-shrink-0">
               <Icon name="Mail" className="w-5 h-5" />
             </span>
-            <div className="[&_a]:text-muted-foreground [&_a]:no-underline [&_a]:hover:text-primary [&_a]:transition-colors [&_p]:m-0">
+            <div className="text-muted-foreground [&_a]:text-muted-foreground [&_a]:no-underline [&_a]:hover:text-primary [&_a]:transition-colors [&_p]:m-0">
               <RichTextRenderer content={contact.email} />
             </div>
           </div>
@@ -260,7 +260,7 @@ const ContactInfo = () => {
             <span className="text-muted-foreground/60 group-hover:text-primary mt-0.5 flex-shrink-0">
               <Icon name="Phone" className="w-5 h-5" />
             </span>
-            <div className="[&_a]:text-muted-foreground [&_a]:no-underline [&_a]:hover:text-primary [&_a]:transition-colors [&_p]:m-0">
+            <div className="text-muted-foreground [&_a]:text-muted-foreground [&_a]:no-underline [&_a]:hover:text-primary [&_a]:transition-colors [&_p]:m-0">
               <RichTextRenderer content={contact.phone} />
             </div>
           </div>
@@ -268,7 +268,7 @@ const ContactInfo = () => {
             <span className="text-muted-foreground/60 group-hover:text-primary mt-0.5 flex-shrink-0">
               <Icon name="MapPin" className="w-5 h-5" />
             </span>
-            <div className="[&_a]:text-muted-foreground [&_a]:no-underline [&_a]:hover:text-primary [&_a]:transition-colors [&_p]:m-0">
+            <div className="text-muted-foreground [&_a]:text-muted-foreground [&_a]:no-underline [&_a]:hover:text-primary [&_a]:transition-colors [&_p]:m-0">
               <RichTextRenderer content={contact.address} />
             </div>
           </div>
@@ -276,7 +276,7 @@ const ContactInfo = () => {
             <span className="text-muted-foreground/60 group-hover:text-primary mt-0.5 flex-shrink-0">
               <Icon name="Infinity" className="w-5 h-5" />
             </span>
-            <div className="[&_a]:text-muted-foreground [&_a]:no-underline [&_a]:hover:text-primary [&_a]:transition-colors [&_p]:m-0">
+            <div className="text-muted-foreground [&_a]:text-muted-foreground [&_a]:no-underline [&_a]:hover:text-primary [&_a]:transition-colors [&_p]:m-0">
               <RichTextRenderer content={contact.emergency} />
             </div>
           </div>
@@ -309,7 +309,7 @@ const ContactInfo = () => {
         <h5 className="text-[10px] font-mono tracking-[0.2em] uppercase text-primary/60">
           Service Areas
         </h5>
-        <div className="text-white/70 text-sm leading-relaxed group-hover:text-white/90 transition-colors">
+        <div className="text-muted-foreground text-sm leading-relaxed [&_p]:m-0">
           <RichTextRenderer content={contact.areas} />
         </div>
       </div>
