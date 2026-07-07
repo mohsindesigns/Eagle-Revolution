@@ -23,7 +23,10 @@ export async function middleware(req: NextRequest) {
     pathname !== '/robots.txt'
   ) {
     try {
-      const matchUrl = new URL('/api/redirects/match', req.url);
+      // Use INTERNAL_API_URL to avoid external round-trip through Cloudflare in production.
+      // In local dev this falls back to the request origin (e.g. http://localhost:3000).
+      const internalBase = process.env.INTERNAL_API_URL || new URL('/', req.url).origin;
+      const matchUrl = new URL('/api/redirects/match', internalBase);
       matchUrl.searchParams.set('url', pathname + req.nextUrl.search);
       
       const res = await fetch(matchUrl.toString(), {
