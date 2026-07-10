@@ -208,7 +208,7 @@ export default function ServiceAreaTemplate({ pageData }: { pageData?: any }) {
     buttonHref: "#contact"
   };
 
-
+  const mapUrlDisplay = mapData.iframeUrl || "maps.google.com";
 
   return (
     <div className="relative bg-slate-50 text-slate-900 min-h-screen font-body overflow-x-hidden">
@@ -336,7 +336,7 @@ export default function ServiceAreaTemplate({ pageData }: { pageData?: any }) {
               {/* Fake URL Bar */}
               <div className="bg-white border border-slate-200/80 rounded-lg text-[11px] text-slate-500 font-semibold px-4 py-1 flex-1 flex items-center gap-2 select-none shadow-inner">
                 <Globe className="w-3.5 h-3.5 text-slate-400" />
-                <span>maps.google.com/st-louis-missouri-coverage</span>
+                <span className="truncate">{mapUrlDisplay}</span>
               </div>
             </div>
 
