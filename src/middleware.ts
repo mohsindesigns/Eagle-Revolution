@@ -20,7 +20,9 @@ export async function middleware(req: NextRequest) {
     !pathname.startsWith('/assets') &&
     pathname !== '/favicon.ico' &&
     pathname !== '/sitemap.xml' &&
-    pathname !== '/robots.txt'
+    pathname !== '/robots.txt' &&
+    pathname !== '/llms.txt' &&
+    pathname !== '/llms.tsxt'
   ) {
     try {
       // Use INTERNAL_API_URL to avoid external round-trip through Cloudflare in production.
@@ -91,9 +93,9 @@ export const config = {
      * - favicon.ico (favicon file)
      * - assets (local public assets)
      * - uploads (uploaded media)
-     * - sitemap.xml, robots.txt
+     * - sitemap.xml, robots.txt, llms.txt, llms.tsxt
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|assets|uploads|sitemap.xml|robots.txt).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|assets|uploads|sitemap.xml|robots.txt|llms.txt|llms.tsxt).*)',
   ],
 };
 
