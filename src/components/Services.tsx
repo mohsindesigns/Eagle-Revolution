@@ -474,7 +474,7 @@ const Services = () => {
                       style={{ scale: imageScale }}
                     >
                       {servicesData.image?.src ? (
-                        servicesData.image.src.startsWith('http') || servicesData.image.src.startsWith('/uploads') ? (
+                        servicesData.image.src.startsWith('http') || servicesData.image.src.startsWith('/uploads') || servicesData.image.src.startsWith('/cdn-images') ? (
                           <img
                             src={servicesData.image.src}
                             alt={servicesData.image.alt || "Eagle Revolution Services"}

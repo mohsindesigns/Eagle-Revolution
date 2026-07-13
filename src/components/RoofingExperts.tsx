@@ -282,7 +282,13 @@ export default function AboutSection() {
 
                         <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-gray-300/50">
                             <div className="relative aspect-[4/5] lg:aspect-[3/4]">
-                                {isDynamicImage ? (
+                                {isDynamicImage && (image.src.startsWith('http') || image.src.startsWith('/uploads') || image.src.startsWith('/cdn-images')) ? (
+                                    <img
+                                        src={image.src}
+                                        alt={image.alt || "About Eagle Revolution"}
+                                        className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+                                    />
+                                ) : isDynamicImage ? (
                                     <Image
                                         src={image.src}
                                         alt={image.alt || "About Eagle Revolution"}

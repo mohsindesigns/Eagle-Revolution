@@ -509,7 +509,7 @@ const Footer = () => {
 
       <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-30">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-24 pb-16 border-b border-border">
-          <div className="lg:col-span-3 space-y-8">
+          <div className="lg:col-span-3 space-y-8 footer-reveal">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -532,7 +532,7 @@ const Footer = () => {
                 </div>
               </div>
 
-              <div className="text-muted-foreground text-xs leading-relaxed [&>p]:m-0">
+              <div className="text-muted-foreground text-sm leading-relaxed font-light [&_p]:m-0">
                 <RichTextRenderer content={company.description} />
               </div>
 
@@ -547,16 +547,16 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 footer-reveal">
             <ServiceLinks />
             <MaterialsSection />
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 footer-reveal">
             <ContactInfo />
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 footer-reveal">
             <div className="space-y-4">
               <h4 className="text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground flex items-center gap-2">
                 <Icon name="MapPin" className="w-4 h-4" />

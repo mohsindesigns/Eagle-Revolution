@@ -2,7 +2,7 @@
 
 import React from "react";
 import DOMPurify from "dompurify";
-import { makeLinksDoFollow } from "@/lib/utils";
+import { makeLinksDoFollow, cleanMojibake } from "@/lib/utils";
 
 interface RichTextRendererProps {
   content: string | string[];
@@ -30,7 +30,7 @@ export default function RichTextRenderer({ content, className = "", stripParagra
         {content.map((p, i) => (
           <div 
             key={i} 
-            dangerouslySetInnerHTML={{ __html: makeLinksDoFollow(safeSanitize(p)) }} 
+            dangerouslySetInnerHTML={{ __html: makeLinksDoFollow(safeSanitize(cleanMojibake(p))) }} 
             className="rich-text-content"
           />
         ))}
@@ -41,7 +41,7 @@ export default function RichTextRenderer({ content, className = "", stripParagra
   if (!content) return null;
 
   // Sanitize and render single HTML string
-  let sanitizedHtml = safeSanitize(content as string);
+  let sanitizedHtml = safeSanitize(cleanMojibake(content as string));
 
   // If the user is seeing literal <p> tags, it might be due to double escaping
   // or the editor's output being rendered as text.

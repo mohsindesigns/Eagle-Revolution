@@ -47,7 +47,7 @@ export async function uploadFile(file: File, buffer: Buffer): Promise<{ url: str
         
         // Generate signature
         const { createHash } = await import('crypto');
-        const signatureStr = `timestamp=${timestamp}${apiSecret}`;
+        const signatureStr = `public_id=${cleanFileName}&timestamp=${timestamp}${apiSecret}`;
         const signature = createHash('sha1').update(signatureStr).digest('hex');
         formData.append('signature', signature);
       }
@@ -75,10 +75,7 @@ export async function uploadFile(file: File, buffer: Buffer): Promise<{ url: str
     }
   }
 
-  // Fallback to local storage (Local Development ONLY)
-  if (process.env.NODE_ENV === 'production') {
-    throw new Error('Local file uploads are not supported in production. Please configure Cloudinary or Vercel Blob.');
-  }
+  // Fallback to local storage (Supported on Hostinger VPS)
 
   const filename = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
   const uploadDir = path.join(process.cwd(), 'public', 'uploads');

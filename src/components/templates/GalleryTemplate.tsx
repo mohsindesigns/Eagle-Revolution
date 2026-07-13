@@ -75,7 +75,14 @@ const Lightbox = ({ project, assetMap, onClose }: { project: any; assetMap: any;
         <X className="w-5 h-5" />
       </button>
       <div className="relative h-[50vh]">
-        <Image src={resolveImage(project.image, assetMap)} alt={project.title} fill className="object-cover" />
+        {(() => {
+          const img = resolveImage(project.image, assetMap);
+          return (typeof img === 'string' && (img.startsWith('http') || img.startsWith('/uploads') || img.startsWith('/cdn-images'))) ? (
+            <img src={img} alt={project.title} className="w-full h-full object-cover" />
+          ) : (
+            <Image src={img} alt={project.title} fill className="object-cover" />
+          );
+        })()}
       </div>
       <div className="p-6">
         <div className="flex items-start justify-between mb-3">
@@ -116,13 +123,21 @@ const MasonryCard = ({ project, assetMap, onClick }: any) => {
       className="relative group cursor-pointer overflow-hidden rounded-2xl bg-muted h-[280px] shadow-lg"
       onClick={onClick}
     >
-      <Image
-        src={img}
-        alt={project.title}
-        fill
-        className="object-cover transition-transform duration-700 group-hover:scale-110"
-        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-      />
+      {(typeof img === 'string' && (img.startsWith('http') || img.startsWith('/uploads') || img.startsWith('/cdn-images'))) ? (
+        <img
+          src={img}
+          alt={project.title}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+      ) : (
+        <Image
+          src={img}
+          alt={project.title}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-110"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+        />
+      )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
         <div>
           <h3 className="text-white text-base font-bold leading-tight">{project.title}</h3>

@@ -210,13 +210,21 @@ const Hero = ({ content: passedContent }: { content?: any }) => {
     <section className="relative min-h-[85vh] sm:min-h-screen w-full bg-background overflow-hidden flex items-center justify-center py-16 sm:py-12">
       <div className="absolute inset-0 z-0">
         <motion.div style={{ y: y1 }} className="absolute inset-0">
-          <Image
-            src={hero.bgImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070"}
-            alt={hero.bgImageAlt || "Eagle Revolution Interior"}
-            fill
-            quality={100}
-            className="object-cover opacity-20 sm:opacity-30 scale-110 grayscale-[0.5]"
-          />
+          {hero.bgImage && (hero.bgImage.startsWith('http') || hero.bgImage.startsWith('/uploads') || hero.bgImage.startsWith('/cdn-images')) ? (
+            <img
+              src={hero.bgImage}
+              alt={hero.bgImageAlt || "Eagle Revolution Interior"}
+              className="object-cover w-full h-full opacity-20 sm:opacity-30 scale-110 grayscale-[0.5]"
+            />
+          ) : (
+            <Image
+              src={hero.bgImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070"}
+              alt={hero.bgImageAlt || "Eagle Revolution Interior"}
+              fill
+              quality={100}
+              className="object-cover opacity-20 sm:opacity-30 scale-110 grayscale-[0.5]"
+            />
+          )}
         </motion.div>
 
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background z-10 md:bg-gradient-to-r md:from-background md:via-background/90 md:to-transparent" />
@@ -343,15 +351,23 @@ const FounderPortrait = ({ content }: { content?: any }) => {
         <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-primary/20 to-primary/20 rounded-2xl sm:rounded-3xl blur-lg group-hover:blur-xl transition-all duration-700" />
 
         <div className="relative rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl shadow-gray-300/50 h-[350px] xs:h-[400px] sm:h-[450px] md:h-[500px] lg:h-[600px]">
-          <Image
-            src={story.portrait?.image || owner}
-            alt={story.portrait?.alt || story.founder?.name || "Founder"}
-            className="object-cover"
-            fill
-            quality={100}
-            sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, 50vw"
-            priority
-          />
+          {story.portrait?.image && (story.portrait.image.startsWith('http') || story.portrait.image.startsWith('/uploads') || story.portrait.image.startsWith('/cdn-images')) ? (
+            <img
+              src={story.portrait.image}
+              alt={story.portrait?.alt || story.founder?.name || "Founder"}
+              className="object-cover w-full h-full"
+            />
+          ) : (
+            <Image
+              src={story.portrait?.image || owner}
+              alt={story.portrait?.alt || story.founder?.name || "Founder"}
+              className="object-cover"
+              fill
+              quality={100}
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, 50vw"
+              priority
+            />
+          )}
 
           <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 via-secondary/20 to-transparent" />
 
@@ -675,7 +691,15 @@ const ServiceCard = ({ service, index }: { service: any; index: number }) => {
       <Link href={`/services/${service.slug}`} className="block h-full">
         <div className="flex flex-col h-full">
           <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 shadow-lg transition-all duration-700 group-hover:shadow-2xl">
-            <Image src={serviceImage} alt={service.title} fill quality={100} className="object-cover transition-transform duration-1000 group-hover:scale-105" priority={index < 3} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+            {typeof serviceImage === 'string' && (serviceImage.startsWith('http') || serviceImage.startsWith('/uploads') || serviceImage.startsWith('/cdn-images')) ? (
+              <img
+                src={serviceImage}
+                alt={service.title}
+                className="object-cover w-full h-full transition-transform duration-1000 group-hover:scale-105"
+              />
+            ) : (
+              <Image src={serviceImage} alt={service.title} fill quality={100} className="object-cover transition-transform duration-1000 group-hover:scale-105" priority={index < 3} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="absolute top-6 left-6 z-10">
               <div className="px-5 py-2.5 bg-white/95 backdrop-blur-md rounded-xl border border-white/30 shadow-lg">
@@ -805,7 +829,7 @@ const AwardCTABanner = ({ content: passedContent }: { content?: any }) => {
           </div>
         </div>
         <div className="flex flex-col sm:flex-row gap-4">
-          <Link href={ctaBanner.primaryLink || "/contact"}><button className="px-8 py-4 bg-primary text-primary-foreground font-bold rounded-full shadow-lg hover:scale-105 transition-transform">{ctaBanner.primaryCta || "Contact Us"}</button></Link>
+          <Link href={ctaBanner.primaryLink || "https://www.greensky.com/prequal/gs/prequalify-for-loan?merchant=81115616&channel=External-Button-Prequal"}><button className="px-8 py-4 bg-primary text-primary-foreground font-bold rounded-full shadow-lg hover:scale-105 transition-transform">{ctaBanner.primaryCta || "Contact Us"}</button></Link>
           <Link href={ctaBanner.secondaryLink || "/contact"}><button className="px-8 py-4 bg-background text-primary border-2 border-primary font-bold rounded-full hover:bg-primary hover:text-white transition-all">{ctaBanner.secondaryCta || "Free Estimate"}</button></Link>
         </div>
       </div>
@@ -879,9 +903,9 @@ export default function AboutTemplate({ pageData, params }: { pageData?: any, pa
         <AwardCTABanner content={content.ctaBanner} />
       </div>
 
-      <PageInlineFaqs 
-        faqs={content.faqs} 
-        faqSchemaMarkup={content.faqSchemaMarkup} 
+      <PageInlineFaqs
+        faqs={content.faqs}
+        faqSchemaMarkup={content.faqSchemaMarkup}
         badge={content.faqBadge}
         title={content.faqTitle}
         subtitle={content.faqDescription}

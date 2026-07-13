@@ -14,6 +14,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Icon } from "../config/icons";
 import { useContent } from "../hooks/useContent";
 import Link from "next/link";
+import Script from "next/script";
 import RichTextRenderer from "./ui/RichTextRenderer";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -255,16 +256,16 @@ const AccordionItem = ({
                     ? {
                       rotate: 180,
                       scale: 1.1,
-                      backgroundColor: "hsl(var(--primary))",
-                      borderColor: "hsl(var(--primary))",
+                      backgroundColor: "rgb(36, 48, 210)",
+                      borderColor: "rgb(36, 48, 210)",
                     }
                     : {
                       rotate: 0,
                       scale: 1,
-                      backgroundColor: "hsl(var(--background))",
+                      backgroundColor: "rgb(255, 255, 255)",
                       borderColor: isHovered
-                        ? "hsl(var(--primary))"
-                        : "hsl(var(--border))",
+                        ? "rgb(36, 48, 210)"
+                        : "rgb(230, 230, 230)",
                     }
                 }
                 transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
@@ -280,20 +281,38 @@ const AccordionItem = ({
                   height="20"
                   viewBox="0 0 24 24"
                   fill="none"
-                  animate={isOpen ? { rotate: 180 } : { rotate: 0 }}
                 >
+                  {/* Horizontal line */}
                   <motion.path
-                    d={isOpen ? "M5 12h14" : "M12 5v14M5 12h14"}
+                    d="M5 12h14"
                     stroke={
                       isOpen
                         ? "white"
                         : isHovered
-                          ? "hsl(var(--primary))"
-                          : "hsl(var(--muted-foreground))"
+                          ? "rgb(36, 48, 210)"
+                          : "rgb(115, 115, 115)"
                     }
                     strokeWidth="1.8"
                     strokeLinecap="round"
-                    animate={isOpen ? { d: "M5 12h14" } : { d: "M12 5v14M5 12h14" }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  {/* Vertical line */}
+                  <motion.path
+                    d="M12 5v14"
+                    stroke={
+                      isOpen
+                        ? "white"
+                        : isHovered
+                          ? "rgb(36, 48, 210)"
+                          : "rgb(115, 115, 115)"
+                    }
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    animate={{ 
+                      rotate: isOpen ? 90 : 0,
+                      opacity: isOpen ? 0 : 1
+                    }}
+                    style={{ originX: "12px", originY: "12px" }}
                     transition={{ duration: 0.2 }}
                   />
                 </motion.svg>
@@ -384,8 +403,8 @@ const AccordionItem = ({
           className="absolute top-5 left-5 w-6 h-6 border-t-2 border-l-2"
           animate={
             isHovered
-              ? { width: 14, height: 14, borderColor: "hsl(var(--primary)/0.5)" }
-              : { width: 24, height: 24, borderColor: "hsl(var(--primary)/0.2)" }
+              ? { width: 14, height: 14, borderColor: "rgba(36, 48, 210, 0.5)" }
+              : { width: 24, height: 24, borderColor: "rgba(36, 48, 210, 0.2)" }
           }
           transition={{ duration: 0.2 }}
         />
@@ -393,8 +412,8 @@ const AccordionItem = ({
           className="absolute bottom-5 right-5 w-6 h-6 border-b-2 border-r-2"
           animate={
             isHovered
-              ? { width: 14, height: 14, borderColor: "hsl(var(--primary)/0.5)" }
-              : { width: 24, height: 24, borderColor: "hsl(var(--primary)/0.2)" }
+              ? { width: 14, height: 14, borderColor: "rgba(36, 48, 210, 0.5)" }
+              : { width: 24, height: 24, borderColor: "rgba(36, 48, 210, 0.2)" }
           }
           transition={{ duration: 0.2 }}
         />
@@ -655,13 +674,15 @@ export default function PageInlineFaqs({
   return (
     <>
       {bulkSchemaObj && (
-        <script
+        <Script
+          id="bulk-faq-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(bulkSchemaObj) }}
         />
       )}
       {customSchemas.map((schema: any, idx: number) => (
-        <script
+        <Script
+          id={`custom-faq-schema-${idx}`}
           key={`custom-faq-schema-${idx}`}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
