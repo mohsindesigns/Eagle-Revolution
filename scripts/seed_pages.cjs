@@ -116,7 +116,7 @@ async function seedPages() {
                 updatedAt: new Date()
             },
             {
-                slug: 'contact',
+                slug: 'contact-us',
                 title: 'Contact Us',
                 template: 'contact',
                 status: 'published',

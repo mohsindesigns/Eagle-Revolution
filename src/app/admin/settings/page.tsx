@@ -224,7 +224,7 @@ export default function SettingsEditor() {
     fetch("/api/content").then((res) => res.json()).then((json) => {
         const d = { ...json };
         if (!d.settings) d.settings = { siteTitle: "Eagle Revolution", siteTemplate: "%s | Eagle Revolution", favicon: "/eagle-logo.png" };
-        if (!d.navbar) d.navbar = { companyLinks: [], ctaText: "Book Now", ctaLink: "/contact", logo: "/eagle-logo.png" };
+        if (!d.navbar) d.navbar = { companyLinks: [], ctaText: "Book Now", ctaLink: "/contact-us", logo: "/eagle-logo.png" };
         setData(d);
       });
     Promise.all([

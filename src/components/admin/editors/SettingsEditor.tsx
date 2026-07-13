@@ -41,7 +41,7 @@ export default function SettingsEditor({ pageId, data, setData }: { pageId: stri
     if (data && Object.keys(data).length === 0) {
        setData({
          settings: { siteTitle: "Eagle Revolution", siteTemplate: "%s | Eagle Revolution", favicon: "" },
-         navbar: { logo: "", siteTitle: "Eagle Revolution", ctaText: "Book Now", ctaLink: "/contact", companyLinks: [] },
+         navbar: { logo: "", siteTitle: "Eagle Revolution", ctaText: "Book Now", ctaLink: "/contact-us", companyLinks: [] },
          footer: { 
            company: { name: "Eagle Revolution", tagline: "Heritage. Integrity. Precision.", description: "", logo: "" },
            newsletter: { placeholder: "Enter your email", buttonText: "Subscribe" },
@@ -167,7 +167,7 @@ export default function SettingsEditor({ pageId, data, setData }: { pageId: stri
                                onChange={(e) => updateNested(["navbar", "ctaLink"], e.target.value)} 
                                className={UI.input}
                              >
-                                <option value="/contact">Contact Portal (Default)</option>
+                                <option value="/contact-us">Contact Portal (Default)</option>
                                 <option value="/gallery">Gallery Portfolio</option>
                                 {publishedPages.map(p => (
                                   <option key={p._id} value={`/${p.slug}`}>{p.title}</option>
@@ -204,7 +204,7 @@ export default function SettingsEditor({ pageId, data, setData }: { pageId: stri
                                      <option value="/">Home Page</option>
                                      <option value="/services">Services</option>
                                      <option value="/gallery">Gallery</option>
-                                     <option value="/contact">Contact</option>
+                                     <option value="/contact-us">Contact</option>
                                      <optgroup label="Custom Published Pages">
                                         {publishedPages.map(p => (
                                           <option key={p._id} value={`/${p.slug}`}>{p.title}</option>

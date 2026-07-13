@@ -58,7 +58,7 @@ export const useContent = () => {
     const footerCertifications = getSafe(footer, 'certifications', []);
 
     return {
-        navbar: getSafe(completeData, 'navbar', { menu: [], logo: "", cta: { text: "Get Quote", href: "/contact" } }),
+        navbar: getSafe(completeData, 'navbar', { menu: [], logo: "", cta: { text: "Get Quote", href: "/contact-us" } }),
         hero: getSafe(completeData, 'hero', { headlines: [], description: "", buttons: [], stats: [], images: [] }),
         about: getSafe(completeData, 'about'),
         services: (() => {

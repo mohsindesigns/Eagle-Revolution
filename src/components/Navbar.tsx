@@ -236,7 +236,7 @@ const Navbar = () => {
 
             <motion.div className="hidden lg:flex items-center" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
-                href={navbar.ctaLink || "/contact"}
+                href={navbar.ctaLink || "/contact-us"}
                 className="flex items-center space-x-2 px-7 py-3.5 rounded-xl font-bold transition-all duration-300 bg-primary text-white shadow-lg shadow-primary/20 hover:text-white"
               >
                 <Icon name="Calendar" className="h-4 w-4" />
@@ -374,7 +374,7 @@ const Navbar = () => {
 
               <div className="p-6 bg-muted/30">
                 <Link
-                  href={navbar.ctaLink || "/contact"}
+                  href={navbar.ctaLink || "/contact-us"}
                   onClick={handleLinkClick}
                   className="block w-full py-4 bg-primary text-white font-bold rounded-xl text-center shadow-lg shadow-primary/20"
                 >

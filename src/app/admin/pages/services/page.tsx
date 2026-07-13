@@ -386,7 +386,7 @@ export default function ServicesPageEditor() {
     title: "Ready for Your Free Estimate?",
     description: "Transform your home with St. Louis's expert builders. Contact us today for quality craftsmanship and unparalleled service.",
     buttonText: "Get Free Estimate",
-    buttonLink: "/contact"
+    buttonLink: "/contact-us"
   };
 
   const blogSection = data.services?.blogSection || {
