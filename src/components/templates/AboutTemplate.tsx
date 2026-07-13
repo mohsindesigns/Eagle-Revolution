@@ -829,8 +829,8 @@ const AwardCTABanner = ({ content: passedContent }: { content?: any }) => {
           </div>
         </div>
         <div className="flex flex-col sm:flex-row gap-4">
-          <Link href={ctaBanner.primaryLink || "https://www.greensky.com/prequal/gs/prequalify-for-loan?merchant=81115616&channel=External-Button-Prequal"}><button className="px-8 py-4 bg-primary text-primary-foreground font-bold rounded-full shadow-lg hover:scale-105 transition-transform">{ctaBanner.primaryCta || "Contact Us"}</button></Link>
-          <Link href={ctaBanner.secondaryLink || "/contact-us"}><button className="px-8 py-4 bg-background text-primary border-2 border-primary font-bold rounded-full hover:bg-primary hover:text-white transition-all">{ctaBanner.secondaryCta || "Free Estimate"}</button></Link>
+          <Link href={"https://www.greensky.com/prequal/gs/prequalify-for-loan?merchant=81115616&channel=External-Button-Prequal"}><button className="px-8 py-4 bg-primary text-primary-foreground font-bold rounded-full shadow-lg hover:scale-105 transition-transform">{ctaBanner.primaryCta || "Contact Us"}</button></Link>
+          <Link href={"/contact-us"}><button className="px-8 py-4 bg-background text-primary border-2 border-primary font-bold rounded-full hover:bg-primary hover:text-white transition-all">{ctaBanner.secondaryCta || "Free Estimate"}</button></Link>
         </div>
       </div>
     </motion.div>
