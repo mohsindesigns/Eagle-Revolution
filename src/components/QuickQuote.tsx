@@ -83,7 +83,7 @@ const SMSConsentCheckbox = ({ checked, onChange }: { checked: boolean; onChange:
 };
 
 const QuickQuote = () => {
-    const { quickQuote } = useContent();
+    const { quickQuote, services } = useContent();
     const [isOpen, setIsOpen] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const [smsConsent, setSmsConsent] = useState(false);
@@ -98,14 +98,16 @@ const QuickQuote = () => {
     const [isSuccess, setIsSuccess] = useState(false);
     const [step, setStep] = useState(1);
 
-    const projectTypes = quickQuote.projectTypes || [
-        { value: 'roofing', label: 'Residential Roofing' },
-        { value: 'windows', label: 'Windows & Doors' },
-        { value: 'decks', label: 'Custom Decks' },
-        { value: 'siding', label: 'Siding & Gutters' },
-        { value: 'commercial', label: 'Commercial Roofing' },
-        { value: 'emergency', label: 'Emergency Service' }
-    ];
+    // Get project types from actual services only
+    const projectTypes = (() => {
+        const servicesList = Array.isArray(services) ? services : (services as any)?.services || [];
+        const publishedServices = servicesList.filter((s: any) => s.status === 'published' || s.status === undefined);
+        
+        return publishedServices.map((service: any) => ({
+            value: service.slug || service.title.toLowerCase().replace(/ /g, '-'),
+            label: service.title
+        }));
+    })();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         setFormData({

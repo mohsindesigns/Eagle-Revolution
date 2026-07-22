@@ -633,7 +633,7 @@ export default function ServiceDetailTemplate({ pageData, params: syncParams }: 
                     <span className="text-base sm:text-lg font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-primary">Why Choose Us</span>
                   </div>
                 </div>
-                <h3 className="text-2xl xs:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4 leading-tight">America's <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80">#1 Rated</span><br />Home Improvement Team</h3>
+                <h3 className="text-2xl xs:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4 leading-tight">One Of America's <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80">Top Rated</span><br />Home Improvement Team</h3>
                 <p className="text-muted-foreground text-sm sm:text-base md:text-lg leading-relaxed max-w-lg mb-6">Join thousands of satisfied homeowners who trusted us with their most valuable investment.</p>
                 <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 mt-4">
                   <div className="flex items-center gap-2">

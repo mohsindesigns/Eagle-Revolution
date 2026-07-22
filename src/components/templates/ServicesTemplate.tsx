@@ -24,15 +24,7 @@ const ServiceCard = ({ service, index }: any) => {
                         <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5 group-hover:bg-primary transition-colors duration-300">
                             <Icon className="w-6 h-6 text-primary group-hover:text-white transition-colors duration-300" />
                         </div>
-                        <h2 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">{service.title}</h2>
-                        <p className="text-muted-foreground text-sm leading-relaxed mb-5">{service.tagline || service.description}</p>
-                        <div className="flex flex-wrap gap-2 mb-5">
-                            {(service.features || []).slice(0, 3).map((f: any, i: number) => (
-                                <span key={i} className="text-xs bg-primary/5 text-primary border border-primary/10 px-3 py-1 rounded-full font-medium">
-                                    {typeof f === 'string' ? f : f.text}
-                                </span>
-                            ))}
-                        </div>
+                        <h2 className="text-xl font-bold text-foreground mb-5 group-hover:text-primary transition-colors">{service.title}</h2>
                         <div className="flex items-center gap-2 text-primary font-semibold text-sm">
                             Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </div>
