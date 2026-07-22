@@ -1,4 +1,23 @@
 import { useContentContext } from "../context/ContentContext";
+import { cleanMojibake } from "../lib/utils";
+
+function sanitizeEncoding(obj: any): any {
+  if (!obj) return obj;
+  if (typeof obj === 'string') {
+    return cleanMojibake(obj);
+  }
+  if (Array.isArray(obj)) {
+    return obj.map(item => sanitizeEncoding(item));
+  }
+  if (typeof obj === 'object') {
+    const res: any = {};
+    for (const key in obj) {
+      res[key] = sanitizeEncoding(obj[key]);
+    }
+    return res;
+  }
+  return obj;
+}
 
 function proxyAllUrls(obj: any): any {
   if (!obj) return obj;
@@ -23,7 +42,7 @@ function proxyAllUrls(obj: any): any {
 
 export const useContent = () => {
     const rawData = useContentContext();
-    const completeData = proxyAllUrls(rawData);
+    const completeData = sanitizeEncoding(proxyAllUrls(rawData));
 
     // Deep fallback helper to prevent undefined.property crashes
     const getSafe = (data: any, key: string, fallback: any = {}) => {
@@ -39,7 +58,7 @@ export const useContent = () => {
     const footerCertifications = getSafe(footer, 'certifications', []);
 
     return {
-        navbar: getSafe(completeData, 'navbar', { menu: [], logo: "", cta: { text: "Get Quote", href: "/contact" } }),
+        navbar: getSafe(completeData, 'navbar', { menu: [], logo: "", cta: { text: "Get Quote", href: "/contact-us" } }),
         hero: getSafe(completeData, 'hero', { headlines: [], description: "", buttons: [], stats: [], images: [] }),
         about: getSafe(completeData, 'about'),
         services: (() => {

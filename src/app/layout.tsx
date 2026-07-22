@@ -148,13 +148,17 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://images.unsplash.com" />
         {/* ── CMS-managed <head> scripts ── */}
         {headScripts.map((s) => (
-          <script key={s.id} dangerouslySetInnerHTML={{ __html: s.code.replace(/<script[^>]*>|<\/script>/gi, '').trim() }} />
+          <script
+            key={s.id}
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{ __html: s.code.replace(/<script[^>]*>|<\/script>/gi, '').trim() }}
+          />
         ))}
       </head>
       <body className={`${spaceGrotesk.variable} ${dmSans.variable} antialiased`}>
         {/* ── CMS-managed body_start scripts ── */}
         {bodyStartScripts.map((s) => (
-          <div key={s.id} dangerouslySetInnerHTML={{ __html: s.code }} />
+          <div key={s.id} suppressHydrationWarning dangerouslySetInnerHTML={{ __html: s.code }} />
         ))}
         <ContentProvider initialData={initialGlobalData} initialBlogs={initialBlogs}>
           <Providers>
@@ -180,7 +184,7 @@ export default async function RootLayout({
 
         {/* ── CMS-managed body_end scripts ── */}
         {bodyEndScripts.map((s) => (
-          <div key={s.id} dangerouslySetInnerHTML={{ __html: s.code }} />
+          <div key={s.id} suppressHydrationWarning dangerouslySetInnerHTML={{ __html: s.code }} />
         ))}
       </body>
     </html>

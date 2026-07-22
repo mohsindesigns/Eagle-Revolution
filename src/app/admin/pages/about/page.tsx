@@ -199,7 +199,7 @@ export default function AboutEditor() {
                         value={aboutPage.hero?.ctaLink || ""}
                         onChange={(e) => updateAbout("hero", "ctaLink", e.target.value)}
                         className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 font-medium"
-                        placeholder="/contact"
+                        placeholder="/contact-us"
                       />
                    </div>
                 </div>
@@ -726,7 +726,7 @@ export default function AboutEditor() {
                        </div>
                        <div className="space-y-2">
                           <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Primary Button Link</label>
-                          <input type="text" value={aboutPage.ctaBanner?.primaryLink || ""} onChange={(e) => updateAbout("ctaBanner", "primaryLink", e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 font-medium" placeholder="/contact" />
+                          <input type="text" value={aboutPage.ctaBanner?.primaryLink || ""} onChange={(e) => updateAbout("ctaBanner", "primaryLink", e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 font-medium" placeholder="/contact-us" />
                        </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
@@ -736,7 +736,7 @@ export default function AboutEditor() {
                        </div>
                        <div className="space-y-2">
                           <label className="text-xs uppercase tracking-widest text-slate-500 font-extrabold">Secondary Button Link</label>
-                          <input type="text" value={aboutPage.ctaBanner?.secondaryLink || ""} onChange={(e) => updateAbout("ctaBanner", "secondaryLink", e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 font-medium" placeholder="/contact" />
+                          <input type="text" value={aboutPage.ctaBanner?.secondaryLink || ""} onChange={(e) => updateAbout("ctaBanner", "secondaryLink", e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 font-medium" placeholder="/contact-us" />
                        </div>
                     </div>
                   </div>

@@ -36,7 +36,7 @@ export default function ServiceDetailEditor({ pageId, data, setData }: { pageId:
          benefits: [{ title: "", description: "", icon: "Zap" }],
          process: [{ title: "", description: "", icon: "Settings" }],
          faq: [{ question: "", answer: "" }],
-         cta: { text: "Start Your Project", link: "/contact" }
+         cta: { text: "Start Your Project", link: "/contact-us" }
        });
     }
   }, [data, setData]);

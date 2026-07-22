@@ -596,6 +596,7 @@ const AwardCTABanner = () => {
                             const links = ["/contact-us", "/gallery"];
 
                             return (
+
                                 <Link key={idx} href={links[idx] || "#"}>
                                     <motion.div
                                         whileHover={{ scale: 1.03 }}

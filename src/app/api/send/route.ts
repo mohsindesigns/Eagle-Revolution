@@ -105,6 +105,10 @@ export async function POST(request: Request) {
       console.error("Error fetching dynamic email", e);
     }
 
+    if (receiverEmail) {
+      receiverEmail = receiverEmail.replace(/\s+/g, '').toLowerCase();
+    }
+
     if (!receiverEmail || !receiverEmail.includes('@')) {
       receiverEmail = 'banderson@eaglerevolution.com';
     }

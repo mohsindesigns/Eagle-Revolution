@@ -217,7 +217,7 @@ export default function ServicesAdminPage() {
     processBadge: "",
     processDescription: "",
     overview: "", overviewImage: "", overviewStats: [],
-    cta: { text: "Start Your Project", link: "/contact" }, icon: "Layout", tag: "", status: "published", features: [], stats: [], benefits: [], process: [], faq: [], faqSchemaMarkup: "", faqBadge: "", faqTitle: "", faqDescription: "",
+    cta: { text: "Start Your Project", link: "/contact-us" }, icon: "Layout", tag: "", status: "published", features: [], stats: [], benefits: [], process: [], faq: [], faqSchemaMarkup: "", faqBadge: "", faqTitle: "", faqDescription: "",
     ...DEFAULT_FEATURED_CATEGORY
   });
 
@@ -423,7 +423,7 @@ export default function ServicesAdminPage() {
                 processBadge: "Methodology",
                 processDescription: "A battle-tested framework that ensures consistency, quality, and complete satisfaction—from initial consultation to final walkthrough.",
                 overview: "", overviewImage: "", overviewStats: [],
-                cta: { text: "Start Your Project", link: "/contact" }, icon: "Layout", tag: "", status: "published", features: [], stats: [], benefits: [], process: [], faq: [], faqSchemaMarkup: "", faqBadge: "", faqTitle: "", faqDescription: "",
+                cta: { text: "Start Your Project", link: "/contact-us" }, icon: "Layout", tag: "", status: "published", features: [], stats: [], benefits: [], process: [], faq: [], faqSchemaMarkup: "", faqBadge: "", faqTitle: "", faqDescription: "",
                 ...DEFAULT_FEATURED_CATEGORY
               });
               setSeo({});

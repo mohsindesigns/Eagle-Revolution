@@ -329,7 +329,7 @@ const Services = () => {
       { value: 50, suffix: "+", label: "Years Combined" },
       { value: 4.9, suffix: "", label: "Rating" }
     ],
-    cta = { title: 'Ready to Start?', description: 'Get your free estimate today.', buttonText: 'Contact Us', buttonLink: '/contact' }
+    cta = { title: 'Ready to Start?', description: 'Get your free estimate today.', buttonText: 'Contact Us', buttonLink: '/contact-us' }
   } = (servicesData || {}) as any;
 
   const description = Array.isArray(rawDescription)
@@ -474,7 +474,7 @@ const Services = () => {
                       style={{ scale: imageScale }}
                     >
                       {servicesData.image?.src ? (
-                        servicesData.image.src.startsWith('http') || servicesData.image.src.startsWith('/uploads') ? (
+                        servicesData.image.src.startsWith('http') || servicesData.image.src.startsWith('/uploads') || servicesData.image.src.startsWith('/cdn-images') ? (
                           <img
                             src={servicesData.image.src}
                             alt={servicesData.image.alt || "Eagle Revolution Services"}

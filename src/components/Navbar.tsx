@@ -92,14 +92,22 @@ const Navbar = () => {
               onClick={handleLinkClick}
             >
               <div className="h-12 sm:h-14 md:h-16 lg:h-18 w-24 sm:w-28 md:w-32 lg:w-36 flex items-center justify-center overflow-hidden relative">
-                <Image
-                  src={navbar.logo || logo}
-                  alt={navbar.siteTitle || "Eagle Revolution Logo"}
-                  className="object-contain"
-                  fill
-                  priority
-                  quality={100}
-                />
+                {(navbar.logo && (navbar.logo.startsWith('http') || navbar.logo.startsWith('/uploads') || navbar.logo.startsWith('/cdn-images'))) ? (
+                  <img
+                    src={navbar.logo}
+                    alt={navbar.siteTitle || "Eagle Revolution Logo"}
+                    className="object-contain w-full h-full"
+                  />
+                ) : (
+                  <Image
+                    src={navbar.logo || logo}
+                    alt={navbar.siteTitle || "Eagle Revolution Logo"}
+                    className="object-contain"
+                    fill
+                    priority
+                    quality={100}
+                  />
+                )}
 
               </div>
             </Link>
@@ -228,7 +236,7 @@ const Navbar = () => {
 
             <motion.div className="hidden lg:flex items-center" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
-                href={navbar.ctaLink || "/contact"}
+                href={navbar.ctaLink || "/contact-us"}
                 className="flex items-center space-x-2 px-7 py-3.5 rounded-xl font-bold transition-all duration-300 bg-primary text-white shadow-lg shadow-primary/20 hover:text-white"
               >
                 <Icon name="Calendar" className="h-4 w-4" />
@@ -275,7 +283,11 @@ const Navbar = () => {
             >
               <div className="p-6 border-b border-border flex items-center justify-between">
                 <div className="relative h-10 w-24">
-                  <Image src={navbar.logo || logo} alt="Logo" className="object-contain" fill quality={100} />
+                  {(navbar.logo && (navbar.logo.startsWith('http') || navbar.logo.startsWith('/uploads') || navbar.logo.startsWith('/cdn-images'))) ? (
+                    <img src={navbar.logo} alt="Logo" className="object-contain w-full h-full" />
+                  ) : (
+                    <Image src={navbar.logo || logo} alt="Logo" className="object-contain" fill quality={100} />
+                  )}
                 </div>
                 <button onClick={() => setIsMenuOpen(false)} className="p-2 text-foreground">
                   <Icon name="X" />
@@ -362,7 +374,7 @@ const Navbar = () => {
 
               <div className="p-6 bg-muted/30">
                 <Link
-                  href={navbar.ctaLink || "/contact"}
+                  href={navbar.ctaLink || "/contact-us"}
                   onClick={handleLinkClick}
                   className="block w-full py-4 bg-primary text-white font-bold rounded-xl text-center shadow-lg shadow-primary/20"
                 >

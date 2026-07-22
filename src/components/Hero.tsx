@@ -65,7 +65,7 @@ const Hero = () => {
             maskImage: "linear-gradient(to bottom, black 60%, transparent 95%)",
           }}
         >
-          {images?.[0]?.startsWith('http') ? (
+          {images?.[0]?.startsWith('http') || images?.[0]?.startsWith('/uploads') || images?.[0]?.startsWith('/cdn-images') ? (
             <img
               src={images[0]}
               alt={hero.bgImageAlt || "Eagle Revolution Roofing"}

@@ -122,7 +122,7 @@ export default function AboutEditor({ pageId, data, setData }: { pageId: string,
                         <div className="space-y-1.5"><label className={UI.label}>Phone</label><input type="text" value={data.hero?.phone || ""} onChange={(e) => updateSection("hero", "phone", e.target.value)} className={UI.input} /></div>
                         <div className="space-y-1.5"><label className={UI.label}>Phone Label</label><input type="text" value={data.hero?.phoneLabel || ""} onChange={(e) => updateSection("hero", "phoneLabel", e.target.value)} className={UI.input} /></div>
                         <div className="space-y-1.5"><label className={UI.label}>CTA Text</label><input type="text" value={data.hero?.cta || ""} onChange={(e) => updateSection("hero", "cta", e.target.value)} className={UI.input} /></div>
-                        <div className="space-y-1.5"><label className={UI.label}>CTA Link</label><input type="text" value={data.hero?.ctaLink || ""} onChange={(e) => updateSection("hero", "ctaLink", e.target.value)} className={UI.input} placeholder="/contact" /></div>
+                        <div className="space-y-1.5"><label className={UI.label}>CTA Link</label><input type="text" value={data.hero?.ctaLink || ""} onChange={(e) => updateSection("hero", "ctaLink", e.target.value)} className={UI.input} placeholder="/contact-us" /></div>
                         <div className="space-y-1.5"><label className={UI.label}>Trust Label</label><input type="text" value={data.hero?.trustLabel || ""} onChange={(e) => updateSection("hero", "trustLabel", e.target.value)} className={UI.input} /></div>
                      </div>
                      <div className="space-y-6">

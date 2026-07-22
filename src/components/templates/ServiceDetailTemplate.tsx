@@ -443,7 +443,7 @@ export default function ServiceDetailTemplate({ pageData, params: syncParams }: 
               {/* CTA Button */}
               <motion.div className="mb-10 w-full" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
                 <div className="flex flex-row flex-wrap sm:flex-nowrap items-center justify-center lg:justify-start gap-4 w-full">
-                  <Link href={service.cta?.link || "/contact"} className="flex-1 sm:flex-initial">
+                  <Link href={service.cta?.link || "/contact-us"} className="flex-1 sm:flex-initial">
                     <div className="group relative overflow-hidden h-full px-7 py-3.5 rounded-2xl inline-flex items-center justify-center gap-2 text-base font-semibold tracking-wide bg-primary text-white border border-primary/30 transition-all duration-300 active:scale-[0.98] hover:text-white w-full sm:w-auto">
                       <span className="relative z-10">{service.cta?.text || "Start Your Project"}</span>
                       <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -651,7 +651,7 @@ export default function ServiceDetailTemplate({ pageData, params: syncParams }: 
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link className="relative flex-1 sm:flex-initial" href="/contact">
+                <Link className="relative flex-1 sm:flex-initial" href="/contact-us">
                   <div className="h-full px-8 py-4 bg-primary text-white font-bold rounded-full shadow-sm hover:text-white overflow-hidden flex items-center justify-center gap-2" tabIndex={0} style={{ transform: "none" }}>
                     <span className="relative z-10 flex items-center gap-2 text-sm md:text-base">Get Free Quote<ArrowRight className="w-4 h-4" /></span>
                     <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>

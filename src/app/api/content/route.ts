@@ -3,6 +3,7 @@ import connectToDatabase from '@/lib/mongodb';
 import SiteContent from '@/models/Content';
 import { hasPermission, getSessionUser } from '@/lib/rbac';
 import { recordActivity } from '@/lib/logger';
+import { sanitizeEncoding } from '@/lib/utils';
 export const revalidate = 60; // Cache for 1 minute
 
 export async function GET() {
@@ -33,6 +34,7 @@ export async function PUT(req: NextRequest) {
   try {
     await connectToDatabase();
     const body = await req.json();
+    const sanitizedBody = sanitizeEncoding(body);
 
     const oldContent = await SiteContent.findOne({ key: 'complete_data' });
 
@@ -40,7 +42,7 @@ export async function PUT(req: NextRequest) {
       { key: 'complete_data' },
       { 
         $set: { 
-          data: body,
+          data: sanitizedBody,
           lastUpdated: new Date()
         } 
       },

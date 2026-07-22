@@ -199,7 +199,7 @@ export default function ContactTemplate({ pageData }: { pageData?: any }) {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
+                        className="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
                     >
                         {finalInfo.phone && (
                             <div className="bg-card/40 border border-border/50 rounded-2xl p-6 text-center">
@@ -216,7 +216,7 @@ export default function ContactTemplate({ pageData }: { pageData?: any }) {
                                     <Icon name="Mail" className="w-5 h-5" />
                                 </div>
                                 <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">Email</h3>
-                                <p className="text-foreground font-medium truncate px-2">{finalInfo.email}</p>
+                                <p className="text-foreground font-medium break-all">{finalInfo.email}</p>
                             </div>
                         )}
                         {finalInfo.address && (
